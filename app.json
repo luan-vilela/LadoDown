@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "LadoDown",
+    "slug": "LadoDown",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
