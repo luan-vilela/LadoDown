@@ -33,7 +33,6 @@ function App() {
           <View style={styles.box}><Text style={{ fontSize: 22 }}>Conteúdo</Text></View>
           <View style={styles.box}><Text style={{ fontSize: 22 }}>Conteúdo</Text></View>
           {/* ######### CAIXA ########## */}
-
       </ScrollView>
 
     </SafeAreaView>
