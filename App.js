@@ -1,42 +1,36 @@
 import * as React from 'react';
-import { NativeBaseProvider, Box, HStack, VStack, Text, Pressable, Image, Center } from 'native-base';
+import { Button, View } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
 
-function Example() {
-  return <NativeBaseProvider>
-    <Center flex={1} px="3"> 
-      <Box bg="primary.600" py="4" px="3" borderRadius="5" rounded="md" width={375} maxWidth="100%">
-      <HStack justifyContent="space-between">
-        <Box justifyContent="space-between">
-          <VStack space="2">
-            <Text fontSize="sm" color="white">
-              Today @ 9PM
-            </Text>
-            <Text color="white" fontSize="xl">
-              Let's talk about avatar!
-            </Text>
-          </VStack>
-          <Pressable rounded="xs" bg="primary.400" alignSelf="flex-start" py="1" px="3">
-            <Text textTransform="uppercase" fontSize="sm" fontWeight="bold" color="white">
-              Remind me
-            </Text>
-          </Pressable>
-        </Box>
-        <Image source={{
-        uri: 'https://media.vanityfair.com/photos/5ba12e6d42b9d16f4545aa19/3:2/w_1998,h_1332,c_limit/t-Avatar-The-Last-Airbender-Live-Action.jpg'
-      }} alt="Aang flying and surrounded by clouds" height="100" rounded="full" width="100" />
-      </HStack>
-    </Box>
-    </Center>
-  </NativeBaseProvider>;
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+      />
+    </View>
+  );
 }
 
-    export default () => {
-        return (
-          <NativeBaseProvider>
-            <Center flex={1} px="3">
-                <Example />
-            </Center>
-          </NativeBaseProvider>
-        );
-    };
-    
+function NotificationsScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
+}
+
+const Drawer = createDrawerNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator useLegacyImplementation initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
