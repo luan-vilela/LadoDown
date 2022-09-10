@@ -1,36 +1,20 @@
-import * as React from 'react';
-import { Button, View } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import React, {useState} from "react";
+import { ScrollView, Animated, View} from "react-native";
+import { NativeBaseProvider} from 'native-base';
+import { NavigationContainer } from "@react-navigation/native";
+import { SafeAreaView, SafeAreaProvider} from "react-native-safe-area-context";
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-    </View>
-  );
-}
+import MainStack from './src/stacks/MainStack';
 
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
-
-const Drawer = createDrawerNavigator();
 
 export default function App() {
+  const [scrollY, setScrollY] = useState(new Animated.Value(0)) // Controla valor do scrollY
+
   return (
-    <NavigationContainer>
-      <Drawer.Navigator useLegacyImplementation initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <NativeBaseProvider>
+      <NavigationContainer>
+        < MainStack />
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
