@@ -3,15 +3,14 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
     header: {
-      backgroundColor: '#56BF8D',
+      backgroundColor: '#10b981',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingLeft: 10,
       paddingRight: 10,
       borderBottomWidth: 2,
-      borderBottomColor: '#FFF',
-  
+      borderBottomColor: '#FFF', 
     },
     box: {
       height: 300,
