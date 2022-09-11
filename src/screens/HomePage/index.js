@@ -82,7 +82,7 @@ export default () => {
                     {(titulo.title !== undefined && titulo.title !== "") ? <Text style={styles.estilo.title}>{titulo.title}{"\n"}</Text> : null}
 
                     {(titulo.tag !== undefined && titulo.tag !== "") ? <Text style={styles.estilo.tag}>{titulo.tag}</Text> : null}
-                    <Text style={styles.estilo.descricao}>{titulo.descricao}{"\n"}</Text>
+                    <Text style={styles.estilo.descricao}>{"\n"}{titulo.descricao}{"\n"}</Text>
                     <Text style={styles.estilo.autor}>Há 2 horas - Luan Vilela</Text>
 
 
