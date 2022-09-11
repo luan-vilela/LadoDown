@@ -6,7 +6,7 @@ export default () => {
     const DATA = [
         {
             id: "1",
-            link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6M7dJ518-Lo8n6KfqoqAFdzYVnsnJM3vf027usZ8&s",
+            imagemPequena: "https://i0.wp.com/www.portaldodog.com.br/cachorros/wp-content/uploads/2021/08/red-fox-looks-camera-portrait.jpg?fit=1000%2C668&ssl=1",
             titulo: "Natureza é o segredo da felicidade",
             imagemGrande: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6M7dJ518-Lo8n6KfqoqAFdzYVnsnJM3vf027usZ8&s",
             descricao: "Alegria da vida vem de nossos encontros com novas experiências e, portanto, não há alegria maior que ter um horizonte sempre cambiante, cada dia com um novo e diferente sol […]",
@@ -14,24 +14,32 @@ export default () => {
         },
         {
             id: "2",
-            link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6M7dJ518-Lo8n6KfqoqAFdzYVnsnJM3vf027usZ8&s",
+            imagemPequena: "https://static.wikia.nocookie.net/mundo-animal/images/3/3f/Raposa-vermelha.jpg/revision/latest?cb=20140315203858&path-prefix=pt",
+            titulo: "",
+            imagemGrande: "",
             descricao: "Alegria da vida vem de nossos encontros com novas experiências e, portanto, não há alegria maior que ter um horizonte sempre cambiante, cada dia com um novo e diferente sol […]",
             tag: "Saúde",
         },
         {
             id: "3",
-            link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6M7dJ518-Lo8n6KfqoqAFdzYVnsnJM3vf027usZ8&s",
+            imagemPequena: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2fFx-L1jBLvyWl2QNKxyLkuSgcGQcwhnsSq_0vavCtbhm7K-VclzGie0vwB661kwxYcA&usqp=CAU",
+            titulo: "",
+            imagemGrande: "",
             descricao: "Alegria da vida vem de nossos encontros com novas experiências e, portanto, não há alegria maior que ter um horizonte sempre cambiante, cada dia com um novo e diferente sol […]",
         },
         {
             id: "4",
-            link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6M7dJ518-Lo8n6KfqoqAFdzYVnsnJM3vf027usZ8&s",
+            imagemPequena: "https://pm1.narvii.com/6723/a0ed90ef0378bb228c22a438163956174e2159bfv2_hq.jpg",
+            titulo: "",
+            imagemGrande: "",
             descricao: "Alegria da vida vem de nossos encontros com novas experiências e, portanto, não há alegria maior que ter um horizonte sempre cambiante, cada dia com um novo e diferente sol […]",
             tag: "Saúde",
         },
         {
             id: "5",
-            link: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJ6M7dJ518-Lo8n6KfqoqAFdzYVnsnJM3vf027usZ8&s",
+            imagemPequena: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRfMvakibxaFvsmzsPxzAvvIhU9JzuW4MKmg&usqp=CAU",
+            titulo: "",
+            imagemGrande: "",
             descricao: "Alegria da vida vem de nossos encontros com novas experiências e, portanto, não há alegria maior que ter um horizonte sempre cambiante, cada dia com um novo e diferente sol […]",
             tag: "",
         },
@@ -46,27 +54,40 @@ export default () => {
     );
 
     const Home = ({ titulo }) => (
-        <TouchableOpacity>
-            <View style={styles.estilo.card}>
-                <ImageBackground source=
-                    {{ uri: titulo.link }}
-                    resizeMode="cover" style={styles.estilo.image}>
-                </ImageBackground>
-                {(titulo.tag !== undefined && titulo.tag !== "") ? <Text style={styles.estilo.tag}>{titulo.tag}</Text> : null}
-                <Text style={styles.estilo.descricao}>{titulo.descricao}</Text>
-            </View>
-        </TouchableOpacity>
+        <View style={styles.estilo.container}>
+            {(titulo.titulo !== undefined && titulo.titulo !== "") ? <Text style={styles.estilo.titulo}>{titulo.titulo}</Text> : null}
+
+            {(titulo.imagemGrande !== undefined && titulo.imagemGrande !== "") ? <ImageBackground source=
+                {{ uri: titulo.imagemGrande }}
+                resizeMode="cover" style={styles.estilo.imagemGrande}>
+            </ImageBackground> : null}
+
+            <TouchableOpacity>
+                <View style={styles.estilo.card}>
+
+                    <ImageBackground source=
+                        {{ uri: titulo.imagemPequena }}
+                        resizeMode="cover" style={styles.estilo.imagemPequena}>
+                    </ImageBackground>
+                    {(titulo.tag !== undefined && titulo.tag !== "") ? <Text style={styles.estilo.tag}>{titulo.tag}</Text> : null}
+                    <Text style={styles.estilo.descricao}>{titulo.descricao} {"\n"}</Text>
+                    <Text style={styles.estilo.autor}>Há 2 horas - Luan Vilela</Text>
+
+
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 
     const HomeBotton = ({ titulo }) => (
         <TouchableOpacity>
             <View style={styles.estilo.cardLateral}>
                 <ImageBackground source=
-                    {{ uri: titulo.link }}
+                    {{ uri: titulo.imagemPequena }}
                     resizeMode="cover" style={styles.estilo.imageLateral}
                 >
                 </ImageBackground>
-                <Text style={styles.estilo.tag}>{titulo.tag}</Text>
+                {(titulo.tag !== undefined && titulo.tag !== "") ? <Text style={styles.estilo.tag}>{titulo.tag}</Text> : null}
                 <Text style={styles.estilo.tituloImagemLateral}>Natureza é o segredo da felicidade</Text>
             </View>
         </TouchableOpacity>
@@ -75,23 +96,12 @@ export default () => {
     return (
         <View style={styles.estilo.container}>
             <ScrollView>
-                <Text style={styles.estilo.titulo}>{DATA[0].titulo}</Text>
-                <ImageBackground source=
-                    {{ uri: DATA[0].imagemGrande }}
-                    resizeMode="cover" style={styles.estilo.imageDefault}>
-                </ImageBackground>
 
                 <FlatList
                     data={DATA}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
-
-                <ImageBackground source=
-                    {{ uri: DATA[0].link }}
-                    resizeMode="cover" style={styles.estilo.imageDefault}>
-                </ImageBackground>
-                <Text style={styles.estilo.titulo}>{DATA[0].titulo}</Text>
 
                 <FlatList
                     data={DATA}

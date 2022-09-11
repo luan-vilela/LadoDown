@@ -7,17 +7,40 @@ const estilo = StyleSheet.create({
         padding: 6,
         backgroundColor: "white",
     },
-    imageDefault: {
-        width: "100%",
-        height: 100,
-        marginBottom: 5
-    },
     titulo: {
         backgroundColor: "#12AC6B",
         color: "white",
         padding: 6,
         marginBottom: 5,
         borderRadius: 2
+    },
+    imagemGrande: {
+        width: "100%",
+        height: 100,
+        marginBottom: 5,
+        borderRadius: 2
+    },
+    card: {
+        flexDirection: "row",
+        marginBottom: 5,
+        borderWidth: 1,
+        borderColor: "black",
+
+    },
+    imagemPequena: {
+        flex: 1,
+    },
+    descricao: {
+        flex: 1.5,
+        paddingLeft: 12,
+        paddingRight: 12,
+        textAlign: "justify",
+    },
+    autor: {
+        position: "absolute",
+        bottom: 0,
+        flexWrap: "wrap",
+        right: 12,
     },
     tag: {
         top: 0,
@@ -26,32 +49,21 @@ const estilo = StyleSheet.create({
         color: "white",
         padding: 5
     },
-    card: {
-        flexDirection: "row",
-        marginBottom: 5
-    },
     cardLateral: {
         flexDirection: "column",
-        borderRightWidth: 5,
-        borderColor: "transparent",
-        marginBottom: 5
-    },
-    imageLateral: {
-        width: "100%",
-        height: 100
+        borderRightWidth: 1,
+        borderColor: "black",
+        marginBottom: 5,
+        marginLeft: 5
     },
     tituloImagemLateral: {
         backgroundColor: "#12AC6B",
         color: "white"
     },
-    image: {
-        flex: 1,
-    },
-    descricao: {
-        flex: 1.5,
-        paddingLeft: 12,
-        textAlign:"justify",
-    },
+    imageLateral: {
+        width: "100%",
+        height: 100
+    }
 });
 
 export default { estilo }
