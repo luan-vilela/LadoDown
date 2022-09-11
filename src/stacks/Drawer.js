@@ -25,6 +25,8 @@ export default () => (
         {/* ########### ABAS DESATIVAS NO MENU ###########*/}
         <Drawer.Screen name={ROUTES.SIGNUP.NAME} component={ROUTES.SIGNUP.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
         <Drawer.Screen name={ROUTES.DASHBOARD.NAME} component={ROUTES.DASHBOARD.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
+        <Drawer.Screen name={ROUTES.TOPICO.NAME} component={ROUTES.TOPICO.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
+
     </Drawer.Navigator>
     
 );

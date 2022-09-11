@@ -5,7 +5,11 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import HeaderDefault from "../../components/HeaderDefault";
 import styles from "./styles";
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from "@react-navigation/native";
+
 const Home = ({ titulo }) => {
+    const navigation = useNavigation();
+
     return (
         <Center>
             <HStack width="100%" borderWidth="5" rounded="md" _dark={{
@@ -23,7 +27,7 @@ const Home = ({ titulo }) => {
                 </VStack>
             </HStack>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Topicos')}>
                 <HStack width="100%" borderWidth="5" rounded="md" _dark={{
                     borderColor: "coolGray.500"
                 }} _light={{
@@ -48,19 +52,22 @@ const Home = ({ titulo }) => {
     );
 };
 
-const HomeBotton = ({ titulo }) => (
-    <TouchableOpacity>
-        <View style={styles.estilo.cardLateral}>
-            <ImageBackground source=
-                {{ uri: titulo.imagemPequena }}
-                resizeMode="cover" style={styles.estilo.imageLateral}
-            >
-            </ImageBackground>
-            {(titulo.tag !== undefined && titulo.tag !== "") ? <Text style={styles.estilo.tagLateral}>{titulo.tag}</Text> : null}
-            <Text style={styles.estilo.tituloImagemLateral}>Natureza é o segredo da felicidade</Text>
-        </View>
-    </TouchableOpacity>
-);
+const HomeBotton = ({ titulo }) => {
+    const navigation = useNavigation();
+    return (
+        <TouchableOpacity onPress={() => navigation.navigate('Topicos')}>
+            <View style={styles.estilo.cardLateral}>
+                <ImageBackground source=
+                    {{ uri: titulo.imagemPequena }}
+                    resizeMode="cover" style={styles.estilo.imageLateral}
+                >
+                </ImageBackground>
+                {(titulo.tag !== undefined && titulo.tag !== "") ? <Text style={styles.estilo.tagLateral}>{titulo.tag}</Text> : null}
+                <Text style={styles.estilo.tituloImagemLateral}>Natureza é o segredo da felicidade</Text>
+            </View>
+        </TouchableOpacity>
+    );
+};
 
 const renderItem = ({ item }) => (
     <Home titulo={item} />
