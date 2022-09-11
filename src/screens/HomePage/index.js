@@ -106,20 +106,15 @@ export default () => {
     );
 
     return (
+        <ScrollView>
         <View style={styles.estilo.container}>
-            <FlatList
-                horizontal={false}
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
 
             <FlatList
                 horizontal={false}
                 data={DATA}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-            />
+            />     
 
             <FlatList
                 horizontal={true}
@@ -128,5 +123,6 @@ export default () => {
                 keyExtractor={item => item.id}
             />
         </View>
+        </ScrollView>
     )
 }

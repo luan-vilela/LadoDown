@@ -28,7 +28,7 @@ const estilo = StyleSheet.create({
     },
     card: {
         flexDirection: "row",
-        marginBottom: 5,
+        elevation: 1,
         borderWidth: 1,
         borderColor: "black",
     },
