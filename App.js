@@ -14,6 +14,7 @@ function App() {
 
       <HeaderDefault scrollY={scrollY} />
       <ScrollView
+
         scrollEventThrottle={16}
         onScroll={Animated.event([{
           nativeEvent: {

@@ -11,8 +11,14 @@ const estilo = StyleSheet.create({
         backgroundColor: "#12AC6B",
         color: "white",
         padding: 6,
-        marginBottom: 5,
         borderRadius: 2
+    },
+    title: {
+        color: "#12AC6B",
+        position: "absolute",
+        top: 0,
+        flexWrap: "wrap",
+        right: 4
     },
     imagemGrande: {
         width: "100%",
@@ -25,7 +31,6 @@ const estilo = StyleSheet.create({
         marginBottom: 5,
         borderWidth: 1,
         borderColor: "black",
-
     },
     imagemPequena: {
         flex: 1,
@@ -39,7 +44,6 @@ const estilo = StyleSheet.create({
     autor: {
         position: "absolute",
         bottom: 0,
-        flexWrap: "wrap",
         right: 12,
     },
     tag: {
