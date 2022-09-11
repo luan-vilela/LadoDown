@@ -11,6 +11,7 @@ import {
   HStack,
   Center,
   Image,
+  ScrollView
 } from "native-base";
 import { useNavigation } from '@react-navigation/native';
 
@@ -73,6 +74,7 @@ const SignIn = () => {
           <Button
             mt="2"
             colorScheme="tertiary"
+            onPress={()=>navigation.navigate('Dashboard')}
             >
             Entrar
           </Button>
@@ -105,8 +107,10 @@ const SignIn = () => {
 
 export default () => {
   return (
+    <ScrollView>
       <Center flex={1} px="3">
         <SignIn />
       </Center>
+    </ScrollView>
   );
 };

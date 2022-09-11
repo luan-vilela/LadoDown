@@ -7,15 +7,9 @@ export const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingLeft: 10,
-      paddingRight: 10,
-      borderBottomWidth: 2,
+      paddingLeft: 2,
+      paddingRight: 2,
+      borderBottomWidth: 1,
       borderBottomColor: '#FFF', 
-    },
-    box: {
-      height: 300,
-      backgroundColor:  '#DDD',
-      margin: 5,
-      borderRadius: 3,
     }
   });

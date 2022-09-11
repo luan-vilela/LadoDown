@@ -4,10 +4,10 @@ import { ScrollView, Animated} from "react-native";
 import { SafeAreaView  } from 'react-native-safe-area-context'
 import HeaderDefault from "../../components/HeaderDefault";
 
-const Home = () => {
+const Forum = () => {
     return (
         <Center w={"100%"}>
-            <Text>HOME</Text>
+            <Text>Fórum</Text>
         </Center>
     );
 };
@@ -33,7 +33,7 @@ export default () => {
           >
           {/* ######### CONTEÜDO ########## */}
           <Center flex={1} px="3">
-            <Home />
+            <Forum />
           </Center>
           {/* ######### CONTEÜDO ########## */}
           </ScrollView>

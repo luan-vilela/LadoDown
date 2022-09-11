@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Heading, HStack, VStack, FormControl, Input, Button, Center, Text, Link, Image } from "native-base";
+import { Box, Heading, HStack, VStack, FormControl, Input, Button, Center, Text, Link, Image, ScrollView } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 const SignUp = () => {
@@ -61,9 +61,11 @@ const SignUp = () => {
 
     export default () => {
         return (
+        <ScrollView>
             <Center flex={1} px="3">
                 <SignUp />
             </Center>
+        </ScrollView>
         );
     };
     

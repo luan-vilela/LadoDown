@@ -19,7 +19,7 @@ const Btn = ({ screen, icon}) => {
   );
 };
 
-const Btn2 = ({ icon}) => {
+const Menu = ({ icon}) => {
   const navigation = useNavigation();
   return (
     <Button
@@ -52,7 +52,7 @@ export default ({ scrollY }) => {
         },
       ]}
     >
-    <Btn2 icon="menu" />
+    <Menu icon="menu" />
 
     <Animated.Image
       style={{
