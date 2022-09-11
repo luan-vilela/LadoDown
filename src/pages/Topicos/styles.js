@@ -4,7 +4,7 @@ const estilo = StyleSheet.create({
     container: {
         flex: 1,
         padding: 6,
-        backgroundColor: "white",
+        backgroundColor: "white"
     },
     titulo: {
         color: "#12AC6B",
