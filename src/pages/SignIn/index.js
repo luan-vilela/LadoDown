@@ -21,12 +21,11 @@ const SignIn = () => {
     const navigation = useNavigation();
 
     return (
-    <Center w="100%">
-      <Image
+    <Center w="100%" >
+      <Image mt="12"
         source={require('../../assets/logo220x112.png')}
         alt="Logo LadoDown"
         resizeMode="contain"
-
       />
       <Box safeArea p="2" py="8" w="90%" maxW="290">
         <Heading
