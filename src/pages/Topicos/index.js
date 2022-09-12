@@ -31,13 +31,17 @@ const Home = () => {
 };
 
 {/* ######### Página padrão ########## */ }
-export default () => {
+export default ({ route }) => {
 
     const [scrollY, setScrollY] = useState(new Animated.Value(0)) // Controla valor do scrollY
+
+    /* 2. Get the param */
+    const { itemId } = route.params;
     return (
         <SafeAreaView>
             {/* ######### HEADER ########## */}
             <HeaderDefault scrollY={scrollY} />
+
             <ScrollView
                 scrollEventThrottle={16}
                 onScroll={Animated.event([{
@@ -53,6 +57,7 @@ export default () => {
                 {/* ######### CONTEÜDO ########## */}
                 <Center flex={1}>
                     <Home />
+                    <Text>itemId: {JSON.stringify(itemId)}</Text>
                 </Center>
                 {/* ######### CONTEÜDO ########## */}
             </ScrollView>

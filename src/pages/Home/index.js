@@ -27,7 +27,9 @@ const Home = ({ titulo }) => {
                 </VStack>
             </HStack>
 
-            <TouchableOpacity onPress={() => navigation.navigate('Topicos')}>
+            <TouchableOpacity onPress={() => navigation.navigate('Topicos', {
+                itemId: titulo.id
+            })}>
                 <HStack width="100%" borderWidth="5" rounded="md" _dark={{
                     borderColor: "coolGray.500"
                 }} _light={{
@@ -55,7 +57,9 @@ const Home = ({ titulo }) => {
 const HomeBotton = ({ titulo }) => {
     const navigation = useNavigation();
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Topicos')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Topicos', {
+            itemId: titulo.id
+        })}>
             <View style={styles.estilo.cardLateral}>
                 <ImageBackground source=
                     {{ uri: titulo.imagemPequena }}
