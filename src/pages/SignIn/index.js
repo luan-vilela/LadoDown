@@ -18,9 +18,9 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from "./styles";
 
 const SignIn = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    return (
+  return (
     <Center w="100%">
       <Image
         source={require('../../assets/logo220x112.png')}
@@ -74,8 +74,8 @@ const SignIn = () => {
           <Button
             mt="2"
             colorScheme="tertiary"
-            onPress={()=>navigation.navigate('Dashboard')}
-            >
+            onPress={() => navigation.navigate('Dashboard')}
+          >
             Entrar
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -94,7 +94,7 @@ const SignIn = () => {
                 fontWeight: "medium",
                 fontSize: "sm",
               }}
-              onPress={()=>navigation.navigate('SignUp')}
+              onPress={() => navigation.navigate('SignUp')}
             >
               Cadastre-se
             </Link>

@@ -5,6 +5,9 @@ import SignUp from '../pages/SignUp';
 import Home from '../pages/Home'
 import Forum from '../pages/Forum'
 import Topicos from '../pages/Topicos'
+import Vacina from '../pages/CadastroVacina/Vacina';
+import Fabricante from '../pages/CadastroVacina/Fabricante';
+
 const ROUTES = {
     DASHBOARD: {
         NAME: 'Dashboard',
@@ -35,6 +38,16 @@ const ROUTES = {
         NAME: 'Topicos',
         ROUTE: Topicos,
         TITLE: 'Tópicos'
+    },
+    VACINA: {
+        NAME: 'Vacina',
+        ROUTE: Vacina,
+        TITLE: 'Vacinas'
+    },
+    FABRICANTE: {
+        NAME: 'Fabricante',
+        ROUTE: Fabricante,
+        TITLE: 'Fabricante'
     },
 }
 

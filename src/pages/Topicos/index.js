@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Center, Text, Button, VStack, Stack, HStack } from "native-base";
 import { ScrollView, Animated, ImageBackground, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context';
 import HeaderDefault from "../../components/HeaderDefault";
 import styles from "./styles";
 
