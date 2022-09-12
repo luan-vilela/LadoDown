@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Center, Text } from "native-base";
+import { Center, Text, Button, VStack, Stack, HStack } from "native-base";
 import { ScrollView, Animated, ImageBackground, View } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context'
 import HeaderDefault from "../../components/HeaderDefault";
@@ -21,10 +21,31 @@ const Home = () => {
                     {{ uri: persons[0].imagem }}
                     resizeMode="cover" style={styles.estilo.image}>
                 </ImageBackground>
+                <Text>Por Luan Vilela - Campo Grande/MS</Text>
+                <Text>02/01/2010 Atualizado há 2 anos</Text>
+
                 <Text style={styles.estilo.subTitulo}>{"\n"}Natureza é o segredo da felicidade</Text>
                 <Text>{persons[0].descricao}</Text>
                 <Text style={styles.estilo.subTitulo}>{"\n"}Natureza é o segredo da felicidade</Text>
                 <Text>{persons[0].descricao}{"\n"}</Text>
+
+                <HStack width="100%">
+                    <Stack mb="2.5" mt="1.5" direction={{
+                        base: "row",
+                        md: "row"
+                    }} space={2} mx={{
+                        base: "auto",
+                        md: "0"
+                    }}>
+                        <Button size="sm" colorScheme="green">Cultura</Button>
+                        <Button size="sm" colorScheme="green">
+                            Saber
+                        </Button>
+                        <Button size="sm" colorScheme="green" >
+                            Saúde
+                        </Button>
+                    </Stack>
+                </HStack>
             </ScrollView>
         </View>
     );
