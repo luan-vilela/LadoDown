@@ -6,7 +6,7 @@ const SignUp = () => {
     const navigation = useNavigation();
     return <Center w="100%">
         <Box>
-        <Image
+        <Image mt="12"
             source={require('../../assets/logo220x112.png')}
             alt="Logo LadoDown"
             resizeMode="contain"
@@ -23,7 +23,7 @@ const SignUp = () => {
             color: "warmGray.200"
             }} 
             fontWeight="medium" size="xs">
-                Entre com seus dados, para se cadastrar!
+                Entre com seus dados para se cadastrar!
             </Heading>
             <VStack space={3} mt="5">
             <FormControl>

@@ -3,32 +3,26 @@ import { VStack, HStack, Button, IconButton, Icon, Text, NativeBaseProvider, Cen
 import { MaterialIcons } from "@expo/vector-icons";
 
 function AppBar() {
-  return <>
-      <StatusBar bg="#3700B3" barStyle="light-content" />
-      <Box safeAreaTop bg="violet.600" />
-      <HStack bg="violet.800" px="1" py="3" justifyContent="space-between" alignItems="center" w="100%" maxW="350">
-        <HStack alignItems="center">
-          <IconButton icon={<Icon size="sm" as={MaterialIcons} name="menu" color="white" />} />
-          <Text color="white" fontSize="20" fontWeight="bold">
-            Home
-          </Text>
-        </HStack>
+  return(
+      <HStack py="2" justifyContent="space-between" alignItems="center" w="100%"  >
+        <IconButton icon={<Icon as={MaterialIcons} name="chevron-left" size="lg" color="tertiary.600" />} />
+        <Text color="primary.900" fontSize="20" fontWeight="light">
+            Nome Do Fulano
+        </Text>
+
         <HStack>
-          <IconButton icon={<Icon as={MaterialIcons} name="favorite" size="sm" color="white" />} />
-          <IconButton icon={<Icon as={MaterialIcons} name="search" size="sm" color="white" />} />
-          <IconButton icon={<Icon as={MaterialIcons} name="more-vert" size="sm" color="white" />} />
+          <IconButton p="0" icon={<Icon as={MaterialIcons} name="notifications" size="lg" color="tertiary.600" />} />
+          <IconButton icon={<Icon as={MaterialIcons} name="person-pin" size="lg" color="tertiary.600" />} />
         </HStack>
       </HStack>
-    </>;
+  );
+  
 }
-
 export default () => {
     return (
-      <ScrollView>
-        <Center flex={1} px="3">
+        <Center px="1">
           <AppBar />
         </Center>
-      </ScrollView>
     );
   };
   

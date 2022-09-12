@@ -1,6 +1,7 @@
 import React from "react";
 import { Skeleton, VStack, HStack, Center, NativeBaseProvider, ScrollView } from "native-base";
 import HeaderAdmin from "../../../components/HeaderAdmin";
+import ReelsSlider from "../../../components/ReelsSlider";
 
 const Dashboard = () => {
   return <Center w="100%">
@@ -27,11 +28,14 @@ const Dashboard = () => {
     export default () => {
         return (
           <NativeBaseProvider>
+            <HeaderAdmin />
+
             <ScrollView>
-              <Center flex={1} px="0">
-                  <Dashboard />
+              <Center flex={1}>
+                <ReelsSlider />
               </Center>
             </ScrollView>
+
           </NativeBaseProvider>
         );
     };
