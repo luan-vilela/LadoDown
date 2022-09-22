@@ -1,34 +1,34 @@
 import React from 'react';
 import { 
-    createDrawerNavigator,
-    DrawerItemList,
-    DrawerContentScrollView,
- } from '@react-navigation/drawer';
+    createStackNavigator
+ } from '@react-navigation/stack';
 
 import ROUTES from '../routes';
 
-const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 export default () => (
-    <Drawer.Navigator
+    <Stack.Navigator
         useLegacyImplementation
-        initialRouteName={ROUTES.HOME.NAME}
+        initialRouteName={ROUTES.SPLASH.NAME}
         screenOptions={{
             headerShown: false
         }}
         >
         
-        <Drawer.Screen name={ROUTES.HOME.NAME} component={ROUTES.HOME.ROUTE} options={{ drawerLabel: ROUTES.HOME.TITLE }} />
-        <Drawer.Screen name={ROUTES.SIGNIN.NAME} component={ROUTES.SIGNIN.ROUTE} options={{ drawerLabel: ROUTES.SIGNIN.TITLE }} />
-        <Drawer.Screen name={ROUTES.FORUM.NAME} component={ROUTES.FORUM.ROUTE} options={{ drawerLabel: ROUTES.FORUM.TITLE }} />
+        <Stack.Screen name={ROUTES.HOME.NAME} component={ROUTES.HOME.ROUTE} />
+        <Stack.Screen name={ROUTES.SIGNIN.NAME} component={ROUTES.SIGNIN.ROUTE} />
+        <Stack.Screen name={ROUTES.FORUM.NAME} component={ROUTES.FORUM.ROUTE} />
 
 
         {/* ########### ABAS DESATIVAS NO MENU ###########*/}
-        <Drawer.Screen name={ROUTES.SIGNUP.NAME} component={ROUTES.SIGNUP.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
-        <Drawer.Screen name={ROUTES.DASHBOARD.NAME} component={ROUTES.DASHBOARD.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
-        <Drawer.Screen name={ROUTES.TOPICO.NAME} component={ROUTES.TOPICO.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
-        <Drawer.Screen name={ROUTES.VACINA.NAME} component={ROUTES.VACINA.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
-        <Drawer.Screen name={ROUTES.FABRICANTE.NAME} component={ROUTES.FABRICANTE.ROUTE} options={{drawerItemStyle: { display: 'none' }}}/>
+        <Stack.Screen name={ROUTES.SIGNUP.NAME} component={ROUTES.SIGNUP.ROUTE} />
+        <Stack.Screen name={ROUTES.DASHBOARD.NAME} component={ROUTES.DASHBOARD.ROUTE} />
+        <Stack.Screen name={ROUTES.TOPICO.NAME} component={ROUTES.TOPICO.ROUTE} />
+        <Stack.Screen name={ROUTES.VACINA.NAME} component={ROUTES.VACINA.ROUTE} />
+        <Stack.Screen name={ROUTES.FABRICANTE.NAME} component={ROUTES.FABRICANTE.ROUTE} />
+        <Stack.Screen name={ROUTES.SPLASH.NAME} component={ROUTES.SPLASH.ROUTE} />
+        <Stack.Screen name={ROUTES.PROFILE.NAME} component={ROUTES.PROFILE.ROUTE} />
 
-    </Drawer.Navigator>
+    </Stack.Navigator>
     
 );

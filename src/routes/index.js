@@ -7,6 +7,8 @@ import Forum from '../pages/Forum'
 import Topicos from '../pages/Topicos'
 import Vacina from '../pages/CadastroVacina/Vacina';
 import Fabricante from '../pages/CadastroVacina/Fabricante';
+import Splash from '../pages/Splash';
+import Profile from '../pages/Admin/Profile';
 
 const ROUTES = {
     DASHBOARD: {
@@ -49,6 +51,16 @@ const ROUTES = {
         ROUTE: Fabricante,
         TITLE: 'Fabricante'
     },
+    SPLASH: {
+        NAME: 'Splash',
+        ROUTE: Splash,
+        title: 'hide'
+    },
+    PROFILE: {
+        NAME: 'Profile',
+        ROUTE: Profile,
+        title: 'hide'
+    }
 }
 
 export default ROUTES;
