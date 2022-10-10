@@ -18,13 +18,15 @@ import ROUTES from "../../routes";
 const ReelsSlider = ({image, title, routeName}) => {
   const navigation = useNavigation();
   return (
-      <Pressable>
+      <Pressable onPress={()=> navigation.navigate(routeName)}>
       {
         ({isPressed}) => {
-          return <Box alignItems="center" style={{
-            transform: [{
+          return <Box 
+            alignItems="center"
+            style={{
+              transform: [{
               scale: isPressed ? 0.96 : 1
-            }]
+              }]
           }}>
               <Box
                 w="164"
@@ -45,17 +47,13 @@ const ReelsSlider = ({image, title, routeName}) => {
                 }}
                 _light={{
                   backgroundColor: "#10b981",
-                }}
-                onPress={()=>navigation.navigate(routeName)}
-                
+                }}               
               >
     
                 <Image flex={1} source={image} alt={title} resizeMode="contain" w="100%"/>
                 <Heading py="2" size="md" textAlign="center" color="primary.50">
                   {title}
                 </Heading>
-    
-    
               </Box>
             </Box>
         }
@@ -69,7 +67,7 @@ export default () => {
     <ScrollView horizontal={true} flex={1}>
       <HStack ml="20" mr="20">
 
-        <ReelsSlider image={require('../../assets/vacina.png')} title={'Carteira de Vacinação'} routeName={ROUTES.DASHBOARD.NAME} />
+        <ReelsSlider image={require('../../assets/vacina.png')} title={'Carteira de Vacinação'} routeName={ROUTES.CARTEIRINHA.NAME} />
         <ReelsSlider image={require('../../assets/crescimento.png')} title={'Curva de Crescimento'} routeName={ROUTES.DASHBOARD.NAME} />
         <ReelsSlider image={require('../../assets/vacina.png')} title={'Agenda'} routeName={ROUTES.DASHBOARD.NAME} />
         <ReelsSlider image={require('../../assets/vacina.png')} title={'Recomendações e Alergias'} routeName={ROUTES.DASHBOARD.NAME} />

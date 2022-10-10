@@ -4,7 +4,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ROUTES from "../../routes";
 import { useNavigation } from "@react-navigation/native";
 
-function AppBar() {
+function AppBar( {title} ) {
   const navigation = useNavigation();
   return(
       <HStack py="2" justifyContent="space-between" alignItems="center" w="100%"  >
@@ -14,7 +14,7 @@ function AppBar() {
           onPress={() => navigation.goBack()}
           />
         <Text color="primary.900" fontSize="20" fontWeight="light">
-            Nome Do Fulano
+            {title}
         </Text>
 
         <HStack>
@@ -28,10 +28,10 @@ function AppBar() {
   );
   
 }
-export default () => {
+export default ({title}) => {
     return (
         <Center px="1">
-          <AppBar />
+          <AppBar title={title} />
         </Center>
     );
   };

@@ -24,11 +24,10 @@ export default () => (
         <Stack.Screen name={ROUTES.SIGNUP.NAME} component={ROUTES.SIGNUP.ROUTE} />
         <Stack.Screen name={ROUTES.DASHBOARD.NAME} component={ROUTES.DASHBOARD.ROUTE} />
         <Stack.Screen name={ROUTES.TOPICO.NAME} component={ROUTES.TOPICO.ROUTE} />
-        <Stack.Screen name={ROUTES.VACINA.NAME} component={ROUTES.VACINA.ROUTE} />
-        <Stack.Screen name={ROUTES.FABRICANTE.NAME} component={ROUTES.FABRICANTE.ROUTE} />
         <Stack.Screen name={ROUTES.SPLASH.NAME} component={ROUTES.SPLASH.ROUTE} />
         <Stack.Screen name={ROUTES.PROFILE.NAME} component={ROUTES.PROFILE.ROUTE} />
-
+        <Stack.Screen name={ROUTES.CARTEIRINHA.NAME} component={ROUTES.CARTEIRINHA.ROUTE} />
+        
     </Stack.Navigator>
     
 );

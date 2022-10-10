@@ -2,22 +2,17 @@ import React, { useEffect } from "react";
 import { Skeleton, VStack, HStack, Center, NativeBaseProvider, ScrollView } from "native-base";
 import { BackHandler } from "react-native";
 
-import HeaderAdmin from "../../../components/HeaderAdmin";
-import ReelsSlider from "../../../components/ReelsSlider";
-import CircleMenu from "../../../components/CircleMenu";
+import HeaderAdmin from "../../../../components/HeaderAdmin";
+import TabelaVacina from "../../../../components/TabelaVacina";
 
     export default () => {
         return (
           <NativeBaseProvider>
-            <HeaderAdmin title={"Fulano de tal"} />
-
+            <HeaderAdmin title={"Carteira de vacinação"} />
+            
             <ScrollView>
-
-                <ReelsSlider />
-                <CircleMenu />
+              <TabelaVacina />
             </ScrollView>
-
-
           </NativeBaseProvider>
         );
     };

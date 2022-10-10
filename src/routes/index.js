@@ -5,10 +5,9 @@ import SignUp from '../pages/SignUp';
 import Home from '../pages/Home'
 import Forum from '../pages/Forum'
 import Topicos from '../pages/Topicos'
-import Vacina from '../pages/CadastroVacina/Vacina';
-import Fabricante from '../pages/CadastroVacina/Fabricante';
 import Splash from '../pages/Splash';
 import Profile from '../pages/Admin/Profile';
+import Carteirinha from '../pages/Admin/Carteirinha/Dashboard'
 
 const ROUTES = {
     DASHBOARD: {
@@ -41,16 +40,6 @@ const ROUTES = {
         ROUTE: Topicos,
         TITLE: 'Tópicos'
     },
-    VACINA: {
-        NAME: 'Vacina',
-        ROUTE: Vacina,
-        TITLE: 'Vacinas'
-    },
-    FABRICANTE: {
-        NAME: 'Fabricante',
-        ROUTE: Fabricante,
-        TITLE: 'Fabricante'
-    },
     SPLASH: {
         NAME: 'Splash',
         ROUTE: Splash,
@@ -60,7 +49,12 @@ const ROUTES = {
         NAME: 'Profile',
         ROUTE: Profile,
         title: 'hide'
-    }
+    },
+    CARTEIRINHA: {
+        NAME: 'Carteirinha',
+        ROUTE: Carteirinha,
+        TITLE: 'hide'
+    },
 }
 
 export default ROUTES;
