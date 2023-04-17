@@ -1,55 +1,73 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import { add } from 'react-native-reanimated';
+// import { add } from "react-native-reanimated";
+import { setStore, getToken } from "./auth";
+import { API_URL } from "@env";
 
-const BASE_API = 'https://api.b7web.com.br/devbarber/api';
+const BASE_API = API_URL;
 
 export default {
-    checkToken: async (token) => {
-        const req = await fetch(`${BASE_API}/auth/refresh`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({token})
-        });
-        const json = await req.json();        
-        return json;
-    },
-    signIn: async (email, password) => {
-        const req = await fetch(`${BASE_API}/auth/login`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({email, password})
-        });
-        const json = await req.json();        
-        return json;
-    },
-    signUp: async (name, email, password) => {
-        const req = await fetch(`${BASE_API}/user`, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({name, email, password})
-        });
-        const json = await req.json();        
-        return json;
-    },
-    getBarbers: async (lat=null, lng=null, address=null) => {
-        const token = await AsyncStorage.getItem('token');
+  checkToken: async (token) => {
+    const req = await fetch(`${BASE_API}/auth/refresh`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token }),
+    });
+    const json = await req.json();
+    return json;
+  },
+  signIn: async (email, password) => {
+    const req = await fetch(`${BASE_API}auth/login`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const json = await req.json();
 
-        console.log("LAT", lat);
-        console.log("LNG", lng);
-        console.log("ADDRESS", address);
+    if (json.token) setStore(json.token);
 
-        const req = await fetch(`${BASE_API}/barbers?token=${token}&lat=${lat}&lng=${lng}&address=${address}`);
-        const json = await req.json();
-        return json;
-    }
+    return json;
+  },
+  signUp: async (name, email, password) => {
+    const req = await fetch(`${BASE_API}/user`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name, email, password }),
+    });
+    const json = await req.json();
+    return json;
+  },
+  post: async (url, data) => {
+    const req = await fetch(`${BASE_API}${url}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const json = await req.json();
+    return json;
+  },
+  get: async (url) => {
+    const token = getToken();
 
+    const req = await fetch(`${BASE_API}${url}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const json = await req.json();
+    return json;
+  },
 };
