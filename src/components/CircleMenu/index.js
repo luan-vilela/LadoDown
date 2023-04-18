@@ -39,7 +39,7 @@ export default () => {
         <Center>
             <HStack  justifyContent="space-between" my="23px" mx="23px" maxW="500px">
                 <Btn icon={"language"} name={"Conteúdo"} routeName={ROUTES.HOME.NAME} />
-                <Btn icon={"forum"} name={"Fórum"} routeName={ROUTES.HOME.NAME} />
+                <Btn icon={"forum"} name={"Fórum"} routeName={ROUTES.FORUM.NAME} />
                 <Btn icon={"campaign"} name={"Alertas"} routeName={ROUTES.HOME.NAME} />
                 <Btn icon={"medical-services"} name={"Histórico Paciente"} routeName={ROUTES.HOME.NAME} />
             </HStack>
