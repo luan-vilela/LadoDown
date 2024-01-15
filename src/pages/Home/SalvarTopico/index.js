@@ -17,7 +17,7 @@ import FormTextAreaInput from "../../../components/Formulario/FormTextAreaInput"
 import FormSubmitButton from "../../../components/Formulario/FormSubmitButton";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import ConteudoServices from "../../../services/ConteudoServices";
+import ConteudoServices from "../../../services/Services";
 
 const validationSchema = Yup.object({
   titulo: Yup.string().trim().required("Campo Obrigatório!"),

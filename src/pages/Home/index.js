@@ -15,15 +15,14 @@ import styles from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-virtualized-view";
-import ConteudoServices from "../../services/ConteudoServices";
-
+import Services from "../../services/Services";
 const Home = ({ titulo }) => {
   const navigation = useNavigation();
   return (
-    <Center>
+    <Center padding={3}>
       <HStack
+        style={styles.estilo.card}
         width="100%"
-        borderWidth="5"
         rounded="md"
         _dark={{
           borderColor: "coolGray.500",
@@ -57,14 +56,12 @@ const Home = ({ titulo }) => {
       >
         <HStack
           width="100%"
-          borderWidth="5"
+          borderWidth="1"
           rounded="md"
           _dark={{
             borderColor: "coolGray.500",
           }}
-          _light={{
-            borderColor: "coolGray.100",
-          }}
+      
         >
           <HStack w="30%">
             <Image
@@ -142,31 +139,30 @@ export default function FormValidation() {
   // const [atualizacao, setAtualizacao] = useState(false);
   const [scrollY, setScrollY] = useState(new Animated.Value(0));
 
-  // useEffect(() => {
-  //   ConteudoServices.get("/conteudo")
-  //     .then((res) => {
-  //       setPost(res.data);
-  //     })
-  //     .catch((error) => {
-  //       Alert.alert(error, "Não foi possível carregar os dados!");
-  //     });
-  // }, []);
+  useEffect(() => {
+    Services.get("/conteudo")
+      .then((res) => {
+        setPost(res.data);
+      })
+      .catch((error) => {
+        Alert.alert(error, "Não foi possível carregar os dados!");
+      });
+  }, []);
 
-  useFocusEffect(
-    useCallback(() => {
- 
-      // Alert.alert("entrou na pagina");
-      return () => {
-        // Alert.alert("saiu para página");
-      };
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     Alert.alert("entrou na pagina");
+  //     return () => {
+  //       Alert.alert("saiu para página");
+  //     };
+  //   }, [])
+  // );
 
   return (
     <SafeAreaView>
       <HeaderDefault scrollY={scrollY} />
 
-      <NovoTopico />
+      {/* <NovoTopico /> */}
 
       <ScrollView
         nestedScrollEnabled={false}
@@ -184,9 +180,6 @@ export default function FormValidation() {
           }
         )}
         horizontal={false}
-        data={post}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
       >
         <Center flex={1}>
           <FlatList

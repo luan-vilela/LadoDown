@@ -19,9 +19,8 @@ const estilo = StyleSheet.create({
     },
     card: {
         flexDirection: "row",
-        elevation: 1,
+        elevation: 100,
         borderWidth: 1,
-        borderColor: "black",
     },
     imagemPequena: {
         flex: 1,
@@ -54,7 +53,8 @@ const estilo = StyleSheet.create({
         borderRightWidth: 1,
         borderColor: "black",
         marginBottom: 5,
-        marginLeft: 5
+        marginLeft: 5,
+        width: 200
     },
     tituloImagemLateral: {
         backgroundColor: "#12AC6B",

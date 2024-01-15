@@ -33,17 +33,14 @@ export default ({ route }) => {
 
   return (
     <SafeAreaView style={styles.estilo.container}>
-      <HeaderDefault scrollY={scrollY} />
       <Box alignItems="center" mt={1}>
-        <View style={styles.estilo.box1}>
-          <View style={styles.estilo.box2}>
-            <Box alignItems="center" mt={3}>
-              <Entypo name="user" size={30} color="black" />
-            </Box>
-            <Box alignItems="center" mt={3}>
+        <View style={styles.estilo.card}>
+          <View style={styles.estilo.content}>
+            <Box alignItems="center">
               <Text>{dados.nome} </Text>
             </Box>
-            <Text style={styles.estilo.texto}>{dados.title} </Text>
+            <Divider />
+            <Text style={styles.estilo.texto}>{dados.comentario} </Text>
             <Box alignItems="center" mt={1}>
               <Modal
                 isOpen={modalVisible}
@@ -69,7 +66,7 @@ export default ({ route }) => {
                           setModalVisible(false);
                         }}
                       >
-                        Cancelar
+                        Voltar
                       </Button>
                       <Button
                         onPress={() => {
@@ -96,8 +93,10 @@ export default ({ route }) => {
         </View>
       </Box>
       <NativeBaseProvider>
-        <View style={styles.estilo.listagem}>
-          <Example />
+        <View style={styles.estilo.containerListagem}>
+          <View style={styles.estilo.listagem}>
+            <Example />
+          </View>
         </View>
       </NativeBaseProvider>
     </SafeAreaView>
@@ -181,7 +180,7 @@ const Example = () => {
               alignSelf="flex-start"
             >
               {item.timeStamp}
-            </Text>    
+            </Text>
             <Menu
               w="190"
               trigger={(triggerProps) => {

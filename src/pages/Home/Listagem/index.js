@@ -15,7 +15,7 @@ import styles from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-virtualized-view";
-import ConteudoServices from "../../../services/ConteudoServices";
+import Services from "../../../services/Services";
 
 const NovoTopico = () => {
   const navigation = useNavigation();
@@ -33,8 +33,11 @@ export default function FormValidation() {
   const [scrollY, setScrollY] = useState(new Animated.Value(0));
 
   useEffect(() => {
-    ConteudoServices.get("/conteudo")
+    Services.get("/conteudo")
       .then((res) => {
+        console.log(res)
+        Alert.alert(res, "Carregou!");
+
         setPost(res.data);
       })
       .catch((error) => {
@@ -42,14 +45,14 @@ export default function FormValidation() {
       });
   }, []);
 
-  useFocusEffect(
-    useCallback(() => {
-      // Alert.alert("entrou na pagina");
-      return () => {
-        // Alert.alert("saiu para página");
-      };
-    }, [])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // Alert.alert("entrou na pagina");
+  //     return () => {
+  //       // Alert.alert("saiu para página");
+  //     };
+  //   }, [])
+  // );
 
   return (
     <SafeAreaView>

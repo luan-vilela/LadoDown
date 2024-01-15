@@ -2,7 +2,8 @@
 import { setStore, getToken } from "./auth";
 import { API_URL } from "@env";
 
-const BASE_API = API_URL;
+// const BASE_API = API_URL;
+const BASE_API = "http://192.168.100.157:3001/";
 
 export default {
   checkToken: async (token) => {
@@ -18,6 +19,9 @@ export default {
     return json;
   },
   signIn: async (email, password) => {
+    // console.log(email, password)
+
+    console.log(BASE_API)
     const req = await fetch(`${BASE_API}auth/login`, {
       method: "POST",
       headers: {
