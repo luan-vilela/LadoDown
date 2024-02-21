@@ -1,20 +1,26 @@
 import React, {useState} from "react";
 import { ScrollView, Animated, View} from "react-native";
-import { NativeBaseProvider} from 'native-base';
+import { NativeBaseProvider, StatusBar} from 'native-base';
 import { NavigationContainer } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider} from "react-native-safe-area-context";
 
-import MainStack from './src/stacks/MainStack';
+import Drawer from "./src/stacks/Drawer";
 
+//Deixa status bar top com a cor verde
+const BarTop = () => {
+  return <StatusBar
+      backgroundColor="#10b981"
+  />;
+};
 
 export default function App() {
-  const [scrollY, setScrollY] = useState(new Animated.Value(0)) // Controla valor do scrollY
 
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        < MainStack />
+        < Drawer />
       </NavigationContainer>
+      <BarTop />
     </NativeBaseProvider>
   );
 }
