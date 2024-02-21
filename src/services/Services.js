@@ -14,8 +14,8 @@ function post(url, formulario) {
   return api.post(url, formulario);
 }
 
-async function GetID(id) {
-  return await axios.get(baseURL + `/Conteudo/${id}`);
+async function GetID(path, id) {
+  return await axios.get(baseURL + `${path}/${id}`);
 }
 
 function salvarRegistro(formulario) {

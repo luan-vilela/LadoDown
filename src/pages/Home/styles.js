@@ -2,68 +2,91 @@ import reactDom from "react-dom";
 import { StyleSheet } from "react-native";
 
 const estilo = StyleSheet.create({
-    titulo: {
-        backgroundColor: "#12AC6B",
-        color: "white",
-        padding: 6,
-        borderRadius: 2
-    },
-    title: {
-        color: "#12AC6B",
-    },
-    imagemGrande: {
-        width: "100%",
-        height: 100,
-        marginBottom: 5,
-        borderRadius: 2
-    },
-    card: {
-        flexDirection: "row",
-        elevation: 100,
-        borderWidth: 1,
-    },
-    imagemPequena: {
-        flex: 1,
-    },
-    descricao: {
-        textAlign: "justify",
-        flexWrap: "wrap",
-    },
-    autor: {
-        position: "absolute",
-        bottom: 0,
-        right: 12,
-    },
-    tag: {
-        bottom: 0,
-        position: "absolute",
-        backgroundColor: "#FF125F",
-        color: "white",
-        padding: 5
-    },
-    tagLateral: {
-        top: 0,
-        position: "absolute",
-        backgroundColor: "#FF125F",
-        color: "white",
-        padding: 5
-    },
-    cardLateral: {
-        flexDirection: "column",
-        borderRightWidth: 1,
-        borderColor: "black",
-        marginBottom: 5,
-        marginLeft: 5,
-        width: 200
-    },
-    tituloImagemLateral: {
-        backgroundColor: "#12AC6B",
-        color: "white"
-    },
-    imageLateral: {
-        width: "100%",
-        height: 100
-    }
+  titulo: {
+    backgroundColor: "#12AC6B",
+    color: "white",
+    padding: 10,
+    borderRadius: 8,
+    marginBottom: 10,
+    fontWeight: "bold",
+  },
+  title: {
+    color: "#12AC6B",
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  imagemGrande: {
+    width: "100%",
+    height: 200,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
+  card: {
+    flexDirection: "column",
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    backgroundColor: "white",
+    overflow: "hidden",
+  },
+  imagemPequena: {
+    width: "100%",
+    height: "100%",
+    borderRadius: 0,
+  },
+  descricao: {
+    textAlign: "justify",
+    marginBottom: 10,
+    fontSize: 12,
+  },
+  autor: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 5,
+  },
+  tag: {
+    backgroundColor: "#FF125F",
+    color: "white",
+    paddingVertical: 2,
+    paddingHorizontal: 4,
+    borderRadius: 4,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+  },
+  tagLateral: {
+    backgroundColor: "#FF125F",
+    color: "white",
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 6,
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+  cardLateral: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    borderRadius: 8,
+    marginBottom: 10,
+    backgroundColor: "white",
+    overflow: "hidden",
+  },
+  tituloImagemLateral: {
+    backgroundColor: "#12AC6B",
+    color: "white",
+    padding: 10,
+    fontWeight: "bold",
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  imageLateral: {
+    width: 100,
+    height: "100%",
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
+  },
 });
 
-export default { estilo }
+export default { estilo };

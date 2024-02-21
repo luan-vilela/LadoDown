@@ -1,27 +1,34 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Center,
   Text,
   HStack,
   VStack,
   FlatList,
-  Button,
-  Box,
+  Fab,
+  Spacer,
 } from "native-base";
-import { Animated, ImageBackground, Image, View, Alert } from "react-native";
+import { Animated, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderDefault from "../../components/HeaderDefault";
 import styles from "./styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-virtualized-view";
 import Services from "../../services/Services";
-const Home = ({ titulo }) => {
+import { Ionicons } from "@expo/vector-icons";
+const Home = ({ post }) => {
   const navigation = useNavigation();
+  const lengthDescription = 135;
   return (
-    <Center padding={3}>
+    <Center padding={2}>
+      {/* <NovoTopico /> */}
+
       <HStack
-        style={styles.estilo.card}
+        style={[
+          styles.estilo.card,
+          { backgroundColor: "transparent", marginBottom: 5 },
+        ]}
         width="100%"
         rounded="md"
         _dark={{
@@ -32,14 +39,13 @@ const Home = ({ titulo }) => {
         }}
       >
         <VStack w="100%">
-          {titulo.tituloPrincipal !== undefined &&
-          titulo.tituloPrincipal !== "" ? (
-            <Text style={styles.estilo.titulo}>{titulo.tituloPrincipal}</Text>
+          {post.tituloPrincipal !== undefined && post.tituloPrincipal !== "" ? (
+            <Text style={styles.estilo.post}>{post.tituloPrincipal}</Text>
           ) : null}
 
-          {titulo.imagemGrande !== undefined && titulo.imagemGrande !== "" ? (
+          {post.imagemGrande !== undefined && post.imagemGrande !== "" ? (
             <Image
-              source={{ uri: titulo.imagemGrande }}
+              source={{ uri: post.imagemGrande }}
               resizeMode="cover"
               style={styles.estilo.imagemGrande}
             ></Image>
@@ -50,42 +56,37 @@ const Home = ({ titulo }) => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate("Topicos", {
-            itemId: titulo.id,
+            itemId: post.id,
           })
         }
       >
         <HStack
           width="100%"
+          height={150}
           borderWidth="1"
           rounded="md"
           _dark={{
             borderColor: "coolGray.500",
           }}
-      
         >
           <HStack w="30%">
             <Image
-              source={{ uri: titulo.imagemPequena }}
+              source={{ uri: post.imagemPequena }}
               resizeMode="cover"
               style={styles.estilo.imagemPequena}
             ></Image>
-            {titulo.tag !== undefined && titulo.tag !== "" ? (
-              <Text style={styles.estilo.tag}>{titulo.tag}</Text>
+            {post.tag !== undefined && post.tag !== "" ? (
+              <Text style={styles.estilo.tag}>{post.tag}</Text>
             ) : null}
           </HStack>
-
           <VStack w="70%" padding="5px">
-            {titulo.title !== undefined && titulo.title !== "" ? (
-              <Text style={styles.estilo.title}>
-                {titulo.title}
-                {"\n"}
-              </Text>
-            ) : null}
+            <Text marginBottom={1}>{post.subTitulo}</Text>
             <Text style={styles.estilo.descricao}>
-              {titulo.descricao}
-              {"\n"}
+              {post.descricao.slice(0, lengthDescription)}
+              {post.descricao.length > lengthDescription && "..."}
             </Text>
-            <Text>Há 2 horas - {titulo.autor}</Text>
+            <Spacer />
+            <Text textAlign={"right"}>Há 2 horas - {post.autor}</Text>
           </VStack>
         </HStack>
       </TouchableOpacity>
@@ -93,50 +94,26 @@ const Home = ({ titulo }) => {
   );
 };
 
-const HomeBotton = ({ titulo }) => {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Topicos", {
-          itemId: titulo.id,
-        })
-      }
-    >
-      <View style={styles.estilo.cardLateral}>
-        <ImageBackground
-          source={{ uri: titulo.imagemPequena }}
-          resizeMode="cover"
-          style={styles.estilo.imageLateral}
-        ></ImageBackground>
-        {titulo.tag !== undefined && titulo.tag !== "" ? (
-          <Text style={styles.estilo.tagLateral}>{titulo.tag}</Text>
-        ) : null}
-        <Text style={styles.estilo.tituloImagemLateral}>
-          {titulo.tituloPrincipal}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+const renderItem = ({ item }) => <Home post={item} />;
 
 const NovoTopico = () => {
   const navigation = useNavigation();
   return (
-    <Box alignItems="flex-start">
-      <Button onPress={() => navigation.navigate("ListagemTopico")}>
-        Listagem dos Tópicos
-      </Button>
-    </Box>
+    <Fab
+      position="absolute"
+      size="md" // tamanho do botão, pode ajustar conforme necessário
+      icon={<Ionicons name="add" size={24} color="white" />} // ou qualquer outro ícone de adição que você preferir
+      onPress={() => navigation.navigate("SalvarTopico")}
+      colorScheme="cyan" // ajuste a cor do botão conforme necessário
+      bottom={0} // margem inferior do botão em relação à borda inferior da tela
+      end={16} // margem direita do botão em relação à borda direita da tela
+      _text={{ color: "white" }} // cor do ícone
+    />
   );
 };
 
-const renderItem = ({ item }) => <Home titulo={item} />;
-const renderBotton = ({ item }) => <HomeBotton titulo={item} />;
-
 export default function FormValidation() {
   const [post, setPost] = useState();
-  // const [atualizacao, setAtualizacao] = useState(false);
   const [scrollY, setScrollY] = useState(new Animated.Value(0));
 
   useEffect(() => {
@@ -149,20 +126,9 @@ export default function FormValidation() {
       });
   }, []);
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     Alert.alert("entrou na pagina");
-  //     return () => {
-  //       Alert.alert("saiu para página");
-  //     };
-  //   }, [])
-  // );
-
   return (
     <SafeAreaView>
       <HeaderDefault scrollY={scrollY} />
-
-      {/* <NovoTopico /> */}
 
       <ScrollView
         nestedScrollEnabled={false}
@@ -186,13 +152,6 @@ export default function FormValidation() {
             horizontal={false}
             data={post}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-          />
-
-          <FlatList
-            horizontal={true}
-            data={post}
-            renderItem={renderBotton}
             keyExtractor={(item) => item.id}
           />
         </Center>
