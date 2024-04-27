@@ -7,6 +7,7 @@ import {
   FlatList,
   Fab,
   Spacer,
+  View,
 } from "native-base";
 import { Animated, Image, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -17,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-virtualized-view";
 import Services from "../../services/Services";
 import { Ionicons } from "@expo/vector-icons";
+import Footer from "../../components/Footer";
 const Home = ({ post }) => {
   const navigation = useNavigation();
   const lengthDescription = 135;
@@ -155,6 +157,9 @@ export default function FormValidation() {
             keyExtractor={(item) => item.id}
           />
         </Center>
+        <View flex={1}>
+          <Footer />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

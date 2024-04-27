@@ -37,9 +37,22 @@ export default () => (
       name={ROUTES.SALVARTOPICO.NAME}
       component={ROUTES.SALVARTOPICO.ROUTE}
     />
-     <Stack.Screen
+    <Stack.Screen
       name={ROUTES.RESPONDER.NAME}
       component={ROUTES.RESPONDER.ROUTE}
     />
+    <Stack.Screen
+      name={ROUTES.FALECONOSCO.NAME}
+      component={ROUTES.FALECONOSCO.ROUTE}
+    />
+    <Stack.Screen
+      name={ROUTES.TERMOUSO.NAME}
+      component={ROUTES.TERMOUSO.ROUTE}
+    />
+    <Stack.Screen
+      name={ROUTES.TERMOPRIVACIDADE.NAME}
+      component={ROUTES.TERMOPRIVACIDADE.ROUTE}
+    />
+    <Stack.Screen name={ROUTES.SOBRE.NAME} component={ROUTES.SOBRE.ROUTE} />
   </Stack.Navigator>
 );

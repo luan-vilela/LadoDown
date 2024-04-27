@@ -9,7 +9,11 @@ import Profile from "../pages/Admin/Profile";
 import Carteirinha from "../pages/Admin/Carteirinha/Dashboard";
 import SalvarTopico from "../pages/Home/SalvarTopico";
 import ListagemTopico from "../pages/Home/Listagem";
-import Responder from "../pages/Forum/responder"
+import Responder from "../pages/Forum/responder";
+import FaleConosco from "../pages/FaleConosco";
+import TermoUso from "../pages/TermoUso";
+import PoliticaPrivacidade from "../pages/PoliticaPrivacidade";
+import Sobre from "../pages/Sobre";
 
 const ROUTES = {
   DASHBOARD: {
@@ -75,6 +79,26 @@ const ROUTES = {
   RESPONDER: {
     NAME: "Responder",
     ROUTE: Responder,
+    TITLE: "hide",
+  },
+  FALECONOSCO: {
+    NAME: "FaleConosco",
+    ROUTE: FaleConosco,
+    TITLE: "hide",
+  },
+  TERMOUSO: {
+    NAME: "TermoUso",
+    ROUTE: TermoUso,
+    TITLE: "hide",
+  },
+  TERMOPRIVACIDADE: {
+    NAME: "PoliticaPrivacidade",
+    ROUTE: PoliticaPrivacidade,
+    TITLE: "hide",
+  },
+  SOBRE: {
+    NAME: "Sobre",
+    ROUTE: Sobre,
     TITLE: "hide",
   },
 };

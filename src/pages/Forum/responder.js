@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { View, Animated } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import HeaderDefault from "../../components/HeaderDefault";
-import { useNavigation } from "@react-navigation/native";
 import {
   Button,
   Box,
@@ -11,7 +9,6 @@ import {
   VStack,
   Text,
   Spacer,
-  Center,
   NativeBaseProvider,
   Modal,
   FormControl,
@@ -22,7 +19,6 @@ import {
   Divider,
 } from "native-base";
 import styles from "./styles";
-import { Entypo } from "@expo/vector-icons";
 
 export default ({ route }) => {
   const [scrollY] = useState(new Animated.Value(0));
@@ -94,9 +90,7 @@ export default ({ route }) => {
       </Box>
       <NativeBaseProvider>
         <View style={styles.estilo.containerListagem}>
-          <View style={styles.estilo.listagem}>
-            <Example />
-          </View>
+          <View style={styles.estilo.listagem}>{/* <Example /> */}</View>
         </View>
       </NativeBaseProvider>
     </SafeAreaView>
