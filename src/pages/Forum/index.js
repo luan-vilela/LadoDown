@@ -1,36 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  FlatList,
-  StyleSheet,
-  Text,
-  Animated,
-  Alert,
-} from "react-native";
+import { View, FlatList, Text, Animated, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderDefault from "../../components/HeaderDefault";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import {
-  IconButton,
-  Icon,
-  VStack,
-  Stack,
-  Center,
-  Pressable,
-  Box,
-  Heading,
-  Button,
-  Divider,
-} from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import { Divider } from "native-base";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Entypo, AntDesign } from "@expo/vector-icons";
-import styles from "./styles";
+import styles from "./styleCard";
 import Services from "../../services/Services";
+import { Ionicons } from "@expo/vector-icons";
 
 const App = () => {
   const [scrollY] = useState(new Animated.Value(0));
-  const [one, setListaOne] = useState();
-  const [two, setListaTwo] = useState();
+  const [one, setListaOne] = useState([]);
+  const [two, setListaTwo] = useState([]);
 
   useEffect(() => {
     Services.get("/forum")
@@ -43,20 +25,12 @@ const App = () => {
       });
   }, []);
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // Alert.alert("entrou na pagina");
-  //     return () => {
-  //       // Alert.alert("saiu para página");
-  //     };
-  //   }, [])
-  // );
   return (
     <SafeAreaView style={styles.estilo.container}>
       <HeaderDefault scrollY={scrollY} />
       <Text style={styles.estilo.title}>Últimas discussões</Text>
       <FlatList
-        horizontal={true}
+        horizontal
         data={one}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
@@ -64,7 +38,7 @@ const App = () => {
       <Divider />
       <Text style={styles.estilo.title}>Discussões mais comentadas</Text>
       <FlatList
-        horizontal={true}
+        horizontal
         data={two}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
@@ -78,28 +52,38 @@ const renderItem = ({ item }) => <Card titulo={item} />;
 const Card = ({ titulo }) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.estilo.card}>
-      <View style={styles.estilo.header}>
-        <Text style={styles.estilo.nome}>{titulo.nome}</Text>
-      </View>
-
-      <View style={styles.estilo.content}>
-        <Text style={styles.estilo.p}>{titulo.comentario}</Text>
-      </View>
-      <View style={styles.estilo.footer}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Responder", {
-              dados: titulo,
-            })
-          }
-        >
-          <View style={styles.estilo.cardFooter}>
-            <Text style={styles.estilo.p}>Footer Content</Text>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Responder", {
+          dados: titulo,
+        })
+      }
+    >
+      <View style={styles.estilo.card}>
+        <View style={styles.estilo.cardContainer}>
+          <View style={styles.estilo.header}>
+            <View style={styles.estilo.imagemContainer}>
+              <Ionicons name="person" size={25} color="#666" />
+            </View>
           </View>
-        </TouchableOpacity>
+          <View style={styles.estilo.content}>
+            <Text style={styles.estilo.nome}>{titulo.nome}</Text>
+
+            <Text style={styles.estilo.descricao}>{titulo.comentario}</Text>
+          </View>
+          <View style={styles.estilo.footer}>
+            <Ionicons
+              name="chatbox-ellipses-outline"
+              color={"white"}
+              size={18}
+            />
+            <Text style={styles.estilo.footerText}>
+              {titulo.curtida} Comentários
+            </Text>
+          </View>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

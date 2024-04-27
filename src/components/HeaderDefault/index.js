@@ -2,36 +2,31 @@ import React, { useState } from "react";
 import { Image, Animated } from "react-native";
 import { Button } from "native-base";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useNavigation, DrawerActions } from '@react-navigation/native';
+import { useNavigation, DrawerActions } from "@react-navigation/native";
 
 import { styles } from "./styles";
 
-
-const Btn = ({ screen, icon}) => {
+const Btn = ({ screen, icon }) => {
   const navigation = useNavigation();
   return (
     <Button
       leftIcon={<Ionicons name={icon} size={32} color="white" />}
       variant="link"
-      onPress={()=>navigation.navigate(screen)}
-    >
-    </Button>
+      onPress={() => navigation.navigate(screen)}
+    ></Button>
   );
 };
 
-const Menu = ({ icon}) => {
+const Menu = ({ icon }) => {
   const navigation = useNavigation();
   return (
     <Button
       leftIcon={<Ionicons name={icon} size={32} color="white" />}
       variant="link"
       onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-    >
-    </Button>
+    ></Button>
   );
 };
-
-
 
 export default ({ scrollY }) => {
   return (
@@ -52,16 +47,16 @@ export default ({ scrollY }) => {
         },
       ]}
     >
-    <Menu icon="menu" />
+      <Menu icon="menu" />
 
-    <Animated.Image
-      style={{
-        width: scrollY.interpolate({
-          inputRange: [0, 120],
-          outputRange: [160, 80],
-          extrapolate: "clamp",
-        }),
-        height: 60,
+      <Animated.Image
+        style={{
+          width: scrollY.interpolate({
+            inputRange: [0, 120],
+            outputRange: [160, 80],
+            extrapolate: "clamp",
+          }),
+          height: 60,
         }}
         resizeMode="contain"
         source={require("../../assets/logo220x112-branco.png")}
