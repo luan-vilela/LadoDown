@@ -68,7 +68,7 @@ export default () => {
       <HStack ml="20" mr="20">
 
         <ReelsSlider image={require('../../assets/vacina.png')} title={'Carteira de Vacinação'} routeName={ROUTES.CARTEIRINHA.NAME} />
-        <ReelsSlider image={require('../../assets/crescimento.png')} title={'Curva de Crescimento'} routeName={ROUTES.DASHBOARD.NAME} />
+        <ReelsSlider image={require('../../assets/crescimento.png')} title={'Curva de Crescimento'} routeName={ROUTES.CRESCIMENTO.NAME} />
         <ReelsSlider image={require('../../assets/vacina.png')} title={'Agenda'} routeName={ROUTES.DASHBOARD.NAME} />
         <ReelsSlider image={require('../../assets/vacina.png')} title={'Recomendações e Alergias'} routeName={ROUTES.DASHBOARD.NAME} />
       </HStack>

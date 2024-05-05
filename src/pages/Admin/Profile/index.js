@@ -1,16 +1,13 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Dimensions, StatusBar, TouchableOpacity, Animated, Pressable } from 'react-native';
+import { View, Button, Dimensions, StatusBar, TouchableOpacity, Animated, Pressable } from 'react-native';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { NativeBaseProvider, Box, Text, Center, useColorMode, useColorModeValue} from 'native-base';
 import Constants from 'expo-constants';
 import HeaderAdmin from '../../../components/HeaderAdmin';
+import Crianca from './partials/Crianca'
 
 const FirstRoute = () => <Center flex={1} my="4">
     Tab 1 aqui
-  </Center>;
-
-const SecondRoute = () => <Center flex={1} my="4">
-    Tab 2 aqui
   </Center>;
 
 const ThirdRoute = () => <Center flex={1} my="4">
@@ -26,7 +23,7 @@ const initialLayout = {
 };
 const renderScene = SceneMap({
   first: FirstRoute,
-  second: SecondRoute,
+  second: Crianca,
   third: ThirdRoute,
   fourth: FourthRoute
 });
@@ -35,16 +32,13 @@ function Profile() {
   const [index, setIndex] = useState(0);
   const [routes] = useState([{
     key: 'first',
-    title: 'Profile'
+    title: 'Perfil'
   }, {
     key: 'second',
     title: 'Criança'
   }, {
     key: 'third',
-    title: 'ABA'
-  }, {
-    key: 'fourth',
-    title: 'ABA'
+    title: 'Configurações'
   }]);
 
   const renderTabBar = props => {
@@ -81,9 +75,10 @@ function Profile() {
 
 export default () => {
     return (
-        <View flex={1} px="3">
+        <View flex={1} px="1">
             <HeaderAdmin />
             <Profile />
+            <Center>Salvar</Center>
         </View>
     );
 };

@@ -14,6 +14,7 @@ import FaleConosco from "../pages/FaleConosco";
 import TermoUso from "../pages/TermoUso";
 import PoliticaPrivacidade from "../pages/PoliticaPrivacidade";
 import Sobre from "../pages/Sobre";
+import Crescimento from "../pages/Admin/Crescimento/Dashboard";
 
 const ROUTES = {
   DASHBOARD: {
@@ -61,9 +62,9 @@ const ROUTES = {
     ROUTE: Carteirinha,
     TITLE: "hide",
   },
-  CARTEIRINHA: {
-    NAME: "Carteirinha",
-    ROUTE: Carteirinha,
+  CRESCIMENTO: {
+    NAME: "Curva Crescimento",
+    ROUTE: Crescimento,
     TITLE: "hide",
   },
   LISTAGEMTOPICO: {

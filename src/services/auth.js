@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export const TOKEN_KEY = "@ladoDown:Token";
+export const TOKEN_KEY = process.env.EXPO_PUBLIC_TOKEN_KEY;
 
 export const isAuthenticated = async () => {
   try {

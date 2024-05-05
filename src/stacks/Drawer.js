@@ -30,6 +30,10 @@ export default () => (
       component={ROUTES.CARTEIRINHA.ROUTE}
     />
     <Stack.Screen
+      name={ROUTES.CRESCIMENTO.NAME}
+      component={ROUTES.CRESCIMENTO.ROUTE}
+    />
+    <Stack.Screen
       name={ROUTES.LISTAGEMTOPICO.NAME}
       component={ROUTES.LISTAGEMTOPICO.ROUTE}
     />

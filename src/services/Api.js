@@ -1,9 +1,7 @@
 // import { add } from "react-native-reanimated";
 import { setStore, getToken } from "./auth";
-import { API_URL } from "@env";
 
-// const BASE_API = API_URL;
-const BASE_API = "http://192.168.100.157:3001/";
+const BASE_API = process.env.EXPO_PUBLIC_API_URL;
 
 export default {
   checkToken: async (token) => {
@@ -49,6 +47,7 @@ export default {
     return json;
   },
   post: async (url, data) => {
+    console.log(`${BASE_API}${url}`, data)
     const req = await fetch(`${BASE_API}${url}`, {
       method: "POST",
       headers: {
