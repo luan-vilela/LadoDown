@@ -14,6 +14,7 @@ import FaleConosco from "../pages/FaleConosco";
 import TermoUso from "../pages/TermoUso";
 import PoliticaPrivacidade from "../pages/PoliticaPrivacidade";
 import Sobre from "../pages/Sobre";
+import Agenda from "../pages/Agenda";
 
 const ROUTES = {
   DASHBOARD: {
@@ -100,6 +101,11 @@ const ROUTES = {
     NAME: "Sobre",
     ROUTE: Sobre,
     TITLE: "hide",
+  },
+  AGENDA: {
+    NAME: "Agenda",
+    ROUTE: Agenda,
+    TITLE: "Agenda",
   },
 };
 

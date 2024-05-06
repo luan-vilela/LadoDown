@@ -53,6 +53,13 @@ export default () => (
       name={ROUTES.TERMOPRIVACIDADE.NAME}
       component={ROUTES.TERMOPRIVACIDADE.ROUTE}
     />
-    <Stack.Screen name={ROUTES.SOBRE.NAME} component={ROUTES.SOBRE.ROUTE} />
+    <Stack.Screen     
+      name={ROUTES.SOBRE.NAME} 
+      component={ROUTES.SOBRE.ROUTE} 
+    />
+    <Stack.Screen     
+      name={ROUTES.AGENDA.NAME} 
+      component={ROUTES.AGENDA.ROUTE} 
+    />
   </Stack.Navigator>
 );
