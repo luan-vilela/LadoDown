@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   Box,
   Text,
@@ -12,17 +12,16 @@ import {
   Center,
   Image,
   ScrollView,
-} from "native-base";
-import { useNavigation } from "@react-navigation/native";
-import { useForm, Controller } from "react-hook-form";
+} from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { useForm, Controller } from 'react-hook-form';
 
-import { styles } from "./styles";
-import Mensagem from "../../components/Mensagem";
-import Api from "../../services/Api";
+import Mensagem from '../../components/Mensagem';
+import Api from '../../services/Api';
 
-import { isAuthenticated, getToken, allKeys } from "../../services/auth";
+import { getToken } from '../../services/auth';
 
-const SignIn = (props) => {
+const SignIn = props => {
   const navigation = useNavigation();
   const {
     control,
@@ -35,7 +34,7 @@ const SignIn = (props) => {
     <Center w="100%">
       <Image
         mt="12"
-        source={require("../../assets/logo220x112.png")}
+        source={require('../../assets/logo220x112.png')}
         alt="Logo LadoDown"
         resizeMode="contain"
       />
@@ -45,20 +44,18 @@ const SignIn = (props) => {
           fontWeight="600"
           color="coolGray.800"
           _dark={{
-            color: "warmGray.50",
-          }}
-        >
+            color: 'warmGray.50',
+          }}>
           Bem Vindo
         </Heading>
         <Heading
           mt="1"
           _dark={{
-            color: "warmGray.200",
+            color: 'warmGray.200',
           }}
           color="coolGray.600"
           fontWeight="medium"
-          size="xs"
-        >
+          size="xs">
           Entre com seus dados!
         </Heading>
 
@@ -67,9 +64,9 @@ const SignIn = (props) => {
             control={control}
             name="email"
             rules={{
-              required: "Email obrigatório",
+              required: 'Email obrigatório',
               pattern: {
-                message: "Email inválido",
+                message: 'Email inválido',
                 value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i,
               },
             }}
@@ -82,11 +79,7 @@ const SignIn = (props) => {
                   onChangeText={onChange}
                   autoCapitalize="none"
                 />
-                {"email" in errors ? (
-                  <Text color="error.500">{errors?.email.message}</Text>
-                ) : (
-                  <></>
-                )}
+                {'email' in errors ? <Text color="error.500">{errors?.email.message}</Text> : <></>}
               </FormControl>
             )}
           />
@@ -94,7 +87,7 @@ const SignIn = (props) => {
             control={control}
             name="password"
             rules={{
-              required: "Senha deve ter no mínimo 3 caracteres.",
+              required: 'Senha deve ter no mínimo 3 caracteres.',
               minLength: 3,
             }}
             render={({ field: { value, onChange } }) => (
@@ -107,31 +100,26 @@ const SignIn = (props) => {
                   secureTextEntry
                   autoCapitalize="none"
                 />
-                {"password" in errors ? (
+                {'password' in errors ? (
                   <Text color="error.500">{errors?.password.message}</Text>
                 ) : (
                   <></>
                 )}
                 <Link
                   _text={{
-                    fontSize: "xs",
-                    fontWeight: "500",
-                    color: "tertiary.600",
+                    fontSize: 'xs',
+                    fontWeight: '500',
+                    color: 'tertiary.600',
                   }}
                   alignSelf="flex-end"
-                  mt="1"
-                >
+                  mt="1">
                   Recuperar Senha?
                 </Link>
               </FormControl>
             )}
           />
 
-          <Button
-            mt="2"
-            colorScheme="tertiary"
-            onPress={handleSubmit(props.handleLogin)}
-          >
+          <Button mt="2" colorScheme="tertiary" onPress={handleSubmit(props.handleLogin)}>
             Entrar
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -139,19 +127,17 @@ const SignIn = (props) => {
               fontSize="sm"
               color="coolGray.600"
               _dark={{
-                color: "warmGray.200",
-              }}
-            >
-              Ainda não tem conta?{" "}
+                color: 'warmGray.200',
+              }}>
+              Ainda não tem conta?{' '}
             </Text>
             <Link
               _text={{
-                color: "tertiary.600",
-                fontWeight: "medium",
-                fontSize: "sm",
+                color: 'tertiary.600',
+                fontWeight: 'medium',
+                fontSize: 'sm',
               }}
-              onPress={() => navigation.navigate("SignUp")}
-            >
+              onPress={() => navigation.navigate('SignUp')}>
               Cadastre-se
             </Link>
           </HStack>
@@ -171,13 +157,13 @@ export default () => {
     async function fetchDate() {
       const isActive = await getToken();
       if (isActive) {
-        navigation.navigate('Dashboard')
+        navigation.navigate('Dashboard');
       }
     }
     fetchDate();
   }, [isAuth]);
 
-  const handleLogin = async (data) => {
+  const handleLogin = async data => {
     if (data.email && data.password) {
       // setLoading(true);
       try {
@@ -192,7 +178,7 @@ export default () => {
         }
       } catch (e) {
         setIsOpen(true);
-        setMessages([["Erro ao carregar a página, tente mais tarde!"]]);
+        setMessages([['Erro ao carregar a página, tente mais tarde!']]);
         console.log(e);
       }
     }

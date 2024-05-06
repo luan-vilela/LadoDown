@@ -1,106 +1,106 @@
-import Dashboard from "../pages/Admin/Home";
-import SignIn from "../pages/SignIn";
-import SignUp from "../pages/SignUp";
-import Home from "../pages/Home";
-import Forum from "../pages/Forum";
-import Topicos from "../pages/Topicos";
-import Splash from "../pages/Splash";
-import Profile from "../pages/Admin/Profile";
-import Carteirinha from "../pages/Admin/Carteirinha/Dashboard";
-import SalvarTopico from "../pages/Home/SalvarTopico";
-import ListagemTopico from "../pages/Home/Listagem";
-import Responder from "../pages/Forum/responder";
-import FaleConosco from "../pages/FaleConosco";
-import TermoUso from "../pages/TermoUso";
-import PoliticaPrivacidade from "../pages/PoliticaPrivacidade";
-import Sobre from "../pages/Sobre";
-import Crescimento from "../pages/Admin/Crescimento/Dashboard";
+import Dashboard from '../pages/Admin/Home';
+import SignIn from '../pages/SignIn';
+import SignUp from '../pages/SignUp';
+import Home from '../pages/Home';
+import Forum from '../pages/Forum';
+import Topicos from '../pages/Topicos';
+import Splash from '../pages/Splash';
+import Profile from '../pages/Admin/Profile';
+import Carteirinha from '../pages/Admin/Carteirinha/Dashboard';
+import SalvarTopico from '../pages/Home/SalvarTopico';
+import ListagemTopico from '../pages/Home/Listagem';
+import Responder from '../pages/Forum/responder';
+import FaleConosco from '../pages/FaleConosco';
+import TermoUso from '../pages/TermoUso';
+import PoliticaPrivacidade from '../pages/PoliticaPrivacidade';
+import Sobre from '../pages/Sobre';
+import Crescimento from '../pages/Admin/Crescimento/Dashboard';
 
 const ROUTES = {
   DASHBOARD: {
-    NAME: "Dashboard",
+    NAME: 'Dashboard',
     ROUTE: Dashboard,
-    TITLE: "Dashboard",
+    TITLE: 'Dashboard',
   },
   HOME: {
-    NAME: "Home",
+    NAME: 'Home',
     ROUTE: Home,
-    TITLE: "Página Principal",
+    TITLE: 'Página Principal',
   },
   SIGNUP: {
-    NAME: "SignUp",
+    NAME: 'SignUp',
     ROUTE: SignUp,
-    TITLE: "Cadastrar-se",
+    TITLE: 'Cadastrar-se',
   },
   SIGNIN: {
-    NAME: "SignIn",
+    NAME: 'SignIn',
     ROUTE: SignIn,
-    TITLE: "Login",
+    TITLE: 'Login',
   },
   FORUM: {
-    NAME: "Forum",
+    NAME: 'Forum',
     ROUTE: Forum,
-    TITLE: "Fórum",
+    TITLE: 'Fórum',
   },
   TOPICO: {
-    NAME: "Topicos",
+    NAME: 'Topicos',
     ROUTE: Topicos,
-    TITLE: "Tópicos",
+    TITLE: 'Tópicos',
   },
   SPLASH: {
-    NAME: "Splash",
+    NAME: 'Splash',
     ROUTE: Splash,
-    title: "hide",
+    title: 'hide',
   },
   PROFILE: {
-    NAME: "Profile",
+    NAME: 'Profile',
     ROUTE: Profile,
-    title: "hide",
+    title: 'hide',
   },
   CARTEIRINHA: {
-    NAME: "Carteirinha",
+    NAME: 'Carteirinha',
     ROUTE: Carteirinha,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   CRESCIMENTO: {
-    NAME: "Curva Crescimento",
+    NAME: 'Curva Crescimento',
     ROUTE: Crescimento,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   LISTAGEMTOPICO: {
-    NAME: "ListagemTopico",
+    NAME: 'ListagemTopico',
     ROUTE: ListagemTopico,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   SALVARTOPICO: {
-    NAME: "SalvarTopico",
+    NAME: 'SalvarTopico',
     ROUTE: SalvarTopico,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   RESPONDER: {
-    NAME: "Responder",
+    NAME: 'Responder',
     ROUTE: Responder,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   FALECONOSCO: {
-    NAME: "FaleConosco",
+    NAME: 'FaleConosco',
     ROUTE: FaleConosco,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   TERMOUSO: {
-    NAME: "TermoUso",
+    NAME: 'TermoUso',
     ROUTE: TermoUso,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   TERMOPRIVACIDADE: {
-    NAME: "PoliticaPrivacidade",
+    NAME: 'PoliticaPrivacidade',
     ROUTE: PoliticaPrivacidade,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
   SOBRE: {
-    NAME: "Sobre",
+    NAME: 'Sobre',
     ROUTE: Sobre,
-    TITLE: "hide",
+    TITLE: 'hide',
   },
 };
 

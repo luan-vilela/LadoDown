@@ -1,18 +1,15 @@
 import { Database } from '@nozbe/watermelondb';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 
-
 import { schemas } from './schemas';
-import { curvasCrescimentoModel } from './models/curvasCrescimentoModel';
-
+import { CurvasCrescimentoModel } from './models/curvasCrescimentoModel';
+import { CriancaModel } from './models/CriancaModel';
 
 const adapter = new SQLiteAdapter({
-    schema: schemas
+  schema: schemas,
 });
 
 export const database = new Database({
-    adapter,
-    modelClasses: [curvasCrescimentoModel]
+  adapter,
+  modelClasses: [CurvasCrescimentoModel, CriancaModel],
 });
-
-
