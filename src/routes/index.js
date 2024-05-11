@@ -15,6 +15,7 @@ import TermoUso from '../pages/TermoUso';
 import PoliticaPrivacidade from '../pages/PoliticaPrivacidade';
 import Sobre from '../pages/Sobre';
 import Crescimento from '../pages/Admin/Crescimento/Dashboard';
+import Agenda from "../pages/Agenda"
 
 const ROUTES = {
   DASHBOARD: {
@@ -100,6 +101,11 @@ const ROUTES = {
   SOBRE: {
     NAME: 'Sobre',
     ROUTE: Sobre,
+    TITLE: 'hide',
+  },
+  AGENDA: {
+    NAME: 'Agenda',
+    ROUTE: Agenda,
     TITLE: 'hide',
   },
 };

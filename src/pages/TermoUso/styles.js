@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     width: "80%",
     alignItems: "center",
-    marginTop: 50,
+    marginTop: 10,
   },
   footer: {
     position: "absolute",

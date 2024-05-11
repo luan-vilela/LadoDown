@@ -1,42 +1,16 @@
-import React, { useState } from "react";
-import { Center, Text, Box, View } from "native-base";
-import { Animated } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from "react";
+import { Center, Text, Box, View, NativeBaseProvider } from "native-base";
 import { ScrollView } from "react-native-virtualized-view";
-import Icon from "react-native-vector-icons/FontAwesome"; // Importe o ícone necessário
-import HeaderDefault from "../../components/HeaderDefault";
-import Hyperlink from "react-native-hyperlink"; // Importe o Hyperlink
 import { styles } from "./styles";
+import HeaderAdmin from "../../components/HeaderAdmin"
 
-export default function TermosDeUso() {
-  const [scrollY, setScrollY] = useState(new Animated.Value(0));
-
+export default () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <HeaderDefault scrollY={scrollY} />
+    <NativeBaseProvider>
+      <HeaderAdmin title={'Termo de uso'} />
+      <ScrollView>
 
-      <ScrollView
-        nestedScrollEnabled={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: { y: scrollY },
-              },
-            },
-          ],
-          {
-            useNativeDriver: false,
-          }
-        )}
-        horizontal={false}
-        style={{ flex: 1 }}
-      >
-        <Center flex={1}>
-          <Text fontSize="xl" fontWeight="bold" top={2}>
-            Termos de Uso
-          </Text>
+      <Center flex={1}>       
           <View style={styles.container}>
             <Box px={4}>
               <Text style={styles.descricao}>
@@ -90,6 +64,6 @@ export default function TermosDeUso() {
           </View>
         </Center>
       </ScrollView>
-    </SafeAreaView>
+    </NativeBaseProvider>
   );
-}
+};
