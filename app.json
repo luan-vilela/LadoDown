@@ -5,6 +5,17 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "permissions": [
+        "CALENDAR",
+        "NOTIFICATION"
+      ]
+    },
+    "ios": {
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "This app requires access to your calendar to schedule events."
+      }
+    }
   }
 }

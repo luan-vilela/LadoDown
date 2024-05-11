@@ -1,46 +1,21 @@
-import React, { useState } from "react";
-import { Center, Text, Box, View } from "native-base";
-import { Animated } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React from "react";
+import { Center, Text, Box, View, NativeBaseProvider } from "native-base";
 import { ScrollView } from "react-native-virtualized-view";
-import Icon from "react-native-vector-icons/FontAwesome"; // Importe o ícone necessário
-import HeaderDefault from "../../components/HeaderDefault";
-import Hyperlink from "react-native-hyperlink"; // Importe o Hyperlink
 import { styles } from "./styles";
+import HeaderAdmin from "../../components/HeaderAdmin"
+import Hyperlink from "react-native-hyperlink"; // Importe o Hyperlink
 
-export default function Sobre() {
-  const [scrollY, setScrollY] = useState(new Animated.Value(0));
-
+export default () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <HeaderDefault scrollY={scrollY} />
+    <NativeBaseProvider>
+      <HeaderAdmin title={'Política de Privacidade'} />
+      <ScrollView>
 
-      <ScrollView
-        nestedScrollEnabled={false}
-        scrollEventThrottle={16}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: { y: scrollY },
-              },
-            },
-          ],
-          {
-            useNativeDriver: false,
-          }
-        )}
-        horizontal={false}
-        style={{ flex: 1 }}
-      >
-        <Center flex={1}>
-          <Text fontSize="xl" fontWeight="bold" top={2}>
-            Política de Privacidade
-          </Text>
+      <Center flex={1}>         
           <View style={styles.container}>
             <Box px={4}>
               <Text fontWeight="bold" mb={2}>
-                Última atualização: 02/03/2024
+                Última atualização: 10/05/2024
               </Text>
               <Text style={styles.descricao}>
                 Esta Política de Privacidade descreve como as informações
@@ -128,14 +103,6 @@ export default function Sobre() {
           </View>
         </Center>
       </ScrollView>
-
-      {/* <View style={styles.footer}>
-        <Icon name="university" size={20} color="white" style={styles.icon} />
-        <Text style={styles.rodape}>
-          Trabalho de conclusão de curso de Ciências da Computação da
-          Universidade Federal de Mato Grosso do Sul.
-        </Text>
-      </View> */}
-    </SafeAreaView>
+    </NativeBaseProvider>
   );
-}
+};

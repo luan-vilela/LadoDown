@@ -1,7 +1,7 @@
 // import { add } from "react-native-reanimated";
 import { setStore, getToken } from "./auth";
 
-const BASE_API = process.env.EXPO_PUBLIC_API_URL;
+const BASE_API = "http://192.168.100.157:3001/";
 
 export default {
   checkToken: async (token) => {
