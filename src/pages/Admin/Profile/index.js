@@ -20,6 +20,7 @@ import {
 import Constants from 'expo-constants';
 import HeaderAdmin from '../../../components/HeaderAdmin';
 import Crianca from './partials/Crianca';
+import Tutor from './partials/Tutor';
 
 const FirstRoute = () => (
   <Center flex={1} my="4">
@@ -43,7 +44,7 @@ const initialLayout = {
   width: Dimensions.get('window').width,
 };
 const renderScene = SceneMap({
-  first: FirstRoute,
+  first: Tutor,
   second: Crianca,
   third: ThirdRoute,
   fourth: FourthRoute,
@@ -130,7 +131,6 @@ export default () => {
     <View flex={1} px="1">
       <HeaderAdmin title={''} />
       <Profile />
-      <Center>Salvar</Center>
     </View>
   );
 };
