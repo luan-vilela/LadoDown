@@ -12,7 +12,7 @@ export default () => (
       headerShown: false,
     }}
   >
-    <Stack.Screen name={ROUTES.HOME.NAME} component={ROUTES.HOME.ROUTE} />
+    <Stack.Screen name={ROUTES.CONTEUDO.NAME} component={ROUTES.CONTEUDO.ROUTE} />
     <Stack.Screen name={ROUTES.SIGNIN.NAME} component={ROUTES.SIGNIN.ROUTE} />
     <Stack.Screen name={ROUTES.FORUM.NAME} component={ROUTES.FORUM.ROUTE} />
 
@@ -32,14 +32,6 @@ export default () => (
     <Stack.Screen
       name={ROUTES.CRESCIMENTO.NAME}
       component={ROUTES.CRESCIMENTO.ROUTE}
-    />
-    <Stack.Screen
-      name={ROUTES.LISTAGEMTOPICO.NAME}
-      component={ROUTES.LISTAGEMTOPICO.ROUTE}
-    />
-    <Stack.Screen
-      name={ROUTES.SALVARTOPICO.NAME}
-      component={ROUTES.SALVARTOPICO.ROUTE}
     />
     <Stack.Screen
       name={ROUTES.RESPONDER.NAME}
@@ -64,6 +56,10 @@ export default () => (
     <Stack.Screen 
     name={ROUTES.AGENDA.NAME}     
     component={ROUTES.AGENDA.ROUTE}
+    />
+    <Stack.Screen 
+    name={ROUTES.ALERTA.NAME}     
+    component={ROUTES.ALERTA.ROUTE}
     />
   </Stack.Navigator>
 );

@@ -1,8 +1,6 @@
 import React from 'react';
 import { HStack, VStack, Text, Center } from 'native-base';
-
 import { useNavigation } from '@react-navigation/native';
-
 import ButtonCircle from '../../components/Button/Circle';
 import ROUTES from '../../routes';
 
@@ -23,10 +21,10 @@ export default () => {
   return (
     <Center>
       <HStack justifyContent="space-between" my="23px" mx="23px" maxW="500px">
-        <Btn icon="language" name="Conteúdo" routeName={ROUTES.HOME.NAME} />
+        <Btn icon="language" name="Conteúdo" routeName={ROUTES.CONTEUDO.NAME} />
         <Btn icon="forum" name="Fórum" routeName={ROUTES.FORUM.NAME} />
-        <Btn icon="campaign" name="Alertas" routeName={ROUTES.HOME.NAME} />
-        <Btn icon="medical-services" name="Histórico Paciente" routeName={ROUTES.HOME.NAME} />
+        <Btn icon="campaign" name="Alertas" routeName={ROUTES.ALERTA.NAME} />
+        <Btn icon="medical-services" name="Histórico Paciente" routeName={ROUTES.CONTEUDO.NAME} />
       </HStack>
     </Center>
   );

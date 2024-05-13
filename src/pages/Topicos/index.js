@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Center, Text, Button, VStack, Stack, HStack } from "native-base";
+import { Center, Text, Button, VStack, Stack, HStack, NativeBaseProvider } from "native-base";
 import { ScrollView, Animated, ImageBackground, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
-import HeaderDefault from "../../components/HeaderDefault";
 import styles from "./styles";
+import HeaderAdmin from "../../components/HeaderAdmin";
 
 const Home = () => {
     const persons = [
@@ -51,37 +50,15 @@ const Home = () => {
     );
 };
 
-{/* ######### Página padrão ########## */ }
 export default ({ route }) => {
-
-    const [scrollY, setScrollY] = useState(new Animated.Value(0)) // Controla valor do scrollY
-
-    /* 2. Get the param */
     const { itemId } = route.params;
     return (
-        <SafeAreaView>
-            {/* ######### HEADER ########## */}
-            <HeaderDefault scrollY={scrollY} />
-
-            <ScrollView
-                scrollEventThrottle={16}
-                onScroll={Animated.event([{
-                    nativeEvent: {
-                        contentOffset: { y: scrollY }
-                    },
-                }],
-                    {
-                        useNativeDriver: false,
-                    }
-                )}
-            >
-                {/* ######### CONTEÜDO ########## */}
+        <NativeBaseProvider>
+        <HeaderAdmin title={'Tópicos'} />     
                 <Center flex={1}>
                     <Home />
                     <Text>itemId: {JSON.stringify(itemId)}</Text>
                 </Center>
-                {/* ######### CONTEÜDO ########## */}
-            </ScrollView>
-        </SafeAreaView>
+        </NativeBaseProvider>
     );
 };

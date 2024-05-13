@@ -1,14 +1,12 @@
 import Dashboard from '../pages/Admin/Home';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
-import Home from '../pages/Home';
+import Conteudo from '../pages/Conteudos';
 import Forum from '../pages/Forum';
 import Topicos from '../pages/Topicos';
 import Splash from '../pages/Splash';
 import Profile from '../pages/Admin/Profile';
 import Carteirinha from '../pages/Admin/Carteirinha/Dashboard';
-import SalvarTopico from '../pages/Home/SalvarTopico';
-import ListagemTopico from '../pages/Home/Listagem';
 import Responder from '../pages/Forum/responder';
 import FaleConosco from '../pages/FaleConosco';
 import TermoUso from '../pages/TermoUso';
@@ -16,6 +14,7 @@ import PoliticaPrivacidade from '../pages/PoliticaPrivacidade';
 import Sobre from '../pages/Sobre';
 import Crescimento from '../pages/Admin/Crescimento/Dashboard';
 import Agenda from "../pages/Agenda"
+import Alerta from "../pages/Alerta"
 
 const ROUTES = {
   DASHBOARD: {
@@ -23,9 +22,9 @@ const ROUTES = {
     ROUTE: Dashboard,
     TITLE: 'Dashboard',
   },
-  HOME: {
-    NAME: 'Home',
-    ROUTE: Home,
+  CONTEUDO: {
+    NAME: 'Conteudo',
+    ROUTE: Conteudo,
     TITLE: 'Página Principal',
   },
   SIGNUP: {
@@ -68,16 +67,6 @@ const ROUTES = {
     ROUTE: Crescimento,
     TITLE: 'hide',
   },
-  LISTAGEMTOPICO: {
-    NAME: 'ListagemTopico',
-    ROUTE: ListagemTopico,
-    TITLE: 'hide',
-  },
-  SALVARTOPICO: {
-    NAME: 'SalvarTopico',
-    ROUTE: SalvarTopico,
-    TITLE: 'hide',
-  },
   RESPONDER: {
     NAME: 'Responder',
     ROUTE: Responder,
@@ -106,6 +95,11 @@ const ROUTES = {
   AGENDA: {
     NAME: 'Agenda',
     ROUTE: Agenda,
+    TITLE: 'hide',
+  },
+  ALERTA: {
+    NAME: 'Alerta',
+    ROUTE: Alerta,
     TITLE: 'hide',
   },
 };
