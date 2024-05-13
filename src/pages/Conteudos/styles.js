@@ -1,4 +1,3 @@
-import reactDom from "react-dom";
 import { StyleSheet } from "react-native";
 
 const estilo = StyleSheet.create({
