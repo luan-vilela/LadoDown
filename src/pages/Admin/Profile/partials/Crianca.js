@@ -10,17 +10,26 @@ import {
   WarningOutlineIcon,
   Stack,
   HStack,
+  Text,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { database } from '../../../../databases/index';
 import { Q } from '@nozbe/watermelondb';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateModal from '../../../../components/Modal/DateModal';
+import HourModal from '../../../../components/Modal/HourModal';
+import AlertConfirm from '../../../../components/Modal/AlertConfirm';
+import { format } from 'date-fns';
 
 function Crianca() {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [showDate, setShowDate] = useState(false);
+  const [showHour, setShowHour] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [aniversario, setAniversario] = useState(null);
 
   const {
     control,
@@ -64,6 +73,13 @@ function Crianca() {
     showMode('time');
   };
 
+  const getDate = () => {
+    if (aniversario) {
+      return format(aniversario, 'dd/MM/yyyy');
+    }
+    return '__/__/____';
+  };
+
   return (
     <Box alignItems="center" flex={1}>
       <Controller
@@ -78,7 +94,13 @@ function Crianca() {
         render={({ field: { value, onChange } }) => (
           <FormControl isInvalid={'name' in errors} w="90%" maxW="300px">
             <FormControl.Label>Nome da Criança</FormControl.Label>
-            <Input placeholder="Nome" value={value} onChangeText={onChange} w="100%" />
+
+            <Input
+              placeholder="__/__/____"
+              value={getDate()}
+              w="100%"
+              onTouchStart={() => setShowDate(true)}
+            />
             {'name' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                 {errors?.name.message}
@@ -137,7 +159,7 @@ function Crianca() {
         render={({ field: { value, onChange } }) => (
           <FormControl isInvalid={'dtNascimento' in errors} w="90%" maxW="300px">
             <FormControl.Label>Data Nascimento</FormControl.Label>
-            <Input placeholder="__/__/____" value={value} onChangeText={onChange} w="100%" />
+
             {'dtNascimento' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                 {errors?.dtNascimento.message}
@@ -146,6 +168,44 @@ function Crianca() {
           </FormControl>
         )}
       />
+
+      <Box>
+        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowDate(true)}>
+          Data
+        </Button>
+        <DateModal
+          setShowModal={setShowDate}
+          showModal={showDate}
+          setValue={item => setAniversario(item)}
+        />
+      </Box>
+
+      <Box>
+        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowHour(true)}>
+          Hora
+        </Button>
+        <HourModal
+          setShowModal={setShowHour}
+          showModal={showHour}
+          setValue={item => console.log(item)}
+        />
+      </Box>
+
+      <Box>
+        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowConfirm(true)}>
+          Confirm
+        </Button>
+        <AlertConfirm
+          setShowModal={setShowConfirm}
+          showModal={showConfirm}
+          setValue={item => console.log(item)}
+          text={'Deseja excluir esse item?'}
+          title={undefined}
+          cancel={undefined}
+          successBtn={'Excluir'}
+          footer={undefined}
+        />
+      </Box>
 
       {show && (
         <DateTimePicker
@@ -157,12 +217,12 @@ function Crianca() {
         />
       )}
 
-      <Stack flex={1}>
+      {/* <Stack flex={1}>
         <HStack p="4" space={3}>
           <Button onPress={showDatepicker}>Data Picker</Button>
           <Button onPress={showTimepicker}>Timer Picker</Button>
         </HStack>
-      </Stack>
+      </Stack> */}
 
       <Box flex={1}>
         <Button mt="4" mb={1} colorScheme="tertiary" onPress={handleSubmit(handleLogin)}>
