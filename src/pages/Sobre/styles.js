@@ -1,28 +1,27 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  footer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-    backgroundColor: "#10b981",
-  },
-  icon: {
-    marginRight: 10,
-  },
-  rodape: {
-    fontSize: 12,
-    color: "white",
-    textAlign: "center",
-  },
 
-  descricao: {
-    fontSize: 14,
-    textAlign: "justify",
+  container: {
+    flex: 1,
+    padding: 30,
+    backgroundColor: '#FFFFFF',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  descriptionContainer: {
+    backgroundColor: '#F0F0F0',
+    borderRadius: 10,
+    padding: 15,
+  },
+  description: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#333333',
+    textAlign: 'justify',
   },
 });
