@@ -6,9 +6,9 @@ import { format, getDaysInMonth, getYear } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 const DateModal = ({ showModal, setShowModal, setValue }) => {
-  const [day, setDay] = useState(5);
-  const [month, setMonth] = useState(0);
-  const [year, setYear] = useState(2002);
+  const [day, setDay] = useState(13);
+  const [month, setMonth] = useState(4);
+  const [year, setYear] = useState(2024);
   const [days, setDays] = useState([]);
 
   const generateDays = () => {
@@ -45,6 +45,9 @@ const DateModal = ({ showModal, setShowModal, setValue }) => {
 
   useEffect(() => {
     setDays(generateDays());
+    if (day > getDaysInMonth(new Date(year, month))) {
+      setDay(getDaysInMonth(new Date(year, month)));
+    }
   }, [month, year]);
 
   return (

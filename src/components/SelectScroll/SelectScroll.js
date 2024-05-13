@@ -1,10 +1,22 @@
-import React, { useRef, useState, useEffect, memo, createRef } from 'react';
-import { Box, View, FlatList, Text, Center } from 'native-base';
+import React, { useRef, useState, useEffect, memo, createRef, useMemo } from 'react';
+import { Box, View, FlatList, Text, Center, NativeBaseProvider } from 'native-base';
+
+const ITEM_HEIGHT = 37;
+
+const List = ({ item, index }) => {
+  return (
+    <View p={'6px'} h={`${ITEM_HEIGHT}px`} key={index}>
+      <Center>{item.label}</Center>
+    </View>
+  );
+};
 
 const SelectScroll = ({ items, value, selected }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const findIndex = useMemo(() => {
+    return items.findIndex(item => item.value == value);
+  }, [items, value]);
 
-  const ITEM_HEIGHT = 37;
+  const [selectedIndex, setSelectedIndex] = useState(findIndex >= 0 ? findIndex : 0);
 
   const handleScroll = event => {
     const offsetY = event.nativeEvent.contentOffset.y;
@@ -13,35 +25,29 @@ const SelectScroll = ({ items, value, selected }) => {
     setSelectedIndex(index);
   };
 
-  const List = ({ item, index }) => {
-    return (
-      <Box p={2} h={37} key={index}>
-        <Center>
-          <Text>{item.label}</Text>
-        </Center>
-      </Box>
-    );
-  };
-
-  useEffect(() => {
-    if (value) {
-      const findIndex = items.findIndex(item => item.value === value);
-      console.log(findIndex);
-      setSelectedIndex(findIndex);
-    }
-  }, [value]);
-
   return (
-    <View w={'100%'} height={'111px'} px={2}>
+    <View w={'100%'} h={`${ITEM_HEIGHT * 3}px`} px={2}>
       <Box
-        top={ITEM_HEIGHT}
-        height="47px"
+        top={0}
+        h={`${ITEM_HEIGHT}px`}
         right={0}
         left={0}
         position={'absolute'}
-        borderColor={'dark.400'}
-        borderTopWidth={1}
+        borderColor={'dark.600'}
+        borderBottomWidth={'1px'}
         zIndex={2}
+        bg={{
+          linearGradient: {
+            colors: [
+              'rgba( 250, 250, 250, 1 )',
+              'rgba( 250, 250, 250, 0.9 )',
+              'rgba( 250, 250, 250, 0.7 )',
+              'rgba( 250, 250, 250, 0.2 )',
+            ],
+            start: [1, 0],
+            end: [0, 0],
+          },
+        }}
         pointerEvents="none"
       />
       <FlatList
@@ -60,14 +66,28 @@ const SelectScroll = ({ items, value, selected }) => {
         w={'100%'}
       />
       <Box
-        top={ITEM_HEIGHT * 2}
-        height="1px"
+        top={`${ITEM_HEIGHT * 2}px`}
+        h={`${ITEM_HEIGHT}px`}
         right={0}
         left={0}
+        bottom={0}
         position={'absolute'}
-        borderColor={'dark.400'}
-        borderTopWidth={1}
+        borderColor={'dark.600'}
+        borderTopWidth={'1px'}
         zIndex={2}
+        bg={{
+          linearGradient: {
+            colors: [
+              'rgba( 250, 250, 250, 0.2 )',
+              'rgba( 250, 250, 250, 0.7 )',
+              'rgba( 250, 250, 250, 0.9 )',
+              'rgba( 250, 250, 250, 1 )',
+            ],
+            start: [0, 0],
+            end: [0, 1],
+          },
+        }}
+        pointerEvents="none"
       />
     </View>
   );
