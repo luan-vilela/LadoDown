@@ -10,17 +10,20 @@ import {
   WarningOutlineIcon,
   Stack,
   HStack,
+  Text,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { database } from '../../../../databases/index';
 import { Q } from '@nozbe/watermelondb';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import DateModal from '../../../../components/Modal/DateModal';
 
 function Crianca() {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [showDate, setShowDate] = useState(false);
 
   const {
     control,
@@ -137,7 +140,7 @@ function Crianca() {
         render={({ field: { value, onChange } }) => (
           <FormControl isInvalid={'dtNascimento' in errors} w="90%" maxW="300px">
             <FormControl.Label>Data Nascimento</FormControl.Label>
-            <Input placeholder="__/__/____" value={value} onChangeText={onChange} w="100%" />
+
             {'dtNascimento' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                 {errors?.dtNascimento.message}
@@ -146,6 +149,17 @@ function Crianca() {
           </FormControl>
         )}
       />
+
+      <Box>
+        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowDate(true)}>
+          Salvar
+        </Button>
+        <DateModal
+          setShowModal={setShowDate}
+          showModal={showDate}
+          setValue={item => console.log(item)}
+        />
+      </Box>
 
       {show && (
         <DateTimePicker
@@ -157,12 +171,12 @@ function Crianca() {
         />
       )}
 
-      <Stack flex={1}>
+      {/* <Stack flex={1}>
         <HStack p="4" space={3}>
           <Button onPress={showDatepicker}>Data Picker</Button>
           <Button onPress={showTimepicker}>Timer Picker</Button>
         </HStack>
-      </Stack>
+      </Stack> */}
 
       <Box flex={1}>
         <Button mt="4" mb={1} colorScheme="tertiary" onPress={handleSubmit(handleLogin)}>
