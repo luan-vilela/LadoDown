@@ -1,25 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Text } from 'react-native';
-import { FormControl, Input, Box, Stack, HStack, Button } from 'native-base';
+// AddModalAlert.js
+import React, { useState } from 'react';
+import { StyleSheet, View, TextInput } from 'react-native';
+import { FormControl, Input } from 'native-base';
 import { database } from '../../../databases/index';
 import { schedulePushNotification } from '../../../utils/schedule';
 import CustomModal from '../../../components/CustomModal';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { format } from 'date-fns';
+import DateModal from '../../../components/Modal/DateModal';
+import HourModal from '../../../components/Modal/HourModalAlert';
 
 export default function AddModalAlert({ showModal, setShowModal, refetch }) {
   const [eventTitle, setEventTitle] = useState('');
-  const [calendarColor, setCalendarColor] = useState('blue');
   const [eventDateTime, setEventDateTime] = useState(new Date());
+  const [showDate, setShowDate] = useState(false);
+  const [aniversario, setAniversario] = useState(null);
+  const [showHour, setShowHour] = useState(false);
 
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const createSchedulePush = async () => {
+    console.log("eventDateTime", eventDateTime)
+    const payloadNotification = {
+      title: eventTitle,
+      trigger: eventDateTime,
+    };
+    return await schedulePushNotification(payloadNotification);
+  };
 
-  const savaData = async (idNotification) => {
+  const handleSave = async () => {
+    const idNotification = await createSchedulePush();
+    if (idNotification) {
+      await saveData(idNotification);
+      await refetch();
+      setShowModal(false);
+    } else {
+      console.log('Erro na criação do agendamento');
+    }
+  };
+
+  const onChangeDate = (selectedDate) => {
+    setShowDate(false);
+    setAniversario(selectedDate);
+
+    // Crie um novo objeto Date com a data e hora selecionadas
+    const newDateTime = new Date(selectedDate);
+
+    // Obtenha a hora e os minutos atuais do eventDateTime
+    const currentHour = eventDateTime.getHours();
+    const currentMinute = eventDateTime.getMinutes();
+
+    // Defina a hora e os minutos do novo objeto Date
+    newDateTime.setHours(currentHour);
+    newDateTime.setMinutes(currentMinute);
+
+    // Atualize o estado eventDateTime
+    setEventDateTime(newDateTime);
+  };
+
+  const onChangeHour = (selectedHourString) => {
+    setShowHour(false);
+
+    // Divida a string da hora em partes
+    const [hour, minute] = selectedHourString.split(':');
+
+    // Crie um novo objeto Date com a hora e o minuto fornecidos
+    const newDateTime = new Date();
+    newDateTime.setHours(parseInt(hour, 10));
+    newDateTime.setMinutes(parseInt(minute, 10));
+
+    // Atualize o estado eventDateTime
+    setEventDateTime(newDateTime);
+  };
+
+  const saveData = async (idNotification) => {
     try {
       await database.write(async () => {
-        const newEvent = await database.get('agenda').create(event => {
+        await database.get('agenda').create((event) => {
           event.eventTitle = eventTitle;
-          event.calendarColor = calendarColor;
           event.notificationTime = eventDateTime;
           event.notificationID = idNotification;
         });
@@ -29,73 +84,50 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
     }
   };
 
-  const createSchedulePush = async () => {
-    const payloadNotification = {
-      title: eventTitle,
-      trigger: eventDateTime
-    }
-    return await schedulePushNotification(payloadNotification);
-  };
-
-  const handleSave = async () => {
-    const idNotification = await createSchedulePush();
-    if (idNotification) {
-      await savaData(idNotification);
-      await refetch();
-      setShowModal(false);
-      return;
-    }
-    console.log("Erro na criação do agendamento");
-  };
-
-  const showDatePicker = () => {
-    setShow(true);
-    setMode('date');
-  };
-
-  const showTimePicker = () => {
-    setShow(true);
-    setMode('time');
-  };
-
-  const onChange = (event, selectedDate) => {
-    setShow(false);
-    const currentDate = selectedDate || eventDateTime;
-    setEventDateTime(currentDate);
-  };
-
   return (
     <CustomModal
       isOpen={showModal}
-      onClose={setShowModal}
+      onClose={() => setShowModal(false)}
       CancelBtn={'fechar'}
-      header={'Adicionar ponto na curva'}
-      onPress={() => handleSave()}
-    >
+      header={'Adicionar Notificação'}
+      onPress={handleSave}>
       <View style={styles.containerBloco}>
         <FormControl isRequired>
+          <FormControl.Label>Título </FormControl.Label>
           <TextInput
             style={styles.input}
-            placeholder="Event Title"
+            placeholder="Título"
             value={eventTitle}
-            onChangeText={setEventTitle} />
-          <FormControl.Label>Data e Hora do Evento</FormControl.Label>
-          <Button onPress={showDatePicker}>Data Picker</Button>
-          <Button onPress={showTimePicker}>Timer Picker</Button>
-          <Text style={styles.dateTimeText}>{eventDateTime.toLocaleString()}</Text>
+            onChangeText={setEventTitle}
+          />
+          <FormControl.Label>Data </FormControl.Label>
+          <Input
+            placeholder="__/__/____"
+            value={aniversario ? format(aniversario, 'dd/MM/yyyy') : '__/__/____'}
+            w="100%"
+            onTouchStart={() => setShowDate(true)}
+          />
+          <FormControl.Label>Hora </FormControl.Label>
+          <Input
+            placeholder="00:00"
+            value={eventDateTime ? format(eventDateTime, 'HH:mm') : '00:00'}
+            w="100%"
+            onTouchStart={() => setShowHour(true)}
+          />
         </FormControl>
       </View>
 
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={eventDateTime}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
-      )}
+      <DateModal
+        setShowModal={setShowDate}
+        showModal={showDate}
+        setValue={onChangeDate}
+      />
+
+      <HourModal
+        setShowModal={setShowHour}
+        showModal={showHour}
+        setValue={onChangeHour}
+      />
     </CustomModal>
   );
 }
@@ -111,10 +143,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
-  },
-  dateTimeText: {
-    marginTop: 10,
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
