@@ -5,9 +5,20 @@ import CustomModal from '../CustomModal';
 import { format, getDaysInMonth, getYear } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-const HourModal = ({ showModal, setShowModal, setValue }) => {
+const HourModalAlert = ({ showModal, setShowModal, setValue }) => {
   const [minute, setMinute] = useState(2);
   const [hour, setHour] = useState(3);
+
+  useEffect(() => {
+    // Obtém a hora atual
+    const currentDateTime = new Date();
+    const currentHour = currentDateTime.getHours();
+    const currentMinute = currentDateTime.getMinutes();
+
+    // Atualiza os estados de hora e minuto com a hora atual
+    setHour(currentHour);
+    setMinute(currentMinute);
+  }, []);
 
   const hours = Array.from({ length: 24 }, (_, i) => {
     return {
@@ -57,4 +68,4 @@ const HourModal = ({ showModal, setShowModal, setValue }) => {
   );
 };
 
-export default HourModal;
+export default HourModalAlert;

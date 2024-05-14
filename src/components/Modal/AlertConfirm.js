@@ -21,7 +21,7 @@ const AlertConfirm = ({
       showCloseButton={showCloseButton}
       header={title}
       onPress={() => {
-        setValue(true), setShowModal(false);
+        setValue(), setShowModal(false);
       }}
       footer={footer}
       SuccessBtn={successBtn}>

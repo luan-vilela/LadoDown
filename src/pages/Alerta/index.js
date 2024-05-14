@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderAdmin from '../../components/HeaderAdmin';
 import * as Notifications from 'expo-notifications';
 import ButtonCircle from '../../components/Button/Circle';
-import { NativeBaseProvider } from 'native-base';
+import { Box, Button, NativeBaseProvider } from 'native-base';
 import { database } from '../../databases/index';
 import AddModal from './partials/AddModalAlert';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+import AlertConfirm from '../../components/Modal/AlertConfirm';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -23,7 +21,10 @@ Notifications.setNotificationHandler({
 
 export default function AlertaScreen() {
   const [showModal, setShowModal] = useState(false);
-  const [processList, setProcessList] = useState([]);  
+  const [processList, setProcessList] = useState([]);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [id, setId] = useState();
+
 
   const requestNotificationPermission = async () => {
     try {
@@ -38,6 +39,11 @@ export default function AlertaScreen() {
     }
   };
 
+  const removerAlerta = async (id) => {
+    setId(id);
+    setShowConfirm(true);
+  };
+
   const fetchAgendaData = async () => {
     try {
       const agendaData = await database.get('agenda').query().fetch();
@@ -47,7 +53,7 @@ export default function AlertaScreen() {
     }
   };
 
-  const removeProcess = async (id) => {
+  const removeProcess = async id => {
     try {
       const processToDelete = await database.get('agenda').find(id);
       const notificationID = processToDelete.notificationID;
@@ -59,7 +65,7 @@ export default function AlertaScreen() {
 
       await database.write(async () => {
         await processToDelete.destroyPermanently();
-        setProcessList((prevList) => prevList.filter((process) => process.id !== id));
+        setProcessList(prevList => prevList.filter(process => process.id !== id));
       });
 
       fetchAgendaData();
@@ -75,14 +81,16 @@ export default function AlertaScreen() {
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
-      <View style={styles.cardContent}>
-        <Text>{`Title: ${item.eventTitle}, Color: ${item.calendarColor}, Notification Time: ${item.notificationTime}`}</Text>
-        <Ionicons
-          name="trash-outline"
-          size={24}
-          color="black"
-          onPress={() => removeProcess(item.id)}
-        />
+      <View style={styles.contentContainer}>
+        <Text style={styles.title}>{item.eventTitle}</Text>
+      </View>
+      <View style={styles.footerContainer}>
+        <Text style={styles.dateTimeText}>
+          {moment(item.notificationTime).locale('pt-br').format('LLLL')}
+        </Text>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => removerAlerta(item.id)}>
+          <Ionicons name="trash-outline" size={36} color="red" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -91,32 +99,73 @@ export default function AlertaScreen() {
     <NativeBaseProvider>
       <HeaderAdmin title={'Alertas'} />
 
-      <FlatList
-        data={processList}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
-        contentContainerStyle={{ padding: 5 }}
-      />
+      <View style={styles.container}>
+        <FlatList
+          data={processList}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          contentContainerStyle={{ padding: 20 }}
+        />
 
-      <ButtonCircle onPress={() => setShowModal(true)} icon={'add'} style={styles.addButton} />
+        <ButtonCircle onPress={() => setShowModal(true)} icon={'add'} style={styles.addButton} />
 
-      {showModal && <AddModal showModal={showModal} setShowModal={setShowModal} refetch={fetchAgendaData} />}
+        {showModal && (
+          <AddModal showModal={showModal} setShowModal={setShowModal} refetch={fetchAgendaData} />
+        )}
+      </View>
+
+      <Box>
+     
+        <AlertConfirm
+          setShowModal={setShowConfirm}
+          showModal={showConfirm}
+          setValue={item => removeProcess(id)}
+          text={'Deseja excluir esse item?'}
+          title={undefined}
+          cancel={undefined}
+          successBtn={'Excluir'}
+          footer={undefined}
+        />
+      </Box>
     </NativeBaseProvider>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#10b981',
+  },
   card: {
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 10,
-    marginBottom: 5,
-    elevation: 3,
+    padding: 20,
+    marginBottom: 20,
   },
-  cardContent: {
+  contentContainer: {
+    alignItems: 'flex-start',
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#10b981',
+  },
+  footerContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dateTimeText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  deleteButton: {
+    left: 5,
+    top: -3,
+    width: 40,
+    height: 50,
   },
   addButton: {
     position: 'absolute',
