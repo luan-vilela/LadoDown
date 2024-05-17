@@ -1,4 +1,3 @@
-// AddModalAlert.js
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import { FormControl, Input } from 'native-base';
@@ -17,7 +16,6 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
   const [showHour, setShowHour] = useState(false);
 
   const createSchedulePush = async () => {
-    console.log("eventDateTime", eventDateTime)
     const payloadNotification = {
       title: eventTitle,
       trigger: eventDateTime,
@@ -40,33 +38,26 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
     setShowDate(false);
     setAniversario(selectedDate);
 
-    // Crie um novo objeto Date com a data e hora selecionadas
     const newDateTime = new Date(selectedDate);
 
-    // Obtenha a hora e os minutos atuais do eventDateTime
     const currentHour = eventDateTime.getHours();
     const currentMinute = eventDateTime.getMinutes();
 
-    // Defina a hora e os minutos do novo objeto Date
     newDateTime.setHours(currentHour);
     newDateTime.setMinutes(currentMinute);
 
-    // Atualize o estado eventDateTime
     setEventDateTime(newDateTime);
   };
 
   const onChangeHour = (selectedHourString) => {
     setShowHour(false);
 
-    // Divida a string da hora em partes
     const [hour, minute] = selectedHourString.split(':');
 
-    // Crie um novo objeto Date com a hora e o minuto fornecidos
     const newDateTime = new Date();
     newDateTime.setHours(parseInt(hour, 10));
     newDateTime.setMinutes(parseInt(minute, 10));
 
-    // Atualize o estado eventDateTime
     setEventDateTime(newDateTime);
   };
 

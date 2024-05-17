@@ -16,6 +16,11 @@
       "infoPlist": {
         "NSCalendarsUsageDescription": "This app requires access to your calendar to schedule events."
       }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5c4e471c-f641-4788-9976-6f4ecb1eb445"
+      }
     }
   }
 }

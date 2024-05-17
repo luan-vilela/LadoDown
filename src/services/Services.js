@@ -10,27 +10,28 @@ function get(url) {
   return api.get(url);
 }
 
-function post(url, formulario) {
+function getAllComment(url,id) {
+  console.log(`${url}/${id}`)
+  return api.get(`${url}/${id}`);
+}
+
+function salvarRegistro(url, formulario) {
+  console.log(BASE_API+url )
+  console.log(formulario)
+
   return api.post(url, formulario);
 }
 
-async function GetID(path, id) {
-  return await axios.get(baseURL + `${path}/${id}`);
-}
+function deletarRegistro(url,id) {
+  console.log(url)
+  console.log(`${url}/${id}`)
 
-function salvarRegistro(formulario) {
-  return axios.post(baseURL + "/Conteudo", formulario);
-}
-
-function editarRegistro(id, formulario) {
-  return axios.put(baseURL + `/Conteudo/${id}`, formulario);
-}
-
-function deletarRegistro(id) {
-  return axios.delete(baseURL + `/Conteudo/${id}`);
+  return api.delete(`${url}/${id}`);
 }
 
 export default {
   get,
-  post,
+  salvarRegistro,
+  deletarRegistro,
+  getAllComment
 };

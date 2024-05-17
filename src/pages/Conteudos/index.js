@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Center, Text, HStack, VStack, FlatList, Spacer, View, NativeBaseProvider } from 'native-base';
+import {
+  Center,
+  Text,
+  HStack,
+  VStack,
+  FlatList,
+  Spacer,
+  View,
+  NativeBaseProvider,
+} from 'native-base';
 import { Animated, Image, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from './styles';
@@ -15,7 +24,6 @@ const Conteudo = ({ post }) => {
   const lengthDescription = 135;
   return (
     <Center padding={2}>
-
       <HStack
         style={[styles.estilo.card, { backgroundColor: 'transparent', marginBottom: 5 }]}
         width="100%"
@@ -28,7 +36,7 @@ const Conteudo = ({ post }) => {
         }}>
         <VStack w="100%">
           {post.tituloPrincipal !== undefined && post.tituloPrincipal !== '' ? (
-            <Text style={styles.estilo.post}>{post.tituloPrincipal}</Text>
+            <Text style={styles.estilo.titulo}>{post.tituloPrincipal}</Text>
           ) : null}
 
           {post.imagemGrande !== undefined && post.imagemGrande !== '' ? (
@@ -40,40 +48,42 @@ const Conteudo = ({ post }) => {
         </VStack>
       </HStack>
 
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('Topicos', {
-            itemId: post.id,
-          })
-        }>
-        <HStack
-          width="100%"
-          height={150}
-          borderWidth="1"
-          rounded="md"
-          _dark={{
-            borderColor: 'coolGray.500',
-          }}>
-          <HStack w="30%">
-            <Image
-              source={{ uri: post.imagemPequena }}
-              resizeMode="cover"
-              style={styles.estilo.imagemPequena}></Image>
-            {post.tag !== undefined && post.tag !== '' ? (
-              <Text style={styles.estilo.tag}>{post.tag}</Text>
-            ) : null}
+      {post.imagemPequena && (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('Topicos', {
+              itemId: post.id,
+            })
+          }>
+          <HStack
+            width="100%"
+            height={150}
+            borderWidth="1"
+            rounded="md"
+            _dark={{
+              borderColor: 'coolGray.500',
+            }}>
+            <HStack w="30%">
+              <Image
+                source={{ uri: post.imagemPequena }}
+                resizeMode="cover"
+                style={styles.estilo.imagemPequena}></Image>
+              {post.tag !== undefined && post.tag !== '' ? (
+                <Text style={styles.estilo.tag}>{post.tag}</Text>
+              ) : null}
+            </HStack>
+            <VStack w="70%" padding="5px">
+              <Text marginBottom={1}>{post.subTitulo}</Text>
+              <Text style={styles.estilo.descricao}>
+                {post.descricao.slice(0, lengthDescription)}
+                {post.descricao.length > lengthDescription && '...'}
+              </Text>
+              <Spacer />
+              <Text textAlign={'right'}>Há 2 horas - {post.autor}</Text>
+            </VStack>
           </HStack>
-          <VStack w="70%" padding="5px">
-            <Text marginBottom={1}>{post.subTitulo}</Text>
-            <Text style={styles.estilo.descricao}>
-              {post.descricao.slice(0, lengthDescription)}
-              {post.descricao.length > lengthDescription && '...'}
-            </Text>
-            <Spacer />
-            <Text textAlign={'right'}>Há 2 horas - {post.autor}</Text>
-          </VStack>
-        </HStack>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      )}
     </Center>
   );
 };

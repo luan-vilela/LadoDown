@@ -2,23 +2,20 @@ import { StyleSheet } from "react-native";
 
 const estilo = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
     backgroundColor: "#10b981",
   },
   card: {
+    top: 10,
     paddingHorizontal: 10,
     width: 350,
     margin: 5,
-    top: 10,
   },
   cardContainer: {
     height: 230,
-    backgroundColor: "#0ea774",
+    backgroundColor: "#ffffff",
     borderRadius: 25,
     overflow: "hidden",
-    elevation: 5, // Aumentando a elevação para uma sombra mais perceptível
-    shadowColor: "#000", // Cor da sombra
-    shadowRadius: 4, // Raio da sombra
     transform: [{ rotateX: "8deg" }], // Ajustando a rotação para um efeito mais sutil
     background: `linear-gradient(to bottom right, #0ea774, #0ea7a4)`,
   },
@@ -46,19 +43,21 @@ const estilo = StyleSheet.create({
   },
   nome: {
     top: 5,
-    color: "#ffffff", // Usando branco puro para garantir consistência
+    color: "#000000", // Definindo a cor do texto como preto
     fontSize: 18, // Aumentando um pouco o tamanho da fonte para maior destaque
     fontWeight: "700", // Usando um valor mais robusto para o peso da fonte
     textAlign: "center",
     textTransform: "uppercase", // Convertendo o texto para maiúsculas para uma aparência mais forte
     letterSpacing: 1, // Adicionando um pequeno espaçamento entre as letras para melhor legibilidade
     marginBottom: 2,
+    fontFamily: "sans-serif", // Definindo a fonte como sans-serif
   },
   descricao: {
     top: 10,
     fontSize: 15, // Aumentando um pouco o tamanho da fonte para melhor legibilidade
-    color: "#ffffff", // Usando branco puro para garantir consistência
+    color: "#000000", // Definindo a cor do texto como preto
     textAlign: "justify",
+    fontFamily: "sans-serif", // Definindo a fonte como sans-serif
   },
   footer: {
     position: "absolute",
@@ -78,6 +77,11 @@ const estilo = StyleSheet.create({
     color: "#ffffff", // Definindo a cor do texto para branco para melhor contraste com o fundo semitransparente
     fontSize: 12, // Aumentando um pouco o tamanho da fonte para maior destaque
   },
+  activityIndicatorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 export default { estilo };
