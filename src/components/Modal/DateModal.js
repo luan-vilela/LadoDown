@@ -49,6 +49,7 @@ const DateModal = ({ showModal, setShowModal, setValue }) => {
       setDay(getDaysInMonth(new Date(year, month)));
     }
   }, [month, year]);
+  console.log('-----');
 
   return (
     <CustomModal

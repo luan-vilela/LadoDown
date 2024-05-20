@@ -5,6 +5,6 @@ import { criancaSchema } from './criancaSchema ';
 import { agendaSchema } from './agendaSchema';
 
 export const schemas = appSchema({
-  version: 3,
+  version: 4,
   tables: [curvasCrescimentoSchema, criancaSchema, agendaSchema],
 });

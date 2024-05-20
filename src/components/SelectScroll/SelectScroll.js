@@ -11,7 +11,7 @@ const List = ({ item, index }) => {
   );
 };
 
-const SelectScroll = ({ items, value, selected }) => {
+const SelectScroll = memo(function SelectScroll({ items, value, selected }) {
   const findIndex = useMemo(() => {
     return items.findIndex(item => item.value == value);
   }, [items, value]);
@@ -91,6 +91,6 @@ const SelectScroll = ({ items, value, selected }) => {
       />
     </View>
   );
-};
+});
 
 export default SelectScroll;

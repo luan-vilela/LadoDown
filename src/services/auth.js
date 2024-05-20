@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const TOKEN_KEY = process.env.EXPO_PUBLIC_TOKEN_KEY;
 
@@ -7,7 +7,7 @@ export const isAuthenticated = async () => {
     const value = await getToken();
     return value !== null;
   } catch (e) {
-    console.log("error");
+    console.log('error');
   }
 };
 
@@ -16,7 +16,7 @@ export const getToken = async () => {
     const item = await AsyncStorage.getItem(TOKEN_KEY);
     return JSON.parse(item);
   } catch (e) {
-    console.log("error");
+    console.log('error');
   }
 };
 
@@ -26,7 +26,7 @@ export const getAllKeys = async () => {
     keys = await AsyncStorage.getAllKeys();
     return keys;
   } catch (e) {
-    console.log("error");
+    console.log('error');
   }
 
   //
@@ -36,13 +36,13 @@ export const setStore = async (value, key = TOKEN_KEY) => {
   try {
     await AsyncStorage.setItem(key, JSON.stringify(value));
   } catch (e) {
-    console.log("error");
+    console.log('error');
   }
 };
 export const logout = async () => {
   try {
     await AsyncStorage.removeItem(TOKEN_KEY);
   } catch (e) {
-    console.log("error");
+    console.log('error');
   }
 };
