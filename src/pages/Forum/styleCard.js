@@ -38,6 +38,12 @@ const estilo = StyleSheet.create({
     fontWeight: "600", // Ajustei o peso da fonte para 600 para dar um pouco mais de destaque
     paddingHorizontal: 20, // Aumentei o espaçamento horizontal para 20 para melhorar o espaçamento nas laterais
   },
+  title2: {
+    top: 20,
+    fontSize: 24, // Aumentei o tamanho da fonte para 24
+    fontWeight: "600", // Ajustei o peso da fonte para 600 para dar um pouco mais de destaque
+    paddingHorizontal: 20, // Aumentei o espaçamento horizontal para 20 para melhorar o espaçamento nas laterais
+  },
   content: {
     padding: 10,
   },

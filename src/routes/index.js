@@ -13,8 +13,10 @@ import TermoUso from '../pages/TermoUso';
 import PoliticaPrivacidade from '../pages/PoliticaPrivacidade';
 import Sobre from '../pages/Sobre';
 import Crescimento from '../pages/Admin/Crescimento/Dashboard';
-import Agenda from "../pages/Agenda"
-import Alerta from "../pages/Alerta"
+import Agenda from '../pages/Agenda';
+import Alerta from '../pages/Alerta';
+import Historico from '../pages/Historico';
+import Recomendacao from '../pages/Recomendacao';
 
 const ROUTES = {
   DASHBOARD: {
@@ -100,6 +102,16 @@ const ROUTES = {
   ALERTA: {
     NAME: 'Alerta',
     ROUTE: Alerta,
+    TITLE: 'hide',
+  },
+  HISTORICO: {
+    NAME: 'Hstorico',
+    ROUTE: Historico,
+    TITLE: 'hide',
+  },
+  RECOMENDACAO: {
+    NAME: 'Recomendacao',
+    ROUTE: Recomendacao,
     TITLE: 'hide',
   },
 };

@@ -2,19 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList, Text, Animated, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { Divider, NativeBaseProvider, ScrollView } from 'native-base';
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  Modal,
+  NativeBaseProvider,
+  ScrollView,
+  TextArea,
+} from 'native-base';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import styles from './styleCard';
 import Services from '../../services/Services';
 import { Ionicons } from '@expo/vector-icons';
 import HeaderAdmin from '../../components/HeaderAdmin';
 import Footer from '../../components/Footer';
+import ButtonCircle from '../../components/Button/Circle';
 
 const App = () => {
   const [scrollY] = useState(new Animated.Value(0));
   const [listaOne, setListaOne] = useState([]);
   const [listaTwo, setListaTwo] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
+  const [pergunta, setPergunta] = useState('');
 
   const fetchForumData = () => {
     setIsLoading(true);
@@ -33,6 +47,27 @@ const App = () => {
         const sortedByQtdComentario = listaB.sort((a, b) => b.qtd_comentario - a.qtd_comentario);
         setListaTwo(sortedByQtdComentario);
         setIsLoading(false);
+      })
+      .catch(error => {
+        Alert.alert('Erro', 'Não foi possível carregar os dados!', error);
+        setIsLoading(false);
+      });
+  };
+
+  const postForum = () => {
+    setIsLoading(true);
+    if (!pergunta.trim()) return;
+
+    Services.salvarRegistro('/forum', {
+      nome: 'Paulo Lorenço',
+      pergunta: pergunta,
+    })
+      .then(res => {
+        if (res) {
+          fetchForumData();
+          setModalVisible(false);
+          setIsLoading(false);
+        }
       })
       .catch(error => {
         Alert.alert('Erro', 'Não foi possível carregar os dados!', error);
@@ -71,6 +106,9 @@ const App = () => {
         <HeaderAdmin title={'Fórum'} />
         <SafeAreaView style={styles.estilo.container}>
           <Text style={styles.estilo.title}>Últimas discussões</Text>
+          <Box position="absolute" top={0} right={0} p={2}>
+            <ButtonCircle onPress={() => setModalVisible(true)} icon={'add'} />
+          </Box>
           {isLoading ? (
             <View style={styles.estilo.activityIndicatorContainer}>
               <ActivityIndicator size="large" color="#0000ff" />
@@ -82,16 +120,18 @@ const App = () => {
                 data={listaOne}
                 renderItem={renderItemA}
                 keyExtractor={item => item.id}
+                style={{ marginBottom: 10, top: 25 }} // Adiciona uma margem inferior de 10 unidades
               />
 
-              <Divider />
+              <Divider bottom={-20} />
 
-              <Text style={styles.estilo.title}>Discussões mais comentadas</Text>
+              <Text style={styles.estilo.title2}>Discussões mais comentadas</Text>
               <FlatList
                 horizontal
                 data={listaTwo}
                 renderItem={renderItemB}
                 keyExtractor={item => item.id}
+                style={{ marginBottom: 10, top: 10 }} // Adiciona uma margem inferior de 10 unidades
               />
             </>
           )}
@@ -100,6 +140,43 @@ const App = () => {
           <Footer />
         </View>
       </ScrollView>
+
+      <Modal
+        isOpen={modalVisible}
+        onClose={() => setModalVisible(false)}
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}>
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Faça uma pergunta?</Modal.Header>
+          <Modal.Body>
+            <FormControl>
+              <FormControl.Label>Pergunta</FormControl.Label>
+              <TextArea
+                ref={initialRef}
+                h={20}
+                placeholder=""
+                value={pergunta}
+                onChangeText={setPergunta}
+                autoCompleteType={undefined}
+              />
+            </FormControl>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button.Group space={2}>
+              <Button
+                variant="ghost"
+                colorScheme="blueGray"
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
+                Voltar
+              </Button>
+              <Button onPress={postForum}>Salvar</Button>
+            </Button.Group>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal>
     </NativeBaseProvider>
   );
 };

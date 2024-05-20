@@ -42,7 +42,7 @@ const Home = ({ comments }) => {
       <ScrollView>
         <Text style={styles.estilo.titulo}>{comments.subTitulo}</Text>
         <ImageBackground
-          source={{ uri: comments.imagemPequena }}
+          source={comments.imagemPequena ? { uri: comments.imagemPequena } : null}
           resizeMode="cover"
           style={styles.estilo.image}></ImageBackground>
         <Text>Por {comments.autor} - Campo Grande/MS</Text>

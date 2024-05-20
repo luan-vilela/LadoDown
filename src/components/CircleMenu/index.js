@@ -24,7 +24,7 @@ export default () => {
         <Btn icon="language" name="Conteúdo" routeName={ROUTES.CONTEUDO.NAME} />
         <Btn icon="forum" name="Fórum" routeName={ROUTES.FORUM.NAME} />
         <Btn icon="campaign" name="Alertas" routeName={ROUTES.ALERTA.NAME} />
-        <Btn icon="medical-services" name="Histórico Paciente" routeName={ROUTES.CONTEUDO.NAME} />
+        <Btn icon="medical-services" name="Histórico Paciente" routeName={ROUTES.HISTORICO.NAME} />
       </HStack>
     </Center>
   );

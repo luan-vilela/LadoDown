@@ -79,12 +79,12 @@ export default () => {
         <ReelsSlider
           image={require('../../assets/vacina.png')}
           title={'Agenda'}
-          routeName={ROUTES.DASHBOARD.NAME}
+          routeName={ROUTES.AGENDA.NAME}
         />
         <ReelsSlider
           image={require('../../assets/vacina.png')}
           title={'Recomendações e Alergias'}
-          routeName={ROUTES.DASHBOARD.NAME}
+          routeName={ROUTES.RECOMENDACAO.NAME}
         />
       </HStack>
     </ScrollView>
