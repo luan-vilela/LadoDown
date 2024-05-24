@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 const estilo = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 6,
+        padding: 10,
         backgroundColor: "white"
     },
     titulo: {
