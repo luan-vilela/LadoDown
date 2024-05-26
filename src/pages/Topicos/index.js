@@ -40,8 +40,8 @@ const Home = ({ comments }) => {
   return (
     <View style={styles.estilo.container}>
       <ScrollView>
-        <Text style={styles.estilo.titulo}>{comments.subTitulo}</Text>
-        <ImageBackground
+        <Text top={1} style={styles.estilo.titulo}>{comments.subTitulo}</Text>
+        <ImageBackground 
           source={comments.imagemPequena ? { uri: comments.imagemPequena } : null}
           resizeMode="cover"
           style={styles.estilo.image}></ImageBackground>
