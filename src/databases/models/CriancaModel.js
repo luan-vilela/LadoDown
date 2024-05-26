@@ -10,4 +10,12 @@ export class CriancaModel extends Model {
   sex;
   @date('dateOfBirth')
   dateOfBirth;
+  @field('birthWeight')
+  birthWeight;
+  @field('birthLength')
+  birthLength;
+  @field('headCircumferenceAtBirth')
+  headCircumferenceAtBirth;
+  @field('gestationalAge')
+  gestationalAge;
 }

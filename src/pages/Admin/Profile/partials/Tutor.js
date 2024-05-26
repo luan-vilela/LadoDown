@@ -1,6 +1,6 @@
 import {
   Center,
-  View,
+  ScrollView,
   Box,
   Select,
   CheckIcon,
@@ -8,37 +8,84 @@ import {
   Input,
   Button,
   WarningOutlineIcon,
+  Stack,
+  HStack,
+  Text,
 } from 'native-base';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { database } from '../../../../databases/index';
 import { Q } from '@nozbe/watermelondb';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DateModal from '../../../../components/Modal/DateModal';
+import HourModal from '../../../../components/Modal/HourModal';
+import AlertConfirm from '../../../../components/Modal/AlertConfirm';
+import { format } from 'date-fns';
 
 function Tutor() {
+  const [recordId, setRecordId] = useState(null);
+  const [showDate, setShowDate] = useState(false);
+  const [dtNascimento, setDtNascimento] = useState(null);
+
   const {
     control,
     handleSubmit,
     setError,
+    setValue,
+    trigger,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const loadingDate = async () => {
-    const kidsCollection = database.get('criancas');
-    const response = await kidsCollection.query().fetch(1);
-    console.log('response', response[0].id);
+  const getDate = () => {
+    if (dtNascimento) {
+      const dateFormat = format(dtNascimento, 'dd/MM/yyyy');
+      console.log(dateFormat);
+      return dateFormat;
+    }
+    return '';
   };
 
-  loadingDate();
+  const loadFormData = async () => {
+    const tutorCollection = database.get('tutor');
+    const response = await tutorCollection.query().fetch();
 
-  const handleLogin = async data => {
-    const post = await database.write(async () => {
-      const post = await database.get('criancas').create(post => {
-        post.name = data.name;
-        post.sex = data.sex;
-        post.dateOfBirth = new Date();
-      });
+    const data = response[0] || {};
+    reset({
+      name: data.name || '',
+      parentesco: data.parentesco || '',
+      dateOfBirth: data.dateOfBirth,
     });
+
+    setRecordId(data.id);
+    setDtNascimento(data.dateOfBirth);
   };
+
+  const handleSave = async data => {
+    try {
+      await database.write(async () => {
+        if (recordId) {
+          const record = await database.get('tutor').find(recordId);
+          await record.update(post => {
+            post.name = data.name;
+            post.parentesco = data.parentesco;
+            post.dateOfBirth = dtNascimento;
+          });
+        } else {
+          await database.get('tutor').create(post => {
+            post.name = data.name;
+            post.parentesco = data.parentesco;
+            post.dateOfBirth = dtNascimento;
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    loadFormData();
+  }, [reset]);
 
   return (
     <Box alignItems="center" flex={1}>
@@ -53,7 +100,7 @@ function Tutor() {
         }}
         render={({ field: { value, onChange } }) => (
           <FormControl isInvalid={'name' in errors} w="90%" maxW="300px">
-            <FormControl.Label>Nome do responsável</FormControl.Label>
+            <FormControl.Label>Nome do Responsável</FormControl.Label>
             <Input placeholder="Nome" value={value} onChangeText={onChange} w="100%" />
             {'name' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
@@ -66,17 +113,24 @@ function Tutor() {
 
       <Controller
         control={control}
-        name="Data Nascimento"
+        name="dtNascimento"
         rules={{
+          // required: 'Data de nascimento é obrigatória',
           pattern: {
-            message: 'Nome inválido!',
-            value: /^(?:\s*.{2,})?$/,
+            value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+            message: 'Data Nascimento inválida!',
           },
         }}
-        render={({ field: { value, onChange } }) => (
+        render={() => (
           <FormControl isInvalid={'dtNascimento' in errors} w="90%" maxW="300px">
-            <FormControl.Label>Data Nascimento</FormControl.Label>
-            <Input placeholder="__/__/____" value={value} onChangeText={onChange} w="100%" />
+            <FormControl.Label>Data de nascimento</FormControl.Label>
+            <Input
+              placeholder="__/__/____"
+              value={getDate()}
+              w="100%"
+              onTouchStart={() => setShowDate(true)}
+              onBlur={() => setValue('dtNascimento', getDate())}
+            />
             {'dtNascimento' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
                 {errors?.dtNascimento.message}
@@ -88,44 +142,43 @@ function Tutor() {
 
       <Controller
         control={control}
-        name="sex"
-        rules={{
-          required: 'Sexo da Criançã é obrigatório',
-          pattern: {
-            message: 'Selecione um sexo!',
-            value: /^(M|F)$/i,
-          },
-        }}
+        name="parentesco"
         render={({ field: { value, onChange } }) => (
-          <FormControl isInvalid={'sex' in errors} w="90%" maxW="300px">
+          <FormControl isInvalid={'parentesco' in errors} w="90%" maxW="300px">
             <FormControl.Label>Parentesco</FormControl.Label>
             <Select
               selectedValue={value}
               minWidth="300px"
               width="100%"
-              accessibilityLabel="sexo"
-              placeholder="Selecione o sexo"
+              accessibilityLabel="parentesco"
+              placeholder="Selecione o parentesco"
               _selectedItem={{
                 bg: 'teal.600',
                 endIcon: <CheckIcon size="5" />,
               }}
               mt={1}
               onValueChange={onChange}>
-              <Select.Item label="Pai" value="M" />
-              <Select.Item label="Mãe" value="F" />
-              <Select.Item label="Outro" value="F" />
+              <Select.Item label="Mãe" value="mae" />
+              <Select.Item label="Pai" value="pai" />
+              <Select.Item label="Outro" value="outro" />
             </Select>
-            {'sex' in errors && (
+            {'parentesco' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                {errors?.sex.message}
+                {errors?.parentesco.message}
               </FormControl.ErrorMessage>
             )}
           </FormControl>
         )}
       />
 
+      <DateModal
+        setShowModal={setShowDate}
+        showModal={showDate}
+        setValue={item => setDtNascimento(item)}
+      />
+
       <Box flex={1}>
-        <Button mt="4" mb={1} colorScheme="tertiary" onPress={handleSubmit(handleLogin)}>
+        <Button mt="4" mb={1} colorScheme="tertiary" onPress={handleSubmit(handleSave)}>
           Salvar
         </Button>
       </Box>
@@ -135,10 +188,10 @@ function Tutor() {
 
 export default () => {
   return (
-    <View flex={1}>
+    <ScrollView flex={1}>
       <Center flex={1} my="4">
         <Tutor />
       </Center>
-    </View>
+    </ScrollView>
   );
 };

@@ -1,6 +1,6 @@
 import {
   Center,
-  View,
+  ScrollView,
   Box,
   Select,
   CheckIcon,
@@ -12,7 +12,7 @@ import {
   HStack,
   Text,
 } from 'native-base';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { database } from '../../../../databases/index';
 import { Q } from '@nozbe/watermelondb';
@@ -23,62 +23,81 @@ import AlertConfirm from '../../../../components/Modal/AlertConfirm';
 import { format } from 'date-fns';
 
 function Crianca() {
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
+  const [recordId, setRecordId] = useState(null);
   const [showDate, setShowDate] = useState(false);
-  const [showHour, setShowHour] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [aniversario, setAniversario] = useState(null);
+  const [dtNascimento, setDtNascimento] = useState(null);
 
   const {
     control,
     handleSubmit,
     setError,
+    setValue,
+    trigger,
     formState: { errors },
+    reset,
   } = useForm();
 
-  const loadingDate = async () => {
-    const kidsCollection = database.get('criancas');
-    const response = await kidsCollection.query().fetch(1);
-    console.log('response', response[0].id);
-  };
-
-  const handleLogin = async data => {
-    const post = await database.write(async () => {
-      const post = await database.get('criancas').create(post => {
-        post.name = data.name;
-        post.sex = data.sex;
-        post.dateOfBirth = new Date();
-      });
-    });
-  };
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-
-  const showMode = currentMode => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
   const getDate = () => {
-    if (aniversario) {
-      return format(aniversario, 'dd/MM/yyyy');
+    if (dtNascimento) {
+      const dateFormat = format(dtNascimento, 'dd/MM/yyyy');
+      console.log(dateFormat);
+      return dateFormat;
     }
-    return '__/__/____';
+    return '';
   };
+
+  const loadFormData = async () => {
+    const kidsCollection = database.get('criancas');
+    const response = await kidsCollection.query().fetch();
+
+    const data = response[0] || {};
+    reset({
+      name: data.name || '',
+      sex: data.sex || '',
+      dateOfBirth: data.dateOfBirth,
+      birthWeight: data.birthWeight || '',
+      birthLength: data.birthLength || '',
+      headCircumferenceAtBirth: data.headCircumferenceAtBirth || '',
+      gestationalAge: data.gestationalAge || '',
+    });
+
+    setRecordId(data.id);
+    setDtNascimento(data.dateOfBirth);
+  };
+
+  const handleSave = async data => {
+    try {
+      await database.write(async () => {
+        if (recordId) {
+          const record = await database.get('criancas').find(recordId);
+          await record.update(post => {
+            post.name = data.name;
+            post.sex = data.sex;
+            post.dateOfBirth = dtNascimento;
+            post.birthWeight = data.birthWeight;
+            post.birthLength = data.birthLength;
+            post.headCircumferenceAtBirth = data.headCircumferenceAtBirth;
+            post.gestationalAge = data.gestationalAge;
+          });
+        } else {
+          await database.get('criancas').create(post => {
+            post.name = data.name;
+            post.sex = data.sex;
+            post.dateOfBirth = dtNascimento;
+            post.birthWeight = data.birthWeight;
+            post.birthLength = data.birthLength;
+            post.headCircumferenceAtBirth = data.headCircumferenceAtBirth;
+            // post.gestationalAge = data.gestationalAge;
+          });
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    loadFormData();
+  }, [reset]);
 
   return (
     <Box alignItems="center" flex={1}>
@@ -94,16 +113,39 @@ function Crianca() {
         render={({ field: { value, onChange } }) => (
           <FormControl isInvalid={'name' in errors} w="90%" maxW="300px">
             <FormControl.Label>Nome da Criança</FormControl.Label>
+            <Input placeholder="Nome" value={value} onChangeText={onChange} w="100%" />
+            {'name' in errors && (
+              <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
+                {errors?.name.message}
+              </FormControl.ErrorMessage>
+            )}
+          </FormControl>
+        )}
+      />
 
+      <Controller
+        control={control}
+        name="dtNascimento"
+        rules={{
+          // required: 'Data de nascimento é obrigatória',
+          pattern: {
+            value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/,
+            message: 'Data Nascimento inválida!',
+          },
+        }}
+        render={() => (
+          <FormControl isInvalid={'dtNascimento' in errors} w="90%" maxW="300px">
+            <FormControl.Label>Data de nascimento</FormControl.Label>
             <Input
               placeholder="__/__/____"
               value={getDate()}
               w="100%"
               onTouchStart={() => setShowDate(true)}
+              onBlur={() => setValue('dtNascimento', getDate())}
             />
-            {'name' in errors && (
+            {'dtNascimento' in errors && (
               <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                {errors?.name.message}
+                {errors?.dtNascimento.message}
               </FormControl.ErrorMessage>
             )}
           </FormControl>
@@ -149,83 +191,61 @@ function Crianca() {
 
       <Controller
         control={control}
-        name="Data Nascimento"
-        rules={{
-          pattern: {
-            message: 'Nome inválido!',
-            value: /^(?:\s*.{2,})?$/,
-          },
-        }}
+        name="birthWeight"
         render={({ field: { value, onChange } }) => (
-          <FormControl isInvalid={'dtNascimento' in errors} w="90%" maxW="300px">
-            <FormControl.Label>Data Nascimento</FormControl.Label>
-
-            {'dtNascimento' in errors && (
-              <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
-                {errors?.dtNascimento.message}
-              </FormControl.ErrorMessage>
-            )}
+          <FormControl w="90%" maxW="300px">
+            <FormControl.Label>Peso ao nascer</FormControl.Label>
+            <Input placeholder="Peso" value={value} onChangeText={onChange} w="100%" />
           </FormControl>
         )}
       />
 
-      <Box>
-        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowDate(true)}>
-          Data
-        </Button>
-        <DateModal
-          setShowModal={setShowDate}
-          showModal={showDate}
-          setValue={item => setAniversario(item)}
-        />
-      </Box>
+      <Controller
+        control={control}
+        name="birthLength"
+        render={({ field: { value, onChange } }) => (
+          <FormControl w="90%" maxW="300px">
+            <FormControl.Label>Comprimento ao nascer</FormControl.Label>
+            <Input placeholder="Medida" value={value} onChangeText={onChange} w="100%" />
+          </FormControl>
+        )}
+      />
 
-      <Box>
-        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowHour(true)}>
-          Hora
-        </Button>
-        <HourModal
-          setShowModal={setShowHour}
-          showModal={showHour}
-          setValue={item => console.log(item)}
-        />
-      </Box>
+      <Controller
+        control={control}
+        name="headCircumferenceAtBirth"
+        render={({ field: { value, onChange } }) => (
+          <FormControl w="90%" maxW="300px">
+            <FormControl.Label>Perímetro cefálico</FormControl.Label>
+            <Input placeholder="Medida" value={value} onChangeText={onChange} w="100%" />
+          </FormControl>
+        )}
+      />
 
-      <Box>
-        <Button mt="4" mb={1} colorScheme="tertiary" onPress={() => setShowConfirm(true)}>
-          Confirm
-        </Button>
-        <AlertConfirm
-          setShowModal={setShowConfirm}
-          showModal={showConfirm}
-          setValue={item => console.log(item)}
-          text={'Deseja excluir esse item?'}
-          title={undefined}
-          cancel={undefined}
-          successBtn={'Excluir'}
-          footer={undefined}
-        />
-      </Box>
+      {/* <Controller
+        control={control}
+        name="gestationalAge"
+        render={({ field: { value, onChange } }) => (
+          <FormControl w="90%" maxW="300px">
+            <FormControl.Label>Idade Gestacional</FormControl.Label>
+            <Input
+              placeholder="xx Meses yy Semanas"
+              value={value}
+              onChangeText={onChange}
+              w="100%"
+            />
+          </FormControl>
+        )}
+      /> */}
 
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
-
-      {/* <Stack flex={1}>
-        <HStack p="4" space={3}>
-          <Button onPress={showDatepicker}>Data Picker</Button>
-          <Button onPress={showTimepicker}>Timer Picker</Button>
-        </HStack>
-      </Stack> */}
+      <DateModal
+        setShowModal={setShowDate}
+        showModal={showDate}
+        setValue={item => setDtNascimento(item)}
+      />
 
       <Box flex={1}>
-        <Button mt="4" mb={1} colorScheme="tertiary" onPress={handleSubmit(handleLogin)}>
+        <Button mt="4" mb={1} colorScheme="tertiary" onPress={handleSubmit(handleSave)}>
           Salvar
         </Button>
       </Box>
@@ -235,10 +255,10 @@ function Crianca() {
 
 export default () => {
   return (
-    <View flex={1}>
+    <ScrollView flex={1}>
       <Center flex={1} my="4">
         <Crianca />
       </Center>
-    </View>
+    </ScrollView>
   );
 };
