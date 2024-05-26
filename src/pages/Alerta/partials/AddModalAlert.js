@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
-import { FormControl, Input } from 'native-base';
+import React, { useEffect, useState } from 'react';
+
+import { FormControl, Input, Center, Box } from 'native-base';
 import { database } from '../../../databases/index';
 import { schedulePushNotification } from '../../../utils/schedule';
 import CustomModal from '../../../components/CustomModal';
-import { format } from 'date-fns';
+import { addMinutes, format } from 'date-fns';
 import DateModal from '../../../components/Modal/DateModal';
 import HourModal from '../../../components/Modal/HourModalAlert';
 
@@ -12,12 +12,12 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
   const [eventTitle, setEventTitle] = useState('');
   const [eventDateTime, setEventDateTime] = useState(new Date());
   const [showDate, setShowDate] = useState(false);
-  const [aniversario, setAniversario] = useState(null);
+  const [eventDate, setEventDate] = useState(new Date());
   const [showHour, setShowHour] = useState(false);
 
   const createSchedulePush = async () => {
     const payloadNotification = {
-      title: eventTitle,
+      title: eventTitle ? eventTitle : `Notificação `,
       trigger: eventDateTime,
     };
     return await schedulePushNotification(payloadNotification);
@@ -34,9 +34,9 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
     }
   };
 
-  const onChangeDate = (selectedDate) => {
+  const onChangeDate = selectedDate => {
     setShowDate(false);
-    setAniversario(selectedDate);
+    setEventDate(selectedDate);
 
     const newDateTime = new Date(selectedDate);
 
@@ -49,7 +49,7 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
     setEventDateTime(newDateTime);
   };
 
-  const onChangeHour = (selectedHourString) => {
+  const onChangeHour = selectedHourString => {
     setShowHour(false);
 
     const [hour, minute] = selectedHourString.split(':');
@@ -61,11 +61,11 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
     setEventDateTime(newDateTime);
   };
 
-  const saveData = async (idNotification) => {
+  const saveData = async idNotification => {
     try {
       await database.write(async () => {
-        await database.get('agenda').create((event) => {
-          event.eventTitle = eventTitle;
+        await database.get('agenda').create(event => {
+          event.eventTitle = eventTitle || `Notificação ${format(eventDate, 'dd/MM')}`;
           event.notificationTime = eventDateTime;
           event.notificationID = idNotification;
         });
@@ -75,64 +75,44 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
     }
   };
 
+  useEffect(() => {
+    const newDate = addMinutes(new Date(), 20);
+    setEventDateTime(newDate);
+  }, []);
+
   return (
     <CustomModal
       isOpen={showModal}
       onClose={() => setShowModal(false)}
       CancelBtn={'fechar'}
-      header={'Adicionar Notificação'}
+      header={'Notificação'}
       onPress={handleSave}>
-      <View style={styles.containerBloco}>
-        <FormControl isRequired>
-          <FormControl.Label>Título </FormControl.Label>
-          <TextInput
-            style={styles.input}
-            placeholder="Título"
-            value={eventTitle}
-            onChangeText={setEventTitle}
-          />
-          <FormControl.Label>Data </FormControl.Label>
-          <Input
-            placeholder="__/__/____"
-            value={aniversario ? format(aniversario, 'dd/MM/yyyy') : '__/__/____'}
-            w="100%"
-            onTouchStart={() => setShowDate(true)}
-          />
-          <FormControl.Label>Hora </FormControl.Label>
-          <Input
-            placeholder="00:00"
-            value={eventDateTime ? format(eventDateTime, 'HH:mm') : '00:00'}
-            w="100%"
-            onTouchStart={() => setShowHour(true)}
-          />
-        </FormControl>
-      </View>
+      <Center>
+        <Box alignItems="center">
+          <FormControl isRequired>
+            <FormControl.Label>Descrição</FormControl.Label>
+            <Input placeholder="Título" value={eventTitle} w="95%" onChangeText={setEventTitle} />
+            <FormControl.Label>Data </FormControl.Label>
+            <Input
+              placeholder="__/__/____"
+              value={eventDate ? format(eventDate, 'dd/MM/yyyy') : '__/__/____'}
+              w="95%"
+              onTouchStart={() => setShowDate(true)}
+            />
+            <FormControl.Label>Hora </FormControl.Label>
+            <Input
+              placeholder="00:00"
+              value={eventDateTime ? format(eventDateTime, 'HH:mm') : '00:00'}
+              w="95%"
+              onTouchStart={() => setShowHour(true)}
+            />
+          </FormControl>
+        </Box>
+      </Center>
 
-      <DateModal
-        setShowModal={setShowDate}
-        showModal={showDate}
-        setValue={onChangeDate}
-      />
+      <DateModal setShowModal={setShowDate} showModal={showDate} setValue={onChangeDate} />
 
-      <HourModal
-        setShowModal={setShowHour}
-        showModal={showHour}
-        setValue={onChangeHour}
-      />
+      <HourModal setShowModal={setShowHour} showModal={showHour} setValue={onChangeHour} />
     </CustomModal>
   );
 }
-
-const styles = StyleSheet.create({
-  containerBloco: {
-    padding: 15,
-  },
-  input: {
-    height: 40,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-});

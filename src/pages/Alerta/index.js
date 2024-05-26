@@ -25,7 +25,6 @@ export default function AlertaScreen() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [id, setId] = useState();
 
-
   const requestNotificationPermission = async () => {
     try {
       const { status } = await Notifications.requestPermissionsAsync();
@@ -39,7 +38,7 @@ export default function AlertaScreen() {
     }
   };
 
-  const removerAlerta = async (id) => {
+  const removerAlerta = async id => {
     setId(id);
     setShowConfirm(true);
   };
@@ -89,7 +88,7 @@ export default function AlertaScreen() {
           {moment(item.notificationTime).locale('pt-br').format('LLLL')}
         </Text>
         <TouchableOpacity style={styles.deleteButton} onPress={() => removerAlerta(item.id)}>
-          <Ionicons name="trash-outline" size={36} color="red" />
+          <Ionicons name="trash-outline" size={26} color="#E34049" />
         </TouchableOpacity>
       </View>
     </View>
@@ -115,7 +114,6 @@ export default function AlertaScreen() {
       </View>
 
       <Box>
-     
         <AlertConfirm
           setShowModal={setShowConfirm}
           showModal={showConfirm}
@@ -138,17 +136,17 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 20,
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 12,
   },
   contentContainer: {
     alignItems: 'flex-start',
     marginBottom: 10,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    fontWeight: '700',
     textAlign: 'center',
     color: '#10b981',
   },
@@ -158,14 +156,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   dateTimeText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#8A8A8A',
   },
   deleteButton: {
-    left: 5,
-    top: -3,
-    width: 40,
-    height: 50,
+    left: 0,
+    top: -12,
+    width: 36,
+    height: 36,
   },
   addButton: {
     position: 'absolute',
