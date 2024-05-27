@@ -20,6 +20,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DateModal from '../../../../components/Modal/DateModal';
 import HourModal from '../../../../components/Modal/HourModal';
 import AlertConfirm from '../../../../components/Modal/AlertConfirm';
+import { loadFormData, saveFormData } from '../../../../services/crianca.service';
 import { format } from 'date-fns';
 
 function Crianca() {
@@ -40,63 +41,40 @@ function Crianca() {
   const getDate = () => {
     if (dtNascimento) {
       const dateFormat = format(dtNascimento, 'dd/MM/yyyy');
-      console.log(dateFormat);
       return dateFormat;
     }
     return '';
   };
 
-  const loadFormData = async () => {
-    const kidsCollection = database.get('criancas');
-    const response = await kidsCollection.query().fetch();
-
-    const data = response[0] || {};
-    reset({
-      name: data.name || '',
-      sex: data.sex || '',
-      dateOfBirth: data.dateOfBirth,
-      birthWeight: data.birthWeight || '',
-      birthLength: data.birthLength || '',
-      headCircumferenceAtBirth: data.headCircumferenceAtBirth || '',
-      gestationalAge: data.gestationalAge || '',
-    });
-
-    setRecordId(data.id);
-    setDtNascimento(data.dateOfBirth);
+  const loadingData = async () => {
+    const response = await loadFormData();
+    reset(response);
+    setRecordId(response.id);
+    setDtNascimento(response.dateOfBirth);
   };
 
   const handleSave = async data => {
-    try {
-      await database.write(async () => {
-        if (recordId) {
-          const record = await database.get('criancas').find(recordId);
-          await record.update(post => {
-            post.name = data.name;
-            post.sex = data.sex;
-            post.dateOfBirth = dtNascimento;
-            post.birthWeight = data.birthWeight;
-            post.birthLength = data.birthLength;
-            post.headCircumferenceAtBirth = data.headCircumferenceAtBirth;
-            post.gestationalAge = data.gestationalAge;
-          });
-        } else {
-          await database.get('criancas').create(post => {
-            post.name = data.name;
-            post.sex = data.sex;
-            post.dateOfBirth = dtNascimento;
-            post.birthWeight = data.birthWeight;
-            post.birthLength = data.birthLength;
-            post.headCircumferenceAtBirth = data.headCircumferenceAtBirth;
-            // post.gestationalAge = data.gestationalAge;
-          });
-        }
-      });
-    } catch (err) {
-      console.log(err);
+    const payload = {
+      name: data.name,
+      sex: data.sex,
+      dateOfBirth: dtNascimento,
+      birthWeight: data.birthWeight,
+      birthLength: data.birthLength,
+      headCircumferenceAtBirth: data.headCircumferenceAtBirth,
+      gestationalAge: data.gestationalAge,
+    };
+
+    if (recordId) {
+      payload['id'] = recordId;
     }
+
+    console.log('PAYLOAD: ', payload);
+
+    const response = saveFormData(payload);
+    console.log('response: ', response);
   };
   useEffect(() => {
-    loadFormData();
+    loadingData();
   }, [reset]);
 
   return (
@@ -195,7 +173,13 @@ function Crianca() {
         render={({ field: { value, onChange } }) => (
           <FormControl w="90%" maxW="300px">
             <FormControl.Label>Peso ao nascer</FormControl.Label>
-            <Input placeholder="Peso" value={value} onChangeText={onChange} w="100%" />
+            <Input
+              placeholder="Peso"
+              value={value}
+              onChangeText={onChange}
+              w="100%"
+              keyboardType="numeric"
+            />
           </FormControl>
         )}
       />

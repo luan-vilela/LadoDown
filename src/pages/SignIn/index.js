@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Text,
@@ -23,6 +23,7 @@ import { getToken } from '../../services/auth';
 
 const SignIn = props => {
   const navigation = useNavigation();
+
   const {
     control,
     handleSubmit,
@@ -119,7 +120,11 @@ const SignIn = props => {
             )}
           />
 
-          <Button mt="2" colorScheme="tertiary" onPress={handleSubmit(props.handleLogin)}>
+          <Button
+            mt="2"
+            colorScheme="tertiary"
+            onPress={handleSubmit(props.handleLogin)}
+            isLoading={props.loading}>
             Entrar
           </Button>
           <HStack mt="6" justifyContent="center">
@@ -152,6 +157,7 @@ export default () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [messages, setMessages] = React.useState([]);
   const [isAuth, setIsAuth] = React.useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchDate() {
@@ -165,7 +171,7 @@ export default () => {
 
   const handleLogin = async data => {
     if (data.email && data.password) {
-      // setLoading(true);
+      setLoading(true);
       try {
         const isLogged = await Api.signIn(data.email, data.password);
         if (isLogged) {
@@ -181,6 +187,7 @@ export default () => {
         setMessages([['Erro ao carregar a página, tente mais tarde!']]);
         console.log(e);
       }
+      setLoading(false);
     }
   };
 
@@ -188,7 +195,7 @@ export default () => {
     <ScrollView>
       <Center flex={1} px="3">
         <Mensagem isOpen={isOpen} setIsOpen={setIsOpen} messages={messages} />
-        <SignIn handleLogin={handleLogin} />
+        <SignIn handleLogin={handleLogin} loading={loading} />
       </Center>
     </ScrollView>
   );

@@ -1,6 +1,6 @@
 import { setStore, getToken } from './auth';
 
-const BASE_API = 'http://192.168.237.69:3001';
+const BASE_API = 'http://192.168.237.70:3001';
 
 export default {
   checkToken: async token => {

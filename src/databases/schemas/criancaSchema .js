@@ -12,24 +12,26 @@ export const criancaSchema = tableSchema({
       type: 'string',
     },
     {
-      name: 'dateOfBirth',
+      name: 'date_of_birth',
       type: 'number',
     },
     {
-      name: 'birthWeight',
-      type: 'number',
+      name: 'birth_weight',
+      type: 'string',
     },
     {
-      name: 'birthLength',
-      type: 'number',
+      name: 'birth_length',
+      type: 'string',
     },
     {
-      name: 'headCircumferenceAtBirth',
-      type: 'number',
+      name: 'head_circumference_at_birth',
+      type: 'string',
     },
     {
-      name: 'gestationalAge',
-      type: 'number',
+      name: 'gestational_age',
+      type: 'string',
     },
+    { name: 'created_at', type: 'number' },
+    { name: 'updated_at', type: 'number' },
   ],
 });
