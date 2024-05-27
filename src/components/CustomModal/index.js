@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Text } from 'native-base';
+import { Modal, Button, Text, Box, HStack } from 'native-base';
 
 const ModalWrapper = ({
   isOpen,
@@ -11,6 +11,10 @@ const ModalWrapper = ({
   SuccessBtn,
   onPress,
   CancelBtn,
+  DelBtn,
+  onPressDel,
+  isLoadingDel,
+  isLoading,
   size,
 }) => {
   return (
@@ -26,14 +30,31 @@ const ModalWrapper = ({
         {children}
 
         {footer && <Modal.Body>{footer}</Modal.Body>}
-        <Button.Group space={2} justifyContent="flex-end" p="2">
-          {CancelBtn && (
-            <Button variant="ghost" colorScheme="blueGray" onPress={onClose}>
-              {CancelBtn || 'Fechar'}
+        <HStack space={3} alignItems="flex-end" p="2">
+          {onPressDel && (
+            <Button
+              variant="subtle"
+              colorScheme="secondary"
+              onPress={onPressDel}
+              isLoading={isLoadingDel}
+              isLoadingText="Aguarde">
+              {DelBtn || 'Excluir'}
             </Button>
           )}
-          {onPress && <Button onPress={onPress}>{SuccessBtn || 'Salvar'}</Button>}
-        </Button.Group>
+
+          <Button.Group flex={1} space={2} justifyContent="flex-end">
+            {CancelBtn && (
+              <Button variant="ghost" colorScheme="blueGray" onPress={onClose}>
+                {CancelBtn || 'Fechar'}
+              </Button>
+            )}
+            {onPress && (
+              <Button onPress={onPress} isLoading={isLoading} isLoadingText="Aguarde">
+                {SuccessBtn || 'Salvar'}
+              </Button>
+            )}
+          </Button.Group>
+        </HStack>
       </Modal.Content>
     </Modal>
   );
@@ -49,6 +70,10 @@ const ModalCustom = ({
   SuccessBtn,
   onPress,
   CancelBtn,
+  DelBtn,
+  onPressDel,
+  isLoadingDel,
+  isLoading,
   size = 'md', // ["xs", "sm", "md", "lg", "xl", "full"]
 }) => {
   return (
@@ -60,8 +85,12 @@ const ModalCustom = ({
       showCloseButton={showCloseButton}
       SuccessBtn={SuccessBtn}
       onPress={onPress}
+      isLoading={isLoading}
       CancelBtn={CancelBtn}
-      size={size}>
+      size={size}
+      DelBtn={DelBtn}
+      onPressDel={onPressDel}
+      isLoadingDel={isLoadingDel}>
       {children}
     </ModalWrapper>
   );

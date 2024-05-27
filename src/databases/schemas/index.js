@@ -1,12 +1,12 @@
 import { appSchema } from '@nozbe/watermelondb';
 
-import { curvasCrescimentoSchema } from './curvasCrescimentoSchema';
 import { criancaSchema } from './criancaSchema ';
 import { agendaSchema } from './agendaSchema';
 import { tutorSchema } from './tutorSchema';
 import { recomendacaoSchema } from './recomendacaoSchema';
+import { curvaCrescimentoSchema } from './curvaCrescimentoSchema';
 
 export const schemas = appSchema({
-  version: 1,
-  tables: [curvasCrescimentoSchema, criancaSchema, agendaSchema, recomendacaoSchema, tutorSchema],
+  version: 6,
+  tables: [criancaSchema, agendaSchema, recomendacaoSchema, tutorSchema, curvaCrescimentoSchema],
 });

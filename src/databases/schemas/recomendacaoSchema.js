@@ -15,5 +15,7 @@ export const recomendacaoSchema = tableSchema({
       name: 'observacao',
       type: 'string',
     },
+    { name: 'created_at', type: 'number' },
+    { name: 'updated_at', type: 'number' },
   ],
 });

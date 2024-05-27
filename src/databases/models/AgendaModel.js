@@ -6,10 +6,13 @@ export class AgendaModel extends Model {
 
   @field('eventTitle')
   eventTitle;
+
   @field('calendarColor')
   calendarColor;
+
   @date('notificationTime')
   notificationTime;
+
   @field('notificationID')
   notificationID;
 }
