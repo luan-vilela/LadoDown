@@ -7,6 +7,6 @@ import { recomendacaoSchema } from './recomendacaoSchema';
 import { curvaCrescimentoSchema } from './curvaCrescimentoSchema';
 
 export const schemas = appSchema({
-  version: 6,
+  version: 8,
   tables: [criancaSchema, agendaSchema, recomendacaoSchema, tutorSchema, curvaCrescimentoSchema],
 });

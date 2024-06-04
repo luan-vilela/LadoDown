@@ -1,5 +1,5 @@
 import { Model } from '@nozbe/watermelondb';
-import { field, date } from '@nozbe/watermelondb/decorators';
+import { field, date, readonly } from '@nozbe/watermelondb/decorators';
 
 export class CurvaCrescimentoModel extends Model {
   static table = 'curva_crescimento';
@@ -18,4 +18,12 @@ export class CurvaCrescimentoModel extends Model {
 
   @date('data_registro')
   dataRegistro;
+
+  @readonly
+  @date('created_at')
+  createdAt;
+
+  @readonly
+  @date('updated_at')
+  updatedAt;
 }

@@ -9,27 +9,40 @@ import {
   Pressable,
   IconButton,
   Icon,
+  Button,
 } from 'native-base';
 import ButtonCircle from '../../../../components/Button/Circle';
 import HeaderAdmin from '../../../../components/HeaderAdmin';
 import CustomModal from '../../../../components/CustomModal';
 import { Table, Row, Rows } from 'react-native-table-component';
+import AlertConfirm from '../../../../components/Modal/AlertConfirm';
 import {
   deleteFormData,
   loadFormData,
   saveFormData,
 } from '../../../../services/curvaCrescimento.service';
+import { loadFormData as loadCrianca } from '../../../../services/crianca.service';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import ROUTES from '../../../../routes/index';
+import { formatDifference } from '../../../../utils/methods';
+import { differenceInMonths } from 'date-fns';
+import PesoChart from './charts/ChartExample';
+import GrowthChart from './charts/TestePontos';
 
 export default () => {
+  const navigation = useNavigation();
   const [showModal, setShowModal] = useState(false);
+  const [showModalAlert, setShowModalAlert] = useState(false);
   const [addPeso, setAddPeso] = useState('');
   const [addAltura, setAddAltura] = useState('');
   const [addCabeca, setAddCabeca] = useState('');
   const [data, setData] = useState([]);
   const [editIndex, setEditIndex] = useState(null);
+  const [isTable, setIsTable] = useState(true);
   const [isLoadingDel, setIsLoadingDel] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [crianca, setCrianca] = useState(null);
 
   const handleRemoveData = async () => {
     if (editIndex) {
@@ -70,8 +83,30 @@ export default () => {
   };
 
   const loadingData = async () => {
+    if (!crianca) {
+      const response = await loadCrianca();
+
+      if (!response) {
+        setShowModalAlert(true);
+        return;
+      }
+
+      setCrianca(response);
+    }
+
     const response = await loadFormData();
-    setData(response);
+
+    const date1 = new Date(crianca.dateOfBirth);
+
+    const responseFormated = response.map(crescimento => {
+      const date2 = new Date(crescimento._raw.updated_at);
+      const months = differenceInMonths(date2, date1);
+
+      return { idade: months, ...crescimento._raw };
+    });
+
+    setData(responseFormated);
+
     resetState();
   };
 
@@ -85,6 +120,9 @@ export default () => {
     setIsLoadingDel(false);
   };
 
+  const handleNavigateSon = v => {
+    navigation.navigate('Profile', { tab: 1 });
+  };
   const rowStyle = index => ({
     backgroundColor: index % 2 === 0 ? '#f9f9f9' : '#e0e0e0',
     borderBottomWidth: 1,
@@ -93,43 +131,93 @@ export default () => {
 
   useEffect(() => {
     loadingData();
-  }, []);
+  }, [isTable, crianca]);
+
+  const customPoints = [
+    { age: 2, value: 5.1 },
+    { age: 4, value: 7.3 },
+  ];
 
   return (
     <NativeBaseProvider>
       <HeaderAdmin title={'Curva de Crescimento'} />
 
-      <ScrollView>
-        <Box>
-          <Table>
-            <Row
-              data={['Peso (kg)', 'Altura (cm)', 'Cabeça (cm)', 'IMC', 'Editar']}
-              style={{ height: 60, backgroundColor: '#10b981' }}
-              textStyle={{ margin: 6, color: '#ffffff', textAlign: 'center' }}
-            />
-            {data.map((rowItem, index) => (
-              <Row
-                key={index}
-                data={[
-                  rowItem._raw.peso.toFixed(2) || '-',
-                  rowItem._raw.altura.toFixed(2) || '-',
-                  rowItem._raw.tamanho_cabeca.toFixed(2) || '-',
-                  rowItem._raw.imc.toFixed(2) || '-',
-                  <Box justifyContent="center" alignItems="center">
-                    <Pressable onPress={() => handleEdit(index)}>
-                      <Icon as={MaterialIcons} name="edit" size="md" color="tertiary.600" />
-                    </Pressable>
-                  </Box>,
-                ]}
-                style={[{ height: 40 }, rowStyle(index)]}
-                textStyle={{ margin: 6, textAlign: 'center' }}
-              />
-            ))}
-          </Table>
-        </Box>
-      </ScrollView>
+      <Button.Group
+        isAttached
+        colorScheme="emerald"
+        my={2}
+        mx={{
+          base: 'auto',
+          md: 0,
+        }}
+        size="md">
+        <Button variant={isTable ? 'solid' : 'outline'} onPress={() => setIsTable(true)}>
+          Tabela
+        </Button>
+        <Button variant={!isTable ? 'solid' : 'outline'} onPress={() => setIsTable(false)}>
+          Grafícos
+        </Button>
+      </Button.Group>
 
-      <ButtonCircle onPress={() => setShowModal(true)} icon={'add'} />
+      {isTable && (
+        <>
+          <ScrollView>
+            <Box>
+              <Table>
+                <Row
+                  data={[
+                    'Idade (meses)',
+                    'Peso (kg)',
+                    'Altura (cm)',
+                    'Cabeça (cm)',
+                    'IMC',
+                    'Editar',
+                  ]}
+                  style={{ height: 60, backgroundColor: '#10b981' }}
+                  textStyle={{ margin: 6, color: '#ffffff', textAlign: 'center' }}
+                />
+                {data.map((rowItem, index) => (
+                  <Row
+                    key={index}
+                    data={[
+                      rowItem.idade || '',
+                      rowItem.peso.toFixed(2) || '-',
+                      rowItem.altura.toFixed(2) || '-',
+                      rowItem.tamanho_cabeca.toFixed(2) || '-',
+                      rowItem.imc.toFixed(2) || '-',
+                      <Box justifyContent="center" alignItems="center">
+                        <Pressable onPress={() => handleEdit(index)}>
+                          <Icon as={MaterialIcons} name="edit" size="md" color="tertiary.600" />
+                        </Pressable>
+                      </Box>,
+                    ]}
+                    style={[{ height: 40 }, rowStyle(index)]}
+                    textStyle={{ margin: 6, textAlign: 'center' }}
+                  />
+                ))}
+              </Table>
+            </Box>
+          </ScrollView>
+
+          <Box position="absolute" bottom={0} right={0} p={'16px'}>
+            <ButtonCircle onPress={() => setShowModal(true)} icon={'add'} />
+          </Box>
+        </>
+      )}
+
+      {!isTable && <GrowthChart customPoints={customPoints} />}
+
+      <AlertConfirm
+        showModal={showModalAlert}
+        setShowModal={setShowModalAlert}
+        setValue={handleNavigateSon}
+        title={undefined}
+        cancel={undefined}
+        successBtn={undefined}
+        footer={undefined}
+        showCloseButton={false}
+        text={'Por favor, entre com os dados da criançã primeiro!'}
+      />
 
       {/* Modal inserir dado */}
       <CustomModal

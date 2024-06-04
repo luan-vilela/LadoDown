@@ -31,7 +31,13 @@ export const criancaSchema = tableSchema({
       name: 'gestational_age',
       type: 'string',
     },
-    { name: 'created_at', type: 'number' },
-    { name: 'updated_at', type: 'number' },
+    {
+      name: 'created_at',
+      type: 'number',
+    },
+    {
+      name: 'updated_at',
+      type: 'number',
+    },
   ],
 });

@@ -19,7 +19,13 @@ export const curvaCrescimentoSchema = tableSchema({
       name: 'imc',
       type: 'number',
     },
-    { name: 'created_at', type: 'number' },
-    { name: 'updated_at', type: 'number' },
+    {
+      name: 'created_at',
+      type: 'number',
+    },
+    {
+      name: 'updated_at',
+      type: 'number',
+    },
   ],
 });

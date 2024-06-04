@@ -21,6 +21,7 @@ import Constants from 'expo-constants';
 import HeaderAdmin from '../../../components/HeaderAdmin';
 import Crianca from './partials/Crianca';
 import Tutor from './partials/Tutor';
+import { useRoute } from '@react-navigation/native';
 
 const FirstRoute = () => (
   <Center flex={1} my="4">
@@ -51,7 +52,10 @@ const renderScene = SceneMap({
 });
 
 function Profile() {
-  const [index, setIndex] = useState(0);
+  const route = useRoute();
+  const { tab } = route.params || 0;
+
+  const [index, setIndex] = useState(tab || 0);
   const [routes] = useState([
     {
       key: 'first',

@@ -1,5 +1,5 @@
 import { Model } from '@nozbe/watermelondb';
-import { date, field } from '@nozbe/watermelondb/decorators';
+import { date, field, readonly } from '@nozbe/watermelondb/decorators';
 
 export class CriancaModel extends Model {
   static table = 'criancas';
@@ -24,4 +24,12 @@ export class CriancaModel extends Model {
 
   @field('gestational_age')
   gestationalAge;
+
+  @readonly
+  @date('created_at')
+  createdAt;
+
+  @readonly
+  @date('updated_at')
+  updatedAt;
 }

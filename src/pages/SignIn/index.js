@@ -175,6 +175,7 @@ export default () => {
       try {
         const isLogged = await Api.signIn(data.email, data.password);
         if (isLogged) {
+          setLoading(false);
           if (isLogged.token) {
             setIsAuth(!isAuth);
             return;

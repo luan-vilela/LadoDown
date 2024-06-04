@@ -1,6 +1,9 @@
 import { setStore, getToken } from './auth';
 
-const BASE_API = 'http://192.168.237.70:3001';
+const BASE = process.env.EXPO_PUBLIC_API_URL;
+const BASE_API = BASE.slice(0, -1);
+
+console.log(BASE_API);
 
 export default {
   checkToken: async token => {
@@ -22,6 +25,7 @@ export default {
   },
   signIn: async (email, password) => {
     try {
+      console.log(`${BASE_API}/auth/login`);
       const req = await fetch(`${BASE_API}/auth/login`, {
         method: 'POST',
         headers: {
