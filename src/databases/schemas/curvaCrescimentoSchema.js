@@ -12,7 +12,7 @@ export const curvaCrescimentoSchema = tableSchema({
       type: 'number',
     },
     {
-      name: 'tamanho_cabeca',
+      name: 'cefalica',
       type: 'number',
     },
     {

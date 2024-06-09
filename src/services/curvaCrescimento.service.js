@@ -20,7 +20,7 @@ export const saveFormData = async data => {
         const response = await row.update(record => {
           record.peso = data.peso;
           record.altura = data.altura;
-          record.tamanhoCabeca = data.tamanhoCabeca;
+          record.cefalica = data.cefalica;
           record.imc = data.imc;
         });
         return response;
@@ -28,7 +28,7 @@ export const saveFormData = async data => {
         const response = await collections.create(record => {
           record.peso = data.peso;
           record.altura = data.altura;
-          record.tamanhoCabeca = data.tamanhoCabeca;
+          record.cefalica = data.cefalica;
           record.imc = data.imc;
         });
         return response;

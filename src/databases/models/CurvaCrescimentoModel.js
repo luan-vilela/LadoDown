@@ -10,8 +10,8 @@ export class CurvaCrescimentoModel extends Model {
   @field('altura')
   altura;
 
-  @field('tamanho_cabeca')
-  tamanhoCabeca;
+  @field('cefalica')
+  cefalica;
 
   @field('imc')
   imc;

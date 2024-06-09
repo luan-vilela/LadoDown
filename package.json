@@ -38,6 +38,7 @@
     "react-hook-form": "^7.43.9",
     "react-native": "0.69.9",
     "react-native-chart-kit": "^6.12.0",
+    "react-native-charts-wrapper": "^0.6.0",
     "react-native-device-info": "^10.13.2",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-hyperlink": "^0.0.22",

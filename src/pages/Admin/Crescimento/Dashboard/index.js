@@ -7,14 +7,14 @@ import {
   NativeBaseProvider,
   ScrollView,
   Pressable,
-  IconButton,
   Icon,
   Button,
+  View,
 } from 'native-base';
 import ButtonCircle from '../../../../components/Button/Circle';
 import HeaderAdmin from '../../../../components/HeaderAdmin';
 import CustomModal from '../../../../components/CustomModal';
-import { Table, Row, Rows } from 'react-native-table-component';
+import { Table, Row } from 'react-native-table-component';
 import AlertConfirm from '../../../../components/Modal/AlertConfirm';
 import {
   deleteFormData,
@@ -24,11 +24,11 @@ import {
 import { loadFormData as loadCrianca } from '../../../../services/crianca.service';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import ROUTES from '../../../../routes/index';
-import { formatDifference } from '../../../../utils/methods';
-import { differenceInMonths } from 'date-fns';
-import PesoChart from './charts/ChartExample';
-import GrowthChart from './charts/TestePontos';
+import { addMonths, differenceInDays, differenceInMonths, differenceInWeeks } from 'date-fns';
+
+import Chart from './chart';
+import HeadCircumferenceChart from './grafico5';
+import { DATA_CRESCIMENTO } from '../../../../mock/mock';
 
 export default () => {
   const navigation = useNavigation();
@@ -47,18 +47,17 @@ export default () => {
   const handleRemoveData = async () => {
     if (editIndex) {
       setIsLoadingDel(true);
-      const id = data[editIndex]._raw.id;
-      const response = await deleteFormData(id);
+      await deleteFormData(editIndex);
       loadingData();
     }
   };
 
   const handleEdit = index => {
-    const rowData = data[index]._raw;
+    const rowData = data[index];
     setAddPeso(rowData.peso.toFixed(2));
     setAddAltura(rowData.altura.toFixed(2));
-    setAddCabeca(rowData.tamanho_cabeca.toFixed(2));
-    setEditIndex(index);
+    setAddCabeca(rowData.cefalica.toFixed(2));
+    setEditIndex(rowData.id);
     setShowModal(true);
   };
 
@@ -70,12 +69,12 @@ export default () => {
     const post = {
       peso: pesoKg,
       altura: Number(addAltura),
-      tamanhoCabeca: Number(addCabeca),
+      cefalica: Number(addCabeca),
       imc: imc,
     };
 
     if (editIndex) {
-      post['id'] = data[editIndex]._raw.id;
+      post['id'] = editIndex;
     }
     setIsLoading(true);
     await saveFormData(post);
@@ -95,14 +94,23 @@ export default () => {
     }
 
     const response = await loadFormData();
+    // DEBUG
+    // const response = DATA_CRESCIMENTO.map(item => {
+    //   return { _raw: item };
+    // });
 
-    const date1 = new Date(crianca.dateOfBirth);
+    const birth = crianca.dateOfBirth;
 
     const responseFormated = response.map(crescimento => {
-      const date2 = new Date(crescimento._raw.updated_at);
-      const months = differenceInMonths(date2, date1);
+      const createdAt = new Date(crescimento._raw.created_at);
 
-      return { idade: months, ...crescimento._raw };
+      const ageMonths = differenceInMonths(createdAt, birth); // Idade em meses
+      const ageWeeks = differenceInWeeks(createdAt, birth); // Idade em semanas
+      // Calcula o início do mês atual desde o nascimento
+      const monthStart = addMonths(birth, ageMonths);
+      const day = differenceInDays(createdAt, monthStart); // Dias no mês atual
+
+      return { age: ageMonths, ageWeeks: ageWeeks, day: day, ...crescimento._raw };
     });
 
     setData(responseFormated);
@@ -132,11 +140,6 @@ export default () => {
   useEffect(() => {
     loadingData();
   }, [isTable, crianca]);
-
-  const customPoints = [
-    { age: 2, value: 5.1 },
-    { age: 4, value: 7.3 },
-  ];
 
   return (
     <NativeBaseProvider>
@@ -180,10 +183,10 @@ export default () => {
                   <Row
                     key={index}
                     data={[
-                      rowItem.idade || '',
+                      rowItem.age || '0',
                       rowItem.peso.toFixed(2) || '-',
                       rowItem.altura.toFixed(2) || '-',
-                      rowItem.tamanho_cabeca.toFixed(2) || '-',
+                      rowItem.cefalica.toFixed(2) || '-',
                       rowItem.imc.toFixed(2) || '-',
                       <Box justifyContent="center" alignItems="center">
                         <Pressable onPress={() => handleEdit(index)}>
@@ -205,7 +208,12 @@ export default () => {
         </>
       )}
 
-      {!isTable && <GrowthChart customPoints={customPoints} />}
+      {!isTable && (
+        <View style={{ flex: 1 }}>
+          <Chart customPoints={data} menino={crianca.sex} />
+          {/* <HeadCircumferenceChart /> */}
+        </View>
+      )}
 
       <AlertConfirm
         showModal={showModalAlert}
