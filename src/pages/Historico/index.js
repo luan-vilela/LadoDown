@@ -52,7 +52,7 @@ export default function Historico() {
 
   return (
     <NativeBaseProvider>
-      <HeaderAdmin title={'Histórico Paciente'} />
+      <HeaderAdmin title={'Histórico da Criança'} />
       <View style={styles.container}>
       <View style={styles.tabela}>
 

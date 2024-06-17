@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Button, VStack, Stack, HStack, NativeBaseProvider, Center } from 'native-base';
-import { ScrollView, ImageBackground, View } from 'react-native';
+import { Text, NativeBaseProvider, Center } from 'native-base';
+import { ScrollView, ImageBackground, View, Animated } from 'react-native';
 import styles from './styles';
 import HeaderAdmin from '../../components/HeaderAdmin';
 import Services from '../../services/Services';
@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 export default ({ route }) => {
   const { itemId } = route.params;
   const [comments, setComments] = useState({ subTitulo: '', descricao: '', imagemPequena: '' });
+  const scrollY = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
     fetchComments();
@@ -30,57 +31,55 @@ export default ({ route }) => {
     <NativeBaseProvider>
       <HeaderAdmin title={'Tópicos'} />
       <Center flex={1} top={5}>
-        <Home comments={comments} />
+        <Home comments={comments} scrollY={scrollY} />
       </Center>
     </NativeBaseProvider>
   );
 };
 
-const Home = ({ comments }) => {
+const Home = ({ comments, scrollY }) => {
   return (
     <View style={styles.estilo.container}>
-      <ScrollView>
-        <Text top={1} style={styles.estilo.titulo}>{comments.subTitulo}</Text>
-        <ImageBackground 
-          source={comments.imagemPequena ? { uri: comments.imagemPequena } : null}
-          resizeMode="cover"
-          style={styles.estilo.image}></ImageBackground>
-        <Text>Por {comments.autor} - Campo Grande/MS</Text>
-        <Text>{comments.updated_at} Atualizado </Text>
+      <ScrollView
+        nestedScrollEnabled={false}
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [
+            {
+              nativeEvent: {
+                contentOffset: { y: scrollY },
+              },
+            },
+          ],
+          { useNativeDriver: false }
+        )}>
+        <Text style={styles.estilo.titulo}>{comments.subTitulo}</Text>
+        {comments.imagemPequena ? (
+          <ImageBackground
+            source={{ uri: comments.imagemPequena }}
+            resizeMode="cover"
+            style={styles.estilo.image}
+          />
+        ) : null}
+        <Text style={styles.estilo.author}>Por {comments.autor} - Campo Grande/MS</Text>
+        <Text style={styles.estilo.date}>{comments.updated_at} Atualizado</Text>
 
-        <Text style={styles.estilo.subTitulo}>{comments.subDescricao}</Text>
-        <Text>{comments.descricao}</Text>
+        {comments.subDescricao ? (
+          <>
+            <Text style={styles.estilo.subTitulo}>{comments.subDescricao}</Text>
+            <Text style={styles.estilo.descricao}>{comments.descricao}</Text>
+          </>
+        ) : null}
 
-        <Text style={styles.estilo.subTitulo}>{comments.subDescricao}</Text>
-        <Text>{comments.descricao}</Text>
+        {comments.imagemPequena ? (
+          <ImageBackground
+            source={{ uri: comments.referencia }}
+            resizeMode="cover"
+            style={styles.estilo.image}
+          />
+        ) : null}
 
-        {/* <HStack width="100%">
-          <Stack
-            mb="2.5"
-            mt="1.5"
-            direction={{
-              base: 'row',
-              md: 'row',
-            }}
-            space={2}
-            mx={{
-              base: 'auto',
-              md: '0',
-            }}>
-            <Button size="sm" colorScheme="green">
-              Cultura
-            </Button>
-            <Button size="sm" colorScheme="green">
-              Saber
-            </Button>
-            <Button size="sm" colorScheme="green">
-              Saúde
-            </Button>
-          </Stack>
-        </HStack> */}
-        <View>
-          <Footer />
-        </View>
+        {/* <Footer /> */}
       </ScrollView>
     </View>
   );
