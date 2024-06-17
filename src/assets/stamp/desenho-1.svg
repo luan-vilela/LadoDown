@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="76.226067mm"
+   height="76.226067mm"
+   viewBox="0 0 76.226067 76.226067"
+   version="1.1"
+   id="svg22341"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs22338">
+    <rect
+       x="369.73965"
+       y="585.52979"
+       width="428.20383"
+       height="389.51624"
+       id="rect23631" />
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-3.900777,-65.232073)">
+    <g
+       id="XMLID_7168_"
+       transform="matrix(0.26458333,0,0,0.26458333,69.395154,47.986916)">		
+	<circle
+   style="fill:none;stroke:#000000;stroke-width:3.77953"
+   id="path22966"
+   cx="-103.48854"
+   cy="209.22781"
+   r="142.1595" />
+<path
+   style="fill:none;stroke:#000000;stroke-width:3.33553"
+   d="m -212.95142,218.07521 c 0,0 5.44077,-114.93384 108.1462,-115.62857 C -2.4044065,101.754 5.3467338,213.53283 5.3467338,213.53283"
+   id="path23170" />
+<text
+   xml:space="preserve"
+   style="font-weight:bold;font-size:32px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;stroke:none;stroke-width:3.77953"
+   id="text23174"><textPath
+     xlink:href="#path23170"
+     startOffset="50%"
+     id="textPath23176"><tspan
+       id="tspan23172"
+       style="text-align:center;text-anchor:middle">123456789123456</tspan></textPath></text>
+<path
+   style="fill:none;stroke:#000000;stroke-width:3.67717"
+   d="m -231.94319,219.33132 c 0,0 6.39996,118.74938 127.21192,119.46716 C 15.722366,339.51412 24.84,224.02447 24.84,224.02447"
+   id="path23170-5" />
+<text
+   xml:space="preserve"
+   style="font-weight:bold;font-size:32px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#000000;stroke:none;stroke-width:3.77953"
+   id="text23174-9"><textPath
+     xlink:href="#path23170-5"
+     startOffset="50%"
+     id="textPath23176-2"><tspan
+       id="tspan23172-2"
+       style="text-align:center;text-anchor:middle">123456789123456</tspan></textPath></text>
+<text
+   xml:space="preserve"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.3333px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:3.77953"
+   id="text23593"
+   y="237.50049"
+   x="-102.46428"><tspan
+     id="tspan23591"
+     x="-102.46428"
+     y="237.50049">244DEZ24</tspan></text>
+<text
+   xml:space="preserve"
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:29.3333px;font-family:sans-serif;-inkscape-font-specification:sans-serif;text-align:center;text-anchor:middle;fill:#000000;stroke:none;stroke-width:3.77953"
+   id="text23593-3"
+   y="223.94258"
+   x="-102.43846"><tspan
+     id="tspan23591-6"
+     x="-102.43846"
+     y="223.94258"
+     style="font-size:29.3333px">24D24</tspan></text>
+</g>
+  </g>
+</svg>

@@ -1,61 +1,36 @@
 import React from 'react';
-import {
-  VStack,
-  HStack,
-  Badge,
-  IconButton,
-  Icon,
-  Text,
-  NativeBaseProvider,
-  Center,
-  Box,
-  Heading,
-  ScrollView,
-} from 'native-base';
-import { MaterialIcons } from '@expo/vector-icons';
-import ROUTES from '../../routes';
-import { useNavigation } from '@react-navigation/native';
-import Badge_Custom from '../Badge_Custom';
+import { ScrollView, Text, View } from 'react-native';
+import * as S from './style';
+import { VACCINES } from '../../mock/vaccines';
 
-function Table() {
-  const navigation = useNavigation();
-  return (
-    <HStack>
-      <VStack h={'100%'} mr="3">
-        <Text flex={1}> </Text>
-        <Text flex={1}>1ª Dose</Text>
-        <Text flex={1}>2ª Dose</Text>
-        <Text flex={1}>3ª Dose</Text>
-        <Text flex={1}>Reforço</Text>
-        <Text flex={1}>Outras</Text>
-      </VStack>
+const TabelaVacina = () => {
+  const vaccines = VACCINES;
 
-      {/* Table */}
-      <ScrollView>
-        <VStack>
-          <Text>1 Semana</Text>
-          <Badge_Custom text={'100%'} percentage={100} />
-          <Badge_Custom text={'50%'} percentage={50} />
-          <Badge_Custom text={'0%'} percentage={0} />
-          <Badge_Custom text={'85%'} percentage={85} />
-          <Badge_Custom text={'9%'} percentage={9} />
-        </VStack>
-        <VStack>
-          <Text>1 Semana</Text>
-          <Badge_Custom text={'100%'} percentage={100} />
-          <Badge_Custom text={'50%'} percentage={50} />
-          <Badge_Custom text={'0%'} percentage={0} />
-          <Badge_Custom text={'85%'} percentage={85} />
-          <Badge_Custom text={'9%'} percentage={9} />
-        </VStack>
-      </ScrollView>
-    </HStack>
-  );
-}
-export default () => {
   return (
-    <HStack px="1" flex={1}>
-      <Table />
-    </HStack>
+    <ScrollView horizontal={true}>
+      {/* <S.CardContainer> */}
+      <S.TableContainer>
+        {vaccines.map((vaccine, index) => (
+          <S.TableItem key={index}>
+            <S.TableHeader>{vaccine.vacina}</S.TableHeader>
+            <S.Register>
+              {vaccine.esquemaDosagem.map((esquema, index) => (
+                <S.RegisterItem key={esquema.id}>
+                  <S.Dose>{esquema.dose}</S.Dose>
+                  <S.RegisterDate>
+                    <Text>Data: __/__/____ </Text>
+                    <Text>Lote: </Text>
+                    <Text>Unidade: </Text>
+                  </S.RegisterDate>
+                </S.RegisterItem>
+              ))}
+            </S.Register>
+          </S.TableItem>
+        ))}
+      </S.TableContainer>
+      {/* </S.CardContainer> */}
+    </ScrollView>
   );
 };
+
+export default TabelaVacina;

@@ -3,21 +3,26 @@ import { database } from '../databases/index';
 const collections = database.get('criancas');
 
 export const loadFormData = async () => {
-  const response = await collections.query().fetch();
-  const data = response[0];
+  try {
+    const response = await collections.query().fetch();
+    const data = response[0];
 
-  const responseData = {
-    id: data.id,
-    name: data.name,
-    sex: data.sex,
-    dateOfBirth: data.dateOfBirth,
-    birthWeight: data.birthWeight,
-    birthLength: data.birthLength,
-    headCircumferenceAtBirth: data.headCircumferenceAtBirth,
-    gestationalAge: data.gestationalAge,
-  };
+    const responseData = {
+      id: data.id,
+      name: data.name,
+      sex: data.sex,
+      dateOfBirth: data.dateOfBirth,
+      birthWeight: data.birthWeight,
+      birthLength: data.birthLength,
+      headCircumferenceAtBirth: data.headCircumferenceAtBirth,
+      gestationalAge: data.gestationalAge,
+    };
 
-  return responseData;
+    return responseData;
+  } catch (err) {
+    console.error(`Erro ao carregar dados da criança: ${err}`);
+    return null;
+  }
 };
 
 export const saveFormData = async data => {
