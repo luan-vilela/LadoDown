@@ -11,24 +11,22 @@ import {
   Button,
   View,
 } from 'native-base';
-import ButtonCircle from '../../../../components/Button/Circle';
-import HeaderAdmin from '../../../../components/HeaderAdmin';
-import CustomModal from '../../../../components/CustomModal';
+import ButtonCircle from '../../../components/Button/Circle';
+import HeaderAdmin from '../../../components/HeaderAdmin';
+import CustomModal from '../../../components/CustomModal';
 import { Table, Row } from 'react-native-table-component';
-import AlertConfirm from '../../../../components/Modal/AlertConfirm';
+import AlertConfirm from '../../../components/Modal/AlertConfirm';
 import {
   deleteFormData,
   loadFormData,
   saveFormData,
-} from '../../../../services/curvaCrescimento.service';
-import { loadFormData as loadCrianca } from '../../../../services/crianca.service';
+} from '../../../services/curvaCrescimento.service';
+import { loadFormData as loadCrianca } from '../../../services/crianca.service';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { addMonths, differenceInDays, differenceInMonths, differenceInWeeks } from 'date-fns';
 
 import Chart from './chart';
-import HeadCircumferenceChart from './grafico5';
-import { DATA_CRESCIMENTO } from '../../../../mock/mock';
 
 export default () => {
   const navigation = useNavigation();
@@ -211,7 +209,6 @@ export default () => {
       {!isTable && (
         <View style={{ flex: 1 }}>
           <Chart customPoints={data} menino={crianca.sex} />
-          {/* <HeadCircumferenceChart /> */}
         </View>
       )}
 

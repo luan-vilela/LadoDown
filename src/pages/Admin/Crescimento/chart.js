@@ -1,17 +1,16 @@
-import { getTableDate } from '../../../../mock/tables/index';
+import { getTableDate } from '../../../mock/tables/index';
 import { Box, Center, CheckIcon, Select, View, Text } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { processColor } from 'react-native';
 import { LineChart } from 'react-native-charts-wrapper';
 
 const Chart = ({ customPoints, menino }) => {
+  const COLOR_PICK = '#054FDD';
   const [points, setPoints] = useState([]);
   const [curvaType, setCurvaType] = React.useState('peso');
 
-  // Dados para pltar a linha
-  const dataDown = getTableDate(menino, curvaType, true);
-
-  console.log(curvaType, menino);
+  // Dados para plotar a linha
+  const tablePlot = getTableDate(menino, curvaType, true);
 
   const nameGraphics = {
     peso: {
@@ -69,7 +68,7 @@ const Chart = ({ customPoints, menino }) => {
   };
 
   const plotGraphic = () => {
-    return dataDown.map(line => {
+    return tablePlot.map(line => {
       return {
         values: line.pontos.map(({ age, value }) => ({ x: age, y: value })),
         label: line.label,
@@ -92,12 +91,12 @@ const Chart = ({ customPoints, menino }) => {
         label: 'Meus Pontos',
         config: {
           valueTextSize: 12,
-          valueTextColor: processColor('blue'),
-          color: processColor('blue'), // Cor dos pontos
+          valueTextColor: processColor(COLOR_PICK),
+          color: processColor(COLOR_PICK), // Cor dos pontos
           drawValues: true,
           drawCircles: true, // Ativar/desativar pontos
           mode: 'LINEAR',
-          circleColor: processColor('blue'),
+          circleColor: processColor(COLOR_PICK),
           circleRadius: 6,
           lineWidth: 3,
           drawCircleHole: false,
