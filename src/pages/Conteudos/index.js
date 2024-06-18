@@ -35,8 +35,8 @@ const Conteudo = ({ post }) => {
           borderColor: 'coolGray.100',
         }}>
         <VStack w="100%">
-          {post.tituloPrincipal !== undefined && post.tituloPrincipal !== '' ? (
-            <Text style={styles.estilo.titulo}>{post.tituloPrincipal}</Text>
+          {post.tituloPrincipal === undefined && post.tituloPrincipal === '' ? (
+            <Text style={styles.estilo.titulo}>Síndrome de Down: características e como promover a qualidade de vida</Text>
           ) : null}
 
           {post.imagemGrande !== undefined && post.imagemGrande !== '' ? (
@@ -125,6 +125,7 @@ export default function FormValidation() {
         )}
         horizontal={false}>
         <Center flex={1}>
+        <Text style={styles.estilo.titulo}>Síndrome de Down: características e como promover a qualidade de vida</Text>
           <FlatList
             horizontal={false}
             data={post}
