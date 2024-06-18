@@ -106,9 +106,7 @@ const App = () => {
         <HeaderAdmin title={'Fórum'} />
         <SafeAreaView style={styles.estilo.container}>
           <Text style={styles.estilo.title}>Últimas discussões</Text>
-          <Box position="absolute" top={0} right={0} p={2}>
-            <ButtonCircle onPress={() => setModalVisible(true)} icon={'add'} />
-          </Box>
+      
           {isLoading ? (
             <View style={styles.estilo.activityIndicatorContainer}>
               <ActivityIndicator size="large" color="#0000ff" />
@@ -120,12 +118,11 @@ const App = () => {
                 data={listaOne}
                 renderItem={renderItemA}
                 keyExtractor={item => item.id}
-                style={{ marginBottom: 10, top: 25 }} // Adiciona uma margem inferior de 10 unidades
+                style={{ marginBottom: 50, top: 25 }} // Adiciona uma margem inferior de 10 unidades
               />
 
-              <Divider bottom={-20} />
 
-              <Text style={styles.estilo.title2}>Discussões mais comentadas</Text>
+              <Text style={styles.estilo.title}>Discussões mais comentadas</Text>
               <FlatList
                 horizontal
                 data={listaTwo}
@@ -136,11 +133,14 @@ const App = () => {
             </>
           )}
         </SafeAreaView>
-        <View>
+     
+        <View >
           <Footer />
         </View>
       </ScrollView>
-
+      <Box style={styles.estilo.addButton}>
+            <ButtonCircle onPress={() => setModalVisible(true)} icon={'add'}  />
+          </Box>
       <Modal
         isOpen={modalVisible}
         onClose={() => setModalVisible(false)}

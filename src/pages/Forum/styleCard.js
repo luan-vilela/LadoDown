@@ -5,10 +5,15 @@ const estilo = StyleSheet.create({
     display: 'flex',
     backgroundColor: '#10b981',
   },
+  addButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
   card: {
     top: 10,
     paddingHorizontal: 10,
-    width: 350,
+    width: 300,
     margin: 5,
   },
   cardContainer: {
