@@ -88,7 +88,6 @@ const App = () => {
   return (
     <NativeBaseProvider>
       <ScrollView
-        nestedScrollEnabled={false}
         scrollEventThrottle={16}
         onScroll={Animated.event(
           [
@@ -106,7 +105,7 @@ const App = () => {
         <HeaderAdmin title={'Fórum'} />
         <SafeAreaView style={styles.estilo.container}>
           <Text style={styles.estilo.title}>Últimas discussões</Text>
-      
+
           {isLoading ? (
             <View style={styles.estilo.activityIndicatorContainer}>
               <ActivityIndicator size="large" color="#0000ff" />
@@ -114,6 +113,7 @@ const App = () => {
           ) : (
             <>
               <FlatList
+                showsHorizontalScrollIndicator={false}
                 horizontal
                 data={listaOne}
                 renderItem={renderItemA}
@@ -121,9 +121,9 @@ const App = () => {
                 style={{ marginBottom: 50, top: 25 }} // Adiciona uma margem inferior de 10 unidades
               />
 
-
               <Text style={styles.estilo.title}>Discussões mais comentadas</Text>
               <FlatList
+                showsHorizontalScrollIndicator={false}
                 horizontal
                 data={listaTwo}
                 renderItem={renderItemB}
@@ -133,14 +133,14 @@ const App = () => {
             </>
           )}
         </SafeAreaView>
-     
-        <View >
+
+        <View>
           <Footer />
         </View>
       </ScrollView>
       <Box style={styles.estilo.addButton}>
-            <ButtonCircle onPress={() => setModalVisible(true)} icon={'add'}  />
-          </Box>
+        <ButtonCircle onPress={() => setModalVisible(true)} icon={'add'} />
+      </Box>
       <Modal
         isOpen={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -198,8 +198,10 @@ const Card = ({ titulo }) => {
         <View style={styles.estilo.cardContainer}>
           <View style={styles.estilo.content}>
             <Text style={styles.estilo.nome}>{titulo.nome}</Text>
-            <Divider />
-            <Text style={styles.estilo.descricao}>{titulo.pergunta}</Text>
+            {/* <Divider/> */}
+            <View style={styles.estilo.description}>
+              <Text style={styles.estilo.descricao}>{titulo.pergunta}</Text>
+            </View>
           </View>
           <View style={styles.estilo.footer}>
             <Ionicons name="chatbox-ellipses-outline" color={'white'} size={18} />

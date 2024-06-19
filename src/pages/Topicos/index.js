@@ -48,9 +48,7 @@ const App = ({ route }) => {
 };
 
 const Home = ({ comments, scrollY }) => {
-  // Split the description text into paragraphs
   const paragraphs = comments.descricao.split('. ').map((paragraph, index, arr) => {
-    // Add the period back to the end of each paragraph except the last one
     return paragraph + (index < arr.length - 1 ? '. ' : '');
   });
 
@@ -73,7 +71,7 @@ const Home = ({ comments, scrollY }) => {
         {comments.imagemPequena ? (
           <ImageBackground
             source={{ uri: comments.imagemPequena }}
-            resizeMode="cover"
+            imageStyle={{resizeMode:"cover", }}
             style={styles.estilo.image}
           />
         ) : null}
