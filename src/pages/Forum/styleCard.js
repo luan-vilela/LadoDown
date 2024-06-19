@@ -3,12 +3,18 @@ import { StyleSheet } from 'react-native';
 const estilo = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: '#10b981',
+    padding: 10,
+    marginBottom: 30,
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
   },
   card: {
     top: 10,
     paddingHorizontal: 10,
-    width: 350,
+    width: 300,
     margin: 5,
   },
   cardContainer: {
@@ -16,7 +22,6 @@ const estilo = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 25,
     overflow: 'hidden',
-    transform: [{ rotateX: '8deg' }], // Ajustando a rotação para um efeito mais sutil
     background: `linear-gradient(to bottom right, #0ea774, #0ea7a4)`,
   },
   header: {
@@ -49,22 +54,23 @@ const estilo = StyleSheet.create({
     padding: 10,
   },
   nome: {
-    top: 5,
-    color: '#000000', // Definindo a cor do texto como preto
+    color: '#10b981', // Definindo a cor do texto como preto
     fontSize: 18, // Aumentando um pouco o tamanho da fonte para maior destaque
-    fontWeight: '700', // Usando um valor mais robusto para o peso da fonte
+    fontWeight: '600', // Usando um valor mais robusto para o peso da fonte
     textAlign: 'center',
-    textTransform: 'uppercase', // Convertendo o texto para maiúsculas para uma aparência mais forte
-    letterSpacing: 1, // Adicionando um pequeno espaçamento entre as letras para melhor legibilidade
-    marginBottom: 2,
-    fontFamily: 'sans-serif', // Definindo a fonte como sans-serif
+    textTransform: 'capitalize', // Convertendo o texto para maiúsculas para uma aparência mais forte
+  },
+  description: {
+    width: '100%',
+    height: '75%',
+    marginBottom: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   descricao: {
-    top: 10,
-    fontSize: 15, // Aumentando um pouco o tamanho da fonte para melhor legibilidade
+    fontSize: 16, // Aumentando um pouco o tamanho da fonte para melhor legibilidade
     color: '#000000', // Definindo a cor do texto como preto
-    textAlign: 'justify',
-    fontFamily: 'sans-serif', // Definindo a fonte como sans-serif
+    textAlign: 'center',
   },
   footer: {
     position: 'absolute',
@@ -74,7 +80,7 @@ const estilo = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Adicionando um fundo semitransparente para melhor contraste com o conteúdo
+    backgroundColor: '#10b981',
     paddingVertical: 10, // Adicionando espaço vertical ao redor do conteúdo do rodapé
   },
   footerText: {

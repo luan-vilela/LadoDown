@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Text, NativeBaseProvider, Center } from 'native-base';
-import { ScrollView, ImageBackground, View, Animated } from 'react-native';
+import { ScrollView, ImageBackground, View, Animated, Linking } from 'react-native';
+import { WebView } from 'react-native-webview';
 import styles from './styles';
 import HeaderAdmin from '../../components/HeaderAdmin';
 import Services from '../../services/Services';
 import Footer from '../../components/Footer';
 
-export default ({ route }) => {
+const App = ({ route }) => {
   const { itemId } = route.params;
-  const [comments, setComments] = useState({ subTitulo: '', descricao: '', imagemPequena: '' });
+  const [comments, setComments] = useState({
+    subTitulo: '',
+    descricao: '',
+    imagemPequena: '',
+    autor: '',
+    updated_at: '',
+    subDescricao: '',
+    referencia: '',
+    tituloPrincipal: '', // Adicionando campo para o link do vídeo
+  });
   const scrollY = useState(new Animated.Value(0))[0];
 
   useEffect(() => {
@@ -38,6 +48,10 @@ export default ({ route }) => {
 };
 
 const Home = ({ comments, scrollY }) => {
+  const paragraphs = comments.descricao.split('. ').map((paragraph, index, arr) => {
+    return paragraph + (index < arr.length - 1 ? '. ' : '');
+  });
+
   return (
     <View style={styles.estilo.container}>
       <ScrollView
@@ -57,7 +71,7 @@ const Home = ({ comments, scrollY }) => {
         {comments.imagemPequena ? (
           <ImageBackground
             source={{ uri: comments.imagemPequena }}
-            resizeMode="cover"
+            imageStyle={{resizeMode:"cover", }}
             style={styles.estilo.image}
           />
         ) : null}
@@ -67,20 +81,41 @@ const Home = ({ comments, scrollY }) => {
         {comments.subDescricao ? (
           <>
             <Text style={styles.estilo.subTitulo}>{comments.subDescricao}</Text>
-            <Text style={styles.estilo.descricao}>{comments.descricao}</Text>
+            {paragraphs.map((paragraph, index) => (
+              <Text key={index} style={styles.estilo.descricao}>
+                {paragraph}
+              </Text>
+            ))}
           </>
         ) : null}
 
-        {comments.imagemPequena ? (
-          <ImageBackground
-            source={{ uri: comments.referencia }}
-            resizeMode="cover"
-            style={styles.estilo.image}
-          />
-        ) : null}
+        {/* Renderização do vídeo */}
+        {comments.tituloPrincipal && (
+          <>
+            <Text style={styles.estilo.subTitulo}>Saiba mais no vídeo abaixo:</Text>
+            <View style={{ height: 200, width: '100%', marginBottom: 20 }}>
+              <WebView
+                source={{ uri: comments.tituloPrincipal }}
+                style={{ flex: 1 }}
+              />
+            </View>
+          </>
+        )}
 
-        {/* <Footer /> */}
+        {/* Renderização do link de referência */}
+        {comments.referencia && (
+          <Text style={styles.estilo.referencia}>
+            Para mais informações, visite{' '}
+            <Text
+              style={styles.estilo.link}
+              onPress={() => Linking.openURL(comments.referencia)}>
+              Movimento Down
+            </Text>.
+          </Text>
+        )}
       </ScrollView>
     </View>
   );
 };
+
+export default App;

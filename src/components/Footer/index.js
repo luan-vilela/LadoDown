@@ -9,11 +9,11 @@ export default () => {
 
   return (
     <View style={styles.footer}>
-      <View style={styles.socialMediaContainer}>
+      {/* <View style={styles.socialMediaContainer}>
         <Text style={styles.socialMediaText}>Redes Sociais</Text>
-      </View>
+      </View> */}
 
-      <View style={styles.iconContainer}>
+      {/* <View style={styles.iconContainer}>
         <TouchableOpacity onPress={() => console.log("Facebook pressed")}>
           <Ionicons name="logo-facebook" size={24} color="white" />
         </TouchableOpacity>
@@ -23,7 +23,7 @@ export default () => {
         <TouchableOpacity onPress={() => console.log("Twitter pressed")}>
           <Ionicons name="logo-twitter" size={24} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.navigate("FaleConosco")}>

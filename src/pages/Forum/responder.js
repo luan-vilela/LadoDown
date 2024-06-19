@@ -84,7 +84,7 @@ export default ({ route }) => {
         <Box alignItems="center" mt={1}>
           <View style={styles.estilo.card}>
             <View style={styles.estilo.content}>
-              <Box alignItems="flex-start">
+              <Box alignItems="center">
                 <Text style={{ fontSize: 18, fontFamily: 'sans-serif' }}>{dados.nome}</Text>
               </Box>
               <Divider />
@@ -92,7 +92,7 @@ export default ({ route }) => {
                 {dados.pergunta}
               </Text>
             </View>
-            <Box position="absolute" bottom={0} right={0} p={2}>
+            <Box position="absolute"  alignItems="center" bottom={0} right={"30%"} left={"30%"} p={5}>
               <Button onPress={() => setModalVisible(true)}>Responder</Button>
             </Box>
           </View>
