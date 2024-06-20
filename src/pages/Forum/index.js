@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, Text, Animated, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -26,53 +26,56 @@ const App = () => {
   const [listaTwo, setListaTwo] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const initialRef = React.useRef(null);
-  const finalRef = React.useRef(null);
+  const initialRef = useRef(null);
+
+  const finalRef = useRef(null);
   const [pergunta, setPergunta] = useState('');
 
-  const fetchForumData = () => {
+  const fetchForumData = async () => {
     setIsLoading(true);
-    Services.get('/forum')
-      .then(res => {
-        const listaA = [...res.data];
-        const listaB = [...res.data];
+    try {
+      const res = await Services.get('/forum');
+      const listaA = [...res.data];
+      const listaB = [...res.data];
 
-        const sortedByCreatedAt = listaA.sort((a, b) => {
-          const dateA = new Date(a.created_at).toISOString();
-          const dateB = new Date(b.created_at).toISOString();
-          return dateB.localeCompare(dateA);
-        });
-        setListaOne(sortedByCreatedAt);
-
-        const sortedByQtdComentario = listaB.sort((a, b) => b.qtd_comentario - a.qtd_comentario);
-        setListaTwo(sortedByQtdComentario);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        Alert.alert('Erro', 'Não foi possível carregar os dados!', error);
-        setIsLoading(false);
+      const sortedByCreatedAt = listaA.sort((a, b) => {
+        const dateA = new Date(a.created_at).toISOString();
+        const dateB = new Date(b.created_at).toISOString();
+        return dateB.localeCompare(dateA);
       });
+      setListaOne(sortedByCreatedAt);
+
+      const sortedByQtdComentario = listaB.sort((a, b) => b.qtd_comentario - a.qtd_comentario);
+      setListaTwo(sortedByQtdComentario);
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível carregar os dados!');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const postForum = () => {
+  const postForum = async () => {
     setIsLoading(true);
-    if (!pergunta.trim()) return;
+    if (!pergunta.trim()) {
+      Alert.alert('Erro', 'A pergunta não pode estar vazia!');
+      setIsLoading(false);
+      return;
+    }
 
-    Services.salvarRegistro('/forum', {
-      nome: 'Paulo Lorenço',
-      pergunta: pergunta,
-    })
-      .then(res => {
-        if (res) {
-          fetchForumData();
-          setModalVisible(false);
-          setIsLoading(false);
-        }
-      })
-      .catch(error => {
-        Alert.alert('Erro', 'Não foi possível carregar os dados!', error);
-        setIsLoading(false);
+    try {
+      const res = await Services.salvarRegistro('/forum', {
+        nome: 'Paulo Lorenço',
+        pergunta: pergunta,
       });
+      if (res) {
+        fetchForumData();
+        setModalVisible(false);
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível salvar a pergunta!');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -118,7 +121,7 @@ const App = () => {
                 data={listaOne}
                 renderItem={renderItemA}
                 keyExtractor={item => item.id}
-                style={{ marginBottom: 50, top: 25 }} // Adiciona uma margem inferior de 10 unidades
+                style={{ marginBottom: 50, top: 25 }} // Adiciona uma margem inferior de 50 unidades
               />
 
               <Text style={styles.estilo.title}>Discussões mais comentadas</Text>
@@ -134,9 +137,7 @@ const App = () => {
           )}
         </SafeAreaView>
 
-        <View>
-          <Footer />
-        </View>
+        <Footer />
       </ScrollView>
       <Box style={styles.estilo.addButton}>
         <ButtonCircle onPress={() => setModalVisible(true)} icon={'add'} />
@@ -164,12 +165,7 @@ const App = () => {
           </Modal.Body>
           <Modal.Footer>
             <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setModalVisible(false);
-                }}>
+              <Button variant="ghost" colorScheme="blueGray" onPress={() => setModalVisible(false)}>
                 Voltar
               </Button>
               <Button onPress={postForum}>Salvar</Button>
@@ -198,14 +194,17 @@ const Card = ({ titulo }) => {
         <View style={styles.estilo.cardContainer}>
           <View style={styles.estilo.content}>
             <Text style={styles.estilo.nome}>{titulo.nome}</Text>
-            {/* <Divider/> */}
             <View style={styles.estilo.description}>
               <Text style={styles.estilo.descricao}>{titulo.pergunta}</Text>
             </View>
           </View>
           <View style={styles.estilo.footer}>
-            <Ionicons name="chatbox-ellipses-outline" color={'white'} size={18} />
-            <Text style={styles.estilo.footerText}>{titulo.qtd_comentario} Comentários</Text>
+            <Ionicons name="chatbox-ellipses-outline" color={'#10b981'} size={18} />
+            <Text style={styles.estilo.footerText}>
+              {titulo.qtd_comentario > 1
+                ? `${titulo.qtd_comentario} Comentários`
+                : `${titulo.qtd_comentario} Comentário`}
+            </Text>
           </View>
         </View>
       </View>

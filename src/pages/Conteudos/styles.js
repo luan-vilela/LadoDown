@@ -2,9 +2,10 @@ import { StyleSheet } from "react-native";
 
 const estilo = StyleSheet.create({
   titulo: {
-    backgroundColor: "#12AC6B",
-    color: "white",
+    textAlign: 'center',
+    color: "#12AC6B",
     padding: 10,
+    fontSize: 20,
     borderRadius: 8,
     marginBottom: 10,
     fontWeight: "bold",
