@@ -24,6 +24,7 @@ export default function AlertaScreen() {
   const [processList, setProcessList] = useState([]);
   const [showConfirm, setShowConfirm] = useState(false);
   const [id, setId] = useState();
+  const [isEmpty, setIsEmpty] = useState(false); // Estado para controlar se a lista está vazia
 
   const requestNotificationPermission = async () => {
     try {
@@ -47,6 +48,7 @@ export default function AlertaScreen() {
     try {
       const agendaData = await database.get('agenda').query().fetch();
       setProcessList(agendaData);
+      setIsEmpty(agendaData.length === 0); // Verifica se a lista está vazia
     } catch (error) {
       console.error('Erro ao buscar os dados da agenda:', error);
     }
@@ -99,12 +101,16 @@ export default function AlertaScreen() {
       <HeaderAdmin title={'Alertas'} />
 
       <View style={styles.container}>
-        <FlatList
-          data={processList}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={{ padding: 20 }}
-        />
+        {isEmpty ? ( // Renderiza a mensagem quando a lista estiver vazia
+          <Text style={styles.emptyMessage}>Nenhum alerta encontrado.</Text>
+        ) : (
+          <FlatList
+            data={processList}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={{ padding: 20 }}
+          />
+        )}
 
         <ButtonCircle onPress={() => setShowModal(true)} icon={'add'} style={styles.addButton} />
 
@@ -170,5 +176,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
+  },
+  emptyMessage: {
+    fontSize: 16,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#fff',
   },
 });

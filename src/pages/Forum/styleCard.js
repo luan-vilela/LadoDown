@@ -12,7 +12,6 @@ const estilo = StyleSheet.create({
     right: 20,
   },
   card: {
-    top: 10,
     paddingHorizontal: 10,
     width: 300,
     margin: 5,
@@ -20,7 +19,7 @@ const estilo = StyleSheet.create({
   cardContainer: {
     height: 230,
     backgroundColor: '#ffffff',
-    borderRadius: 25,
+    borderRadius: 15,
     overflow: 'hidden',
     background: `linear-gradient(to bottom right, #0ea774, #0ea7a4)`,
   },
@@ -30,7 +29,6 @@ const estilo = StyleSheet.create({
   imagemContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    top: 10,
     width: 50,
     height: 50,
     borderRadius: 25, // Aumentando o raio de canto para um visual mais suave
@@ -55,17 +53,25 @@ const estilo = StyleSheet.create({
   },
   nome: {
     color: '#10b981', // Definindo a cor do texto como preto
-    fontSize: 18, // Aumentando um pouco o tamanho da fonte para maior destaque
+    marginTop: 10,
+    fontSize: 20, // Aumentando um pouco o tamanho da fonte para maior destaque
     fontWeight: '600', // Usando um valor mais robusto para o peso da fonte
     textAlign: 'center',
     textTransform: 'capitalize', // Convertendo o texto para maiúsculas para uma aparência mais forte
+    marginBottom: 20
   },
   description: {
     width: '100%',
-    height: '75%',
-    marginBottom: 30,
+    height: '60%',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
+  },
+  commentButtonText: {
+    color: '#333',
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
+
   },
   descricao: {
     fontSize: 16, // Aumentando um pouco o tamanho da fonte para melhor legibilidade
@@ -77,17 +83,17 @@ const estilo = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    marginRight: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#10b981',
+    justifyContent: 'flex-end',
     paddingVertical: 10, // Adicionando espaço vertical ao redor do conteúdo do rodapé
   },
   footerText: {
     top: -2,
     marginLeft: 5,
     fontWeight: 'bold',
-    color: '#ffffff', // Definindo a cor do texto para branco para melhor contraste com o fundo semitransparente
+    color: '#10b981', // Definindo a cor do texto como preto
     fontSize: 12, // Aumentando um pouco o tamanho da fonte para maior destaque
   },
   activityIndicatorContainer: {

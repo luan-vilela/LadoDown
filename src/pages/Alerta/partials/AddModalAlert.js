@@ -62,6 +62,7 @@ export default function AddModalAlert({ showModal, setShowModal, refetch }) {
   };
 
   const saveData = async idNotification => {
+    console.log('Notificação', eventDateTime);
     try {
       await database.write(async () => {
         await database.get('agenda').create(event => {
