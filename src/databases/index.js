@@ -7,6 +7,7 @@ import { AgendaModel } from './models/AgendaModel';
 import { TutorModel } from './models/TutorModel';
 import { RecomendacaoModel } from './models/RecomendacaoModel';
 import { CurvaCrescimentoModel } from './models/CurvaCrescimentoModel';
+import { VacinaModel } from './models/VacinaModel';
 
 const adapter = new SQLiteAdapter({
   schema: schemas,
@@ -14,5 +15,12 @@ const adapter = new SQLiteAdapter({
 
 export const database = new Database({
   adapter,
-  modelClasses: [CriancaModel, AgendaModel, RecomendacaoModel, TutorModel, CurvaCrescimentoModel],
+  modelClasses: [
+    CriancaModel,
+    AgendaModel,
+    RecomendacaoModel,
+    TutorModel,
+    CurvaCrescimentoModel,
+    VacinaModel,
+  ],
 });
