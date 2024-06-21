@@ -1,6 +1,7 @@
+import { Q } from '@nozbe/watermelondb';
 import { database } from '../databases/index';
 
-const collections = database.collections.get('vacinas');
+const collections = database.get('carteirinha');
 
 export const loadVacinas = async () => {
   try {
@@ -18,34 +19,43 @@ export const saveVacina = async data => {
       if (data?.id) {
         const vacina = await collections.find(data.id);
         const response = await vacina.update(record => {
-          record.nome_vacina = data.nome_vacina;
-          record.data_aplicacao = data.data_aplicacao;
-          record.proxima_dose = data.proxima_dose;
-          record.local_aplicacao = data.local_aplicacao;
+          record.nomeVacina = data.nomeVacina;
+          record.dataAplicacao = data.dataAplicacao;
+          record.localAplicacao = data.localAplicacao;
           record.lote = data.lote;
-          record.profissional_saude = data.profissional_saude;
+          record.profissionalSaude = data.profissionalSaude;
           record.comentarios = data.comentarios;
         });
+        console.log('Vacina atualizada:', response);
         return response;
       } else {
         const response = await collections.create(record => {
-          record.id_vacina = data.id_vacina;
-          record.nome_vacina = data.nome_vacina;
-          record.data_aplicacao = data.data_aplicacao;
-          record.proxima_dose = data.proxima_dose;
-          record.local_aplicacao = data.local_aplicacao;
+          record.idVacina = data.idVacina;
+          record.nomeVacina = data.nomeVacina;
+          record.dataAplicacao = data.dataAplicacao;
+          record.localAplicacao = data.localAplicacao;
           record.lote = data.lote;
-          record.profissional_saude = data.profissional_saude;
+          record.profissionalSaude = data.profissionalSaude;
           record.comentarios = data.comentarios;
-          record.created_at = data.created_at;
-          record.updated_at = data.updated_at;
         });
+
         return response;
       }
     });
   } catch (error) {
     console.error(`Erro ao salvar os dados da vacina: ${error}`);
     return null;
+  }
+};
+
+export const getVacinaRegistrada = async idVacina => {
+  try {
+    const vacinas = await collections.query(Q.where('idVacina', `${idVacina}`)).fetch();
+
+    return vacinas[0] || null;
+  } catch (error) {
+    console.error(`Erro ao buscar vacina registrada: ${error}`);
+    throw error;
   }
 };
 

@@ -1,16 +1,15 @@
 import { tableSchema } from '@nozbe/watermelondb';
 
 export const vacinaSchema = tableSchema({
-  name: 'vacinas',
+  name: 'carteirinha',
   columns: [
-    { name: 'id_vacina', type: 'string', isIndexed: true },
-    { name: 'nome_vacina', type: 'string' },
-    { name: 'data_aplicacao', type: 'number' },
-    { name: 'proxima_dose', type: 'number', isOptional: true },
-    { name: 'local_aplicacao', type: 'string', isOptional: true },
-    { name: 'lote', type: 'string', isOptional: true },
-    { name: 'profissional_saude', type: 'string', isOptional: true },
-    { name: 'comentarios', type: 'string', isOptional: true },
+    { name: 'idVacina', type: 'string' },
+    { name: 'nomeVacina', type: 'string' },
+    { name: 'dataAplicacao', type: 'number' },
+    { name: 'localAplicacao', type: 'string' },
+    { name: 'lote', type: 'string' },
+    { name: 'profissionalSaude', type: 'string' },
+    { name: 'comentarios', type: 'string' },
     { name: 'created_at', type: 'number' },
     { name: 'updated_at', type: 'number' },
   ],

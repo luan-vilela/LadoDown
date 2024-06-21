@@ -8,7 +8,7 @@ import { curvaCrescimentoSchema } from './curvaCrescimentoSchema';
 import { vacinaSchema } from './vacinaSchema';
 
 export const schemas = appSchema({
-  version: 11,
+  version: 6,
   tables: [
     criancaSchema,
     agendaSchema,

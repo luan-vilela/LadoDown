@@ -64,14 +64,6 @@ export const ModalView = styled.View`
   border-radius: 20px;
   padding: 35px;
   align-items: center;
-  shadow-color: #000;
-  shadow-offset: {
-    width: 0;
-    height: 2;
-  }
-  shadow-opacity: 0.25;
-  shadow-radius: 3.84;
-  elevation: 5;
 `;
 
 export const ModalText = styled.Text`
@@ -104,8 +96,15 @@ export const ModalTitle = styled.Text`
   margin-bottom: 15px;
 `;
 
+export const InputContainer = styled.View`
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+`;
+
 export const ButtonContainer = styled.View`
-  flex-direction: row;
+  flex-direction: column;
+  gap: 10px;
   justify-content: space-around;
   width: 100%;
   margin-top: 20px;
@@ -122,4 +121,13 @@ export const Button = styled.TouchableOpacity`
 export const ButtonText = styled.Text`
   color: white;
   font-weight: bold;
+`;
+
+export const BoxDiv = styled.Text`
+  background-color: #10b981;
+  color: white;
+
+  font-size: 16px;
+  padding: 10px 16px;
+  margin-top: 12px;
 `;

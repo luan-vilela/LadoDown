@@ -1,6 +1,6 @@
 import { database } from '../databases/index';
 
-const collections = database.collections.get('curva_crescimento');
+const collections = database.get('curva_crescimento');
 
 export const loadFormData = async () => {
   try {

@@ -5,10 +5,10 @@ import CustomModal from '../CustomModal/';
 import { format, getDaysInMonth, getYear } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
-const DateModal = ({ showModal, setShowModal, setValue }) => {
-  const [day, setDay] = useState(13);
-  const [month, setMonth] = useState(4);
-  const [year, setYear] = useState(2024);
+const DateModal = ({ showModal, setShowModal, setValue, _day, _month, _year }) => {
+  const [day, setDay] = useState(_day || 1);
+  const [month, setMonth] = useState(_month || 1);
+  const [year, setYear] = useState(_year || 2024);
   const [days, setDays] = useState([]);
 
   const generateDays = () => {

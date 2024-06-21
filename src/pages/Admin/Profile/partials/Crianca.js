@@ -1,6 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import {
-  Center,
-  ScrollView,
   Box,
   Select,
   CheckIcon,
@@ -8,25 +7,23 @@ import {
   Input,
   Button,
   WarningOutlineIcon,
-  Stack,
-  HStack,
+  ScrollView,
+  Center,
   Text,
 } from 'native-base';
-import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { database } from '../../../../databases/index';
-import { Q } from '@nozbe/watermelondb';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateModal from '../../../../components/Modal/DateModal';
-import HourModal from '../../../../components/Modal/HourModal';
-import AlertConfirm from '../../../../components/Modal/AlertConfirm';
+import AlertConfirm from '../../../../components/Modal/AlertConfirm'; // Importe o componente de confirmação de alerta
 import { loadFormData, saveFormData } from '../../../../services/crianca.service';
 import { format } from 'date-fns';
 
 function Crianca() {
   const [recordId, setRecordId] = useState(null);
   const [showDate, setShowDate] = useState(false);
-  const [dtNascimento, setDtNascimento] = useState(null);
+  const [dtNascimento, setDtNascimento] = useState();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const now = new Date();
 
   const {
     control,
@@ -70,12 +67,17 @@ function Crianca() {
 
     console.log('PAYLOAD: ', payload);
 
-    const response = saveFormData(payload);
+    const response = await saveFormData(payload); // Espera pela resposta do serviço de salvar
+
     console.log('response: ', response);
+
+    // Mostra o modal de sucesso após salvar os dados
+    setShowSuccessModal(true);
   };
+
   useEffect(() => {
     loadingData();
-  }, [reset]);
+  }, []);
 
   return (
     <Box alignItems="center" flex={1}>
@@ -134,7 +136,7 @@ function Crianca() {
         control={control}
         name="sex"
         rules={{
-          required: 'Sexo da Criançã é obrigatório',
+          required: 'Sexo da Criança é obrigatório',
           pattern: {
             message: 'Selecione um sexo!',
             value: /^(M|F)$/i,
@@ -206,26 +208,26 @@ function Crianca() {
         )}
       />
 
-      {/* <Controller
-        control={control}
-        name="gestationalAge"
-        render={({ field: { value, onChange } }) => (
-          <FormControl w="90%" maxW="300px">
-            <FormControl.Label>Idade Gestacional</FormControl.Label>
-            <Input
-              placeholder="xx Meses yy Semanas"
-              value={value}
-              onChangeText={onChange}
-              w="100%"
-            />
-          </FormControl>
-        )}
-      /> */}
-
       <DateModal
         setShowModal={setShowDate}
         showModal={showDate}
         setValue={item => setDtNascimento(item)}
+        _day={dtNascimento?.getDate() || now.getDate()}
+        _month={dtNascimento?.getMonth() || now.getMonth()}
+        _year={dtNascimento?.getFullYear() || now.getFullYear()}
+      />
+
+      {/* Modal de sucesso */}
+      <AlertConfirm
+        showModal={showSuccessModal}
+        setShowModal={() => setShowSuccessModal(false)}
+        title="Sucesso"
+        text="Os dados foram salvos com sucesso!"
+        setValue={() => setShowSuccessModal(false)}
+        cancel={undefined}
+        successBtn={'OK'}
+        footer={undefined}
+        showCloseButton={undefined}
       />
 
       <Box flex={1}>
@@ -237,7 +239,7 @@ function Crianca() {
   );
 }
 
-export default () => {
+const CriancaScreen = () => {
   return (
     <ScrollView flex={1}>
       <Center flex={1} my="4">
@@ -246,3 +248,5 @@ export default () => {
     </ScrollView>
   );
 };
+
+export default CriancaScreen;
