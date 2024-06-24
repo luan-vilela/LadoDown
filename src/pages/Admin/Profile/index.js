@@ -22,6 +22,7 @@ import HeaderAdmin from '../../../components/HeaderAdmin';
 import Crianca from './partials/Crianca';
 import Tutor from './partials/Tutor';
 import { useRoute } from '@react-navigation/native';
+import Config from './partials/Config';
 
 const FirstRoute = () => (
   <Center flex={1} my="4">
@@ -47,7 +48,7 @@ const initialLayout = {
 const renderScene = SceneMap({
   first: Tutor,
   second: Crianca,
-  third: ThirdRoute,
+  third: Config,
   fourth: FourthRoute,
 });
 

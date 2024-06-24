@@ -78,7 +78,7 @@ export default () => {
         />
         <ReelsSlider
           image={require('../../assets/vacina.png')}
-          title={'Agenda'}
+          title={'Passos Iniciais'}
           routeName={ROUTES.AGENDA.NAME}
         />
         <ReelsSlider

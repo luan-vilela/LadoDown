@@ -26,6 +26,8 @@ function Tutor() {
   const [recordId, setRecordId] = useState(null);
   const [showDate, setShowDate] = useState(false);
   const [dtNascimento, setDtNascimento] = useState(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const now = new Date();
 
   const {
     control,
@@ -78,6 +80,7 @@ function Tutor() {
             post.dateOfBirth = dtNascimento;
           });
         }
+        setShowSuccessModal(true);
       });
     } catch (err) {
       console.log(err);
@@ -175,6 +178,9 @@ function Tutor() {
         setShowModal={setShowDate}
         showModal={showDate}
         setValue={item => setDtNascimento(item)}
+        _day={dtNascimento?.getDate() || now.getDate()}
+        _month={dtNascimento?.getMonth() || now.getMonth()}
+        _year={dtNascimento?.getFullYear() || now.getFullYear()}
       />
 
       <Box flex={1}>
@@ -182,6 +188,18 @@ function Tutor() {
           Salvar
         </Button>
       </Box>
+
+      <AlertConfirm
+        showModal={showSuccessModal}
+        setShowModal={() => setShowSuccessModal(false)}
+        title="Sucesso"
+        text="Os dados foram salvos com sucesso!"
+        setValue={() => setShowSuccessModal(false)}
+        cancel={undefined}
+        successBtn={'OK'}
+        footer={undefined}
+        showCloseButton={undefined}
+      />
     </Box>
   );
 }

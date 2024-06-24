@@ -65,11 +65,7 @@ function Crianca() {
       payload['id'] = recordId;
     }
 
-    console.log('PAYLOAD: ', payload);
-
     const response = await saveFormData(payload); // Espera pela resposta do serviço de salvar
-
-    console.log('response: ', response);
 
     // Mostra o modal de sucesso após salvar os dados
     setShowSuccessModal(true);

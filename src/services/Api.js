@@ -1,6 +1,6 @@
 import { setStore, getToken } from './auth';
 
-const BASE = process.env.EXPO_PUBLIC_API_URL;
+const BASE = 'https://back-love-down-luan-vilela-luans-projects-340b3d71.vercel.app/';
 const BASE_API = BASE.slice(0, -1);
 
 console.log(BASE_API);

@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Alert, Modal, TextInput, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Alert, Modal, TextInput, TouchableOpacity, Linking } from 'react-native';
 import * as S from './style';
 
 import { COLOR_VACCINE, VACCINES } from '../../mock/vaccines';
 import { loadVacinas, saveVacina, getVacinaRegistrada } from '../../services/vacina.service';
-import { Button, HStack, Input, VStack, Text, FormControl, WarningOutlineIcon } from 'native-base';
+import { Button, HStack, Input, VStack, Text, FormControl, Image } from 'native-base';
 import DateModal from '../Modal/DateModal';
 import { Controller, useForm } from 'react-hook-form';
-import { format } from 'date-fns';
-
-const colorBorder = '#333';
+import { differenceInDays, format } from 'date-fns';
+import { loadFormData } from '../../services/crianca.service';
 
 const TabelaVacina = () => {
   const vaccines = VACCINES;
@@ -26,6 +25,8 @@ const TabelaVacina = () => {
   const [vacinaRegistrada, setVacinaRegistrada] = useState(null);
   const [showDate, setShowDate] = useState(false);
   const [now, setNow] = useState(new Date());
+  const [crianca, setCrianca] = useState(null);
+  const [diasTotais, setDiasTotais] = useState(99999);
 
   const {
     control,
@@ -49,8 +50,24 @@ const TabelaVacina = () => {
     }
   }
 
+  const loadingCrianca = async () => {
+    const response = await loadFormData();
+    setCrianca(response);
+    const diasTotais = differenceInDays(new Date(), new Date(response?.dateOfBirth));
+    setDiasTotais(diasTotais);
+  };
+
   useEffect(() => {
     carregarVacinas();
+
+    if (crianca === null) loadingCrianca();
+  }, []);
+
+  const getDaysAtrasos = () => {};
+
+  useEffect(() => {
+    if (!selectedVacina) return;
+    loadingCrianca();
   }, []);
 
   const getDate = () => {
@@ -164,7 +181,20 @@ const TabelaVacina = () => {
   const handleCloseDetailsModal = () => {
     setDetailsModalVisible(false);
   };
-  console.log(now);
+
+  const handlePress = link => {
+    const url = `${link}`; // URL externa que você deseja abrir
+
+    Linking.openURL(url).catch(err => console.error('Erro ao abrir o link:', err));
+  };
+
+  const validVacine = esquema => {
+    if (esquema.minimo < diasTotais && diasTotais < esquema.maximo) {
+      return 'red';
+    }
+    return '';
+  };
+
   return (
     <ScrollView horizontal={true}>
       <S.CardContainer>
@@ -189,7 +219,9 @@ const TabelaVacina = () => {
                           key={index}
                           style={{ backgroundColor: colors[(i * 5 + j) % colors.length] }}
                           onPress={() => handleRegisterItemClick(esquema.id, vaccine)}>
-                          <S.Dose>{esquema.dose}</S.Dose>
+                          <S.Dose style={{ backgroundColor: validVacine(esquema) }}>
+                            {esquema.dose}
+                          </S.Dose>
                           <S.RegisterDate>
                             <Text>
                               Data:{' '}
@@ -201,6 +233,7 @@ const TabelaVacina = () => {
                             <Text>
                               Unidade: {vacinaCarregada ? vacinaCarregada.localAplicacao : ''}
                             </Text>
+                            {}
                           </S.RegisterDate>
                         </S.RegisterItem>
                       );
@@ -242,7 +275,7 @@ const TabelaVacina = () => {
                 }}
                 render={() => (
                   <FormControl isInvalid={'dt' in errors} w="100%">
-                    <FormControl.Label>Data de nascimento</FormControl.Label>
+                    <FormControl.Label>Data da vacinação</FormControl.Label>
                     <Input
                       placeholder="__/__/____"
                       value={getDate()}
@@ -333,6 +366,16 @@ const TabelaVacina = () => {
                 <Text>Idade Máxima: {Math.round(Number(dose.maximo) / 12)} meses</Text>
               </View>
             ))}
+
+            <Image
+              source={{ uri: selectedVacina?.vacina?.foto }}
+              style={{ width: 200, height: 200, marginTop: 10, marginBottom: 10 }}
+              resizeMode="contain"
+            />
+            <Button variant={'link'} onPress={() => handlePress(selectedVacina?.vacina?.url)}>
+              Saiba mais
+            </Button>
+
             <S.ButtonContainer>
               <Button colorScheme={'emerald'} onPress={handleCloseDetailsModal}>
                 Fechar

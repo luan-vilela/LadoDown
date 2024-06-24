@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const TOKEN_KEY = process.env.EXPO_PUBLIC_TOKEN_KEY;
+const TOKEN_KEY = 'https://back-love-down-luan-vilela-luans-projects-340b3d71.vercel.app/';
 
 export const isAuthenticated = async () => {
   try {
