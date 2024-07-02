@@ -5,7 +5,7 @@
 	<img src="https://raw.githubusercontent.com/luan-vilela/LadoDown/main/src/assets/logo220x112.png" width="180" alt="Logo LadoDown" />
 </p>
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/luan-vilela/LadoDown/main/LICENSE)[![build](https://github.com/aseprite/aseprite/actions/workflows/build.yml/badge.svg)](https://github.com/aseprite/aseprite/actions/workflows/build.yml)
+[![build](https://github.com/aseprite/aseprite/actions/workflows/build.yml/badge.svg)](https://github.com/aseprite/aseprite/actions/workflows/build.yml) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://raw.githubusercontent.com/luan-vilela/LadoDown/main/LICENSE)
 
 LadoDown é um aplicativo voltado para o registro de informações de crianças com Síndrome de Down. Pais e responsáveis podem usar o aplicativo para acompanhar a curva de crescimento específica para SD, gerenciar vacinas, receber alertas, participar de fóruns e acessar conteúdos do blog.
 
