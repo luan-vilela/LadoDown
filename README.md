@@ -38,43 +38,40 @@ Para desenvolver e executar o LadoDown, certifique-se de ter as seguintes ferram
 
 Para instalar o LadoDown, siga os passos abaixo:
 
-    $ git clone https://github.com/seu_usuario/ladodown.git
-    $ cd ladodown 
-    $ npm install
+    git clone https://github.com/luan-vilela/ladodown.git
+    cd ladodown 
+    npm install
     
   ## Configuração do Ambiente
 
 O aplicativo LadoDown utiliza variáveis de ambiente para configurar a API. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis:
 
-`EXPO_PUBLIC_API_URL=""`
-`EXPO_PUBLIC_TOKEN_KEY=@ladoDown:Token`
+
+    EXPO_PUBLIC_API_URL=""
+    EXPO_PUBLIC_TOKEN_KEY=@ladoDown:Token
 
 ## Configuração da API
 
 Para que o LadoDown funcione corretamente, você também precisa configurar e executar a API correspondente. Siga os passos abaixo para configurar a API:
 
-1.  Clone o repositório da API LadoDown a partir do GitHub:
-    
-    
-    `$ git clone https://github.com/luan-vilela/LadoDownAPI.git`
-    `$ cd LadoDownAPI` 
-    
-2.  Instale as dependências da API:
-       
-    `$ npm install` 
-    
-3.  Configure as variáveis de ambiente da API conforme necessário. Consulte a documentação da API para obter detalhes sobre a configuração das variáveis de ambiente.
-    
-4.  Inicie a API:
-      
-    `$ npm start` 
+
+1- Clone o repositório da API LadoDown a partir do GitHub e instale as dependências da API:
+
+
+    git clone https://github.com/luan-vilela/LadoDownAPI.git
+    cd LadoDownAPI
+    npm install
+
+2- Inicie o servidor 
+
+    npm run start
     
 
-Certifique-se de que a API esteja em execução corretamente e configurada com as mesmas variáveis de ambiente especificadas no projeto LadoDown.
+Certifique-se de que a API esteja em execução corretamente e configurada com as mesmas variáveis de ambiente especificadas no projeto [LadoDownAPI](https://github.com/luan-vilela/LadoDownAPI).
 
 ## Como usar
 
--  Você pode gerar apk localmente via usb utilizando um celular android em modo desenvolvedor e dando permissão necessária
+- Você pode gerar apk localmente via usb utilizando um celular android em modo desenvolvedor e dando permissão necessária
 - Você pode usar android studio com um emulador rodando na maquina. https://developer.android.com/codelabs/basic-android-kotlin-compose-install-android-studio?hl=pt-br#0
 
 
@@ -82,19 +79,24 @@ Certifique-se de que a API esteja em execução corretamente e configurada com a
 
 Para iniciar o servidor de desenvolvimento, utilize o comando:
 
-Para iniciar o servidor de desenvolvimento, utilize o comando:
-
-`$ npx react-native start` 
+     npx react-native start
 
 Para rodar o aplicativo em um dispositivo Android conectado ou emulador, utilize:
 
-`$ npx react-native run-android` 
-
-Para dispositivos iOS, utilize:
-
-`$ npx react-native run-ios` 
+    npx react-native run-android
 
 Com esses comandos, você poderá testar e depurar o aplicativo diretamente em seu dispositivo ou emulador.
+
+## Compilar e gerar APK
+
+Para Compilar o apk, utilize o comando:
+
+     react-native run-android
+
+- Para gerar um apk você pode seguir esse tutorial, caso precise de ajudar para configurar o projeto -> https://tableless.com.br/react-native-build-release-android
+
+- Caso prefira pode utilizar a documentação oficial do react native -> https://reactnative.dev/docs/signed-apk-android
+
 
 ## Contribuição
 
